@@ -3,6 +3,7 @@
 pptpd自身不含有限制账户登录功能，可用pppd功能实现。
 
 以centos6.5为例:
+
 `rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/pptpd-1.4.0-3.el6.x86_64.rpm`
 
 vpn用户接入时，pppd会调用auth-up和auth-down文件，没有则跳过。centos6.5文件目录为/etc/pp/，默认没有，可手动添加：
