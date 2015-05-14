@@ -1,21 +1,21 @@
 ##EXSI命令行摘录##
 
-* 复制镜像：
+* ####复制镜像：
 
 	>vmkfstools -i XXX.vmdk  Y/Y.vmdk -d thin
 
-* 查看虚拟主机开启:
+* ####查看虚拟主机开启:
 
 	>net-stats -l 
 	>
 	>esxcli  network  vm list
 
-* 虚拟机一些配置操作:
+* ####虚拟机一些配置操作:
 
 	>esxcli  network ip XX
 
 
-* 配置网络:
+* ####配置网络:
 	>esxcfg-vswitch –l (List vSwitch)
 	>
 	>esxcfg-vswitch –a vSwitch1 (Create vSwitch)
@@ -28,11 +28,11 @@
 	>
 	>esxcfg-vmknic –l (List VMkernelPort) 
  
-* 查看网络配置:
+* ####查看网络配置:
 
 	>vim-cmd hostsvc/vmotion/netconfig_get
 
-* 从命令行打开虚拟机电源:
+* ####从命令行打开虚拟机电源:
 
 	1. 使用以下命令列出虚拟机的清单 ID：
 
