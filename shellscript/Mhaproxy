@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+#description:
+#Mhaproxy	This is the start script for manager haproxy start or stop or restart
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: null
+# Should-Start: null
+# version：1.0
+# date:2014-6-11
+### END INFO
+
+set -e
+
+HADIR=/opt/haproxy
+HANAME=haproxy
+DAEMON=$HADIR/sbin/$HANAME
+CONFIG=$HADIR/$HANAME.cfg
+PIDFILE=$HADIR/$HANAME.pid
+DESC="HAProxy daemon"
+
+test -x $DAEMON || exit 0
+
+start(){
+	echo -n "Starting $DESC:$HANAME"
+	$DAEMON -f $CONFIG
+	echo "."
+}
+
+stop(){
+	echo -n "Stopping $DESC:$HANAME"
+	haproxy_pid=`cat $PIDFILE`
+	kill $haproxy_pid
+	echo "."
+}
+
+restart(){
+	echo -n "Restarting $DESC:$HANAME"
+	$DAEMON -f $CONFIG -p $PIDFILE -sf $(cat $PIDFILE)
+	echo "."
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart)
+		restart
+		;;
+	*)
+		echo "Usage:$HANAME{start|stop|restart}" >&2
+		exit 1
+		;;
+esac
+exit 0
+
