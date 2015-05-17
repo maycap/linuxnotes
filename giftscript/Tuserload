@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+#description:
+#Tuserload	this is the check script for cheking loading user
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: null
+# Should-Start: null
+# version：1.0
+# date:2014-6-8 
+### END INFO
+
+DIR='/usr/monitor/check'
+MUSER='gencat@163.com'
+WARN=2
+
+DEVICE=`ls /sys/class/net | grep -v lo`
+IP=$(ip addr show to 0.0.0.0/0 scope global | awk '/[[:space:]]inet /{ print gensub("/.*","","g",$2)}')
+#IP=`ifconfig $DEVICE | grep "inet addr" | cut -f 2 -d ":" | cut -f 1 -d " "` 
+
+#users=`uptime | cut -d ',' -f 2 | awk '{print $1}'`
+tag=`uptime | awk -F'user' '{print $1}' | wc -w`
+users=`uptime | awk '{print $'$tag'}'`
+
+if [ $users -gt $WARN ];then
+	echo "$IP 服务器用户数已经达到$users 个。请及时处理.$(date +%Y-%m-%d/%H:%M:%S)" >>$DIR-$(date +%Y-%m-%d).log	
+	w | awk '/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/ {print $1,$2,$3}' >>$DIR-$(date +%Y-%m-%d).log
+	echo "$IP 服务器用户数已经达到$users 个。请及时处理.$(date +%Y-%m-%d/%H:%M:%S)" | mail -s "$IP 服务器用户登录警告！" $MUSER
+else	
+	echo "$IP 服务器当前用户登录数是$users 个。情况正常.$(date +%Y-%m-%d/%H:%M:%S)" >>$DIR-$(date +%Y-%m-%d).log	
+fi
+

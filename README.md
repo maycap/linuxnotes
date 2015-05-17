@@ -18,6 +18,10 @@ This is notes about pptpd to restrict user login repeatedly
 
 This is notes about EXSI command operation
 
+* [svn](./worknotes/svn.md)
+
+This is notes about Synchronous SVN code to apache work catalog
+
 ***
 ###On [managescript catalog](./managescript)
 
