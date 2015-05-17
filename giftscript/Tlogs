@@ -1,0 +1,248 @@
+#!/bin/bash
+#
+#description:
+#Tlogs	This is the test script for looking tomcat_catalina.out
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: null
+# Should-Start: null
+# version：1.1
+# date:2014-6-20
+### END INFO
+
+follow=0
+troubh=0
+DPATHTAG=0
+temp_logs=/tmp/$$.logs
+
+check_name(){
+if [ -z $1 ];then	
+	echo -e "\e[1;31m \t-p select appname ,only and must!\e[0m"
+	exit 1
+fi
+
+if [ ! -e /web/service ];then
+	echo -e "\e[1;31m\t service may be moved,Please used -d\e[0m"
+	exit 4
+fi
+tag=`ls /web/service | grep tomcat | grep $1 | wc -l`
+if [ $tag -ne 1 ];then
+	ls /web/service | grep tomcat | grep $1
+	return 1
+else
+	dir=`ls /web/service | grep $1`
+	return 0
+fi
+}
+
+check_path()
+{
+	if [ -f "$1" ];then 
+		return 0
+	else
+		return 1
+	fi
+}	
+
+check_num(){
+if [ -z $1 ];then	
+	echo -e "\e[1;31m \t-n output the last K lines\e[0m"
+	exit 1
+elif [[ $1 =~ ^[0-9]+$ ]];then
+	return 0
+else
+	return 1
+fi
+
+}
+
+check_t(){
+	[ -z "$1" ] && return 1 || return 0
+}
+
+check_sed()
+{
+if [ -z "$1" ];then	
+	echo -e "\e[1;31m \t-m suppress automatic printing of pattern space.\e[0m"
+	exit 1
+fi
+echo "test" > $temp_logs
+sed -n "$1" $temp_logs
+if [ $? -ne 0 ];then
+	echo -e "\e[1;31m \t-m syntax error."
+	echo -e "\t -m 20,40p\e[0m"
+	return 1
+else
+	return 0
+fi
+rm -fr $temp_logs
+}
+
+
+if [ "$#" -eq 0 ];then
+	echo -e "\e[1;31mUsage:`basename $0` NOT Parameters!"
+	echo -e "\te.g. `basename $0` -p [oms] -n 1000\e[0m"
+	exit 1
+	
+else
+	if [ "${1##-}" = "$1" ];then
+		echo -e "\e[1;31mParameters ERROR!"
+		echo -e "\te.g. `basename $0` -p [oms]\e[0m"
+		exit 1
+	fi
+
+
+	if [ "$1" = "-h" ] ;then	
+		echo -e "\e[1;32mUsage:`basename $0` -p [oms] -n [counts]"
+		echo -e "e.g. `basename $0` -p oms -n 100"
+		echo -e "\t-p select appname ,only and must!"
+		echo -e "\t-d select path ,only and must!"
+		echo -e "\t-n output the last K lines"
+		echo -e "\t-m suppress automatic printing of pattern space"
+		echo -e "\t-h request for help."
+		echo -e "\t-t check this 1|ERROR or 2|WARN or [custom]."
+		echo -e "\t-f output  appended data as the file grows."
+		echo -e "\t-v look version.\e[0m"
+		exit 0
+	fi
+
+	if [ "$1" = "-v" ];then
+		echo -e "\e[1;32m \tversion 1.1"
+		echo -e "\tCreate by Maycap."
+		echo -e "\tThanks for used.\e[0m"
+		exit 0
+	fi
+
+
+	while [ "$1" != "${1##-}" ];do
+		case $1 in
+		-p)
+			check_name $2
+			if [ $? -ne 0 ];then
+				echo -e "\e[1;32m \t-p select appname ,only and must!\e[0m"
+				exit 3
+			fi
+			DIR=$dir
+			shift 2
+			;;
+		-d)
+			check_path "$2"
+			if [ $? -ne 0 ];then
+				echo -e "\e[1;32m \t-d select path ,only and must!\e[0m"
+				exit 3
+			fi
+			DPATH="$2"
+			DPATHTAG=1
+			shift 2
+			;;
+		-n)	
+			check_num $2
+			if [ $? -ne 0 ];then
+				echo -e "\e[1;31m \t-n output the last K lines.\e[0m"
+				exit 3
+			fi			
+			num=$2
+			shift 2
+			;;
+		-m)	
+			check_sed "$2"
+			if [ $? -ne 0 ];then
+				echo -e "\e[1;31m \t-m suppress automatic printing of pattern space."
+				echo -e "\t -m 20,40p\e[0m"
+				exit 3
+			fi			
+			sednum="$2"
+			shift 2
+			;;
+		-f)
+			follow=1
+			shift 1
+			;;
+		-t)
+			check_t "$2"
+			if [ $? -ne 0 ];then
+				echo -e "\e[1;31m\t-t check this 1|ERROR or 2|WARN or [custom].\e[0m"
+				exit 3
+			fi
+			troubh=1
+			ttype="$2"
+			shift 2
+			;;
+		*)
+			echo -e "\e[1;31mParameters ERROR!"
+                        echo -e "\te.g. `basename $0` -p [oms]\e[0m"
+                        exit 3
+			;;
+		esac
+	done
+fi
+
+check_log()
+{	
+	if [ $2 -eq 0 ];then
+	>$temp_logs
+	grep -n $1 /web/service/$DIR/logs/catalina.out >> $temp_logs
+	total=`cat $temp_logs | wc -l`
+	echo "TOTAL $1 : $total"
+	cat $temp_logs
+	else 	
+	>$temp_logs
+	grep -n $1 "$3" >> $temp_logs
+	total=`cat $temp_logs | wc -l`
+	echo "TOTAL $1 : $total"
+	cat $temp_logs
+	fi
+	rm -fr $temp_logs
+}
+
+look_log(){
+	if [ $3 -eq 0 ];then
+		if [ $2 -eq 0 ];then
+			tail -n $1 /web/service/$DIR/logs/catalina.out
+		else
+			tail -n $1 "$4"
+		fi
+	else
+		if [ $2 -eq 0 ];then
+			tail -n $1 -f /web/service/$DIR/logs/catalina.out
+		else
+			tail -n $1 -f "$4"
+		fi
+	fi
+}	
+
+if [[ -z $DIR &&  -z $DPATH ]];then
+	echo -e "\e[1;32m \t-p or -d ,only and  must!\e[0m"
+	exit 1
+fi
+num=${num:-200}
+
+
+if [ $troubh -eq 0 ];then
+	if [ -z $sednum ];then
+		look_log $num $DPATHTAG  $follow "$DPATH"
+	elif [ $DPATHTAG -eq 0 ];then
+		sed -n "$sednum" /web/service/$DIR/logs/catalina.out
+	else
+		sed -n "$sednum" $DPATH
+fi
+
+else
+	case $ttype in
+	1|ERROR)
+		check_log "ERROR" $DPATHTAG $DPATH
+		exit 0
+		;;
+	2|WARN)
+		check_log "WARN" $DPATHTAG $DPATH
+		exit 0
+		;;
+	*)
+		check_log  "$ttype" $DPATHTAG $DPATH
+		exit 0
+		;;
+				
+	esac
+fi
+

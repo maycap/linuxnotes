@@ -1,0 +1,199 @@
+#!/bin/bash
+#
+#description:
+#Tbandwidth test net  speed kb/s or packet/s
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: null
+# Should-Start: null
+# version：1.0
+# date:2014-6-8 
+### END INFO
+
+DIR='/usr/monitor/bandwidth'
+MUSER='wangless@163.com'
+
+
+#update interval in seconds
+INTERVAL="1"
+#check num
+COUNT=5
+NETTYPE=bytes
+DEVICES=`ls /sys/class/net | grep -v lo`
+
+check_ck(){
+	if [[ ! $1 =~ ^[0-9]+$ ]];then
+		echo -e "\e[1;31mCOUNT must inter type! \e[0m"
+		return 1
+	elif [ "$1" -eq 0 ];then
+		echo -e "\e[1;31mOCUNT must > 0!\e[0m"
+		return 1
+	fi
+	return 0
+}
+
+check_dev(){
+	for dev in `echo $1`
+	do
+		if [ -e /sys/class/net/$dev ];then
+			continue	
+		else
+			return 1
+		fi
+	done
+	return 0
+}
+
+check_type(){	
+	if [[ ! $1 =~ ^[1-9]$ ]];then
+		echo -e "\e[1;32mPlease input 1,2,3... \e[0m"
+		return 1
+	elif [ "$1" -gt 2 ];then
+		echo -e "\e[1;32mSorry,Now only suport 1(bytes) or 2(packets). \e[0m"
+		return 1
+	fi
+	
+	return 0
+}
+
+speed(){
+	if [ "$#" -eq "2" ];then
+		if [ "$2" = "1" ];then
+			NT="bytes"
+		else
+			NT="packets"
+		fi
+	fi
+	NT=${NT:-$NETTYPE}
+	R1=`cat /sys/class/net/$1/statistics/rx_$NT`	
+	T1=`cat /sys/class/net/$1/statistics/tx_$NT`	
+	sleep $INTERVAL	
+	R2=`cat /sys/class/net/$1/statistics/rx_$NT`	
+	T2=`cat /sys/class/net/$1/statistics/tx_$NT`	
+	TBPS=`expr $T2 - $T1`
+	RBPS=`expr $R2 - $R1`
+	
+	if [ "$2" = "2" ];then
+		echo -e "\e[1;32m \tTX $1: $TBPS packets/s RX $1: $RBPS packets/s $(date +%Y-%m-%d/%H:%M:%S) \e[0m"
+		return 0
+	fi 
+	TKBPS=`expr $TBPS / 1024`
+	RKBPS=`expr $RBPS / 1024`
+	echo -e "\e[1;32m \tTX $1: $TKBPS kb/s RX $1: $RKBPS kb/s $(date +%Y-%m-%d/%H:%M:%S) \e[0m"
+}
+
+
+if [ "$#" -eq 0 ];then
+	echo -e "\e[1;32mUsage:`basename $0` -d [network-interface] -c [counts]"
+	echo -e "\te.g. `basename $0` -d eth0 -c 5"
+	echo -e "\tDefault ALL DEVIVE and count 5 \e[0m"
+	
+else
+	if [ "${1##-}" = "$1" ];then
+		echo -e "\e[1;31mParameters ERROR!\e[0m"
+		echo -e "\e[1;32m \te.g. `basename $0` -d eth0 -c 5 \e[0m"
+		exit 1
+	fi
+
+	if [ "$1" = "-h" ] ;then	
+		echo -e "\e[1;32mUsage:`basename $0` -d [network-interface] -c [counts]"
+		echo -e "e.g. `basename $0` -d eth0 -c 5"
+		echo -e "Default ALL DEVIVE and count 5"
+		echo -e "\t-t select nettype,like 1(bytes),2(packets)." 
+		echo -e "\t-c number of count."
+		echo -e "\t-w select display modes,like 1(display),2(write),3(1 and 2)." 
+		echo -e "\t-h request for help."
+		echo -e "\t-v look version.\e[0m"
+		exit 0
+	fi
+	
+	if [ "$1" = "-v" ];then
+		echo -e "\e[1;32m \tversion 1.0"
+		echo -e "\tCreate by Maycap."
+		echo -e "\tThanks for used.\e[0m"
+		exit 0
+	fi
+
+	tag=`expr $# % 2`
+	if [ $tag -ne 0 ];then
+		echo -e "\e[1;31mParameters lost! Please retry!\e[0m"
+		exit 2
+	fi
+	
+	while [ "$1" != "${1##-}" ];do
+		case $1 in
+		'')	
+			echo -e "\e[1;31mParameters ERROR! \e[0m"
+			echo -e "\e[1;32m\te.g. `basename $0` -d eth0 -c 5 \e[0m"
+			exit 3;;
+		-d)
+			check_dev  "$2"
+			if [ $? -ne 0 ];then	
+			echo -e "\e[1;31mParameters ERROR! \e[0m"
+			echo -e "\e[1;32m \te.g. `basename $0` -d eth0 \e[0m"
+			exit 3
+			fi			
+			DEVICE=$2
+			shift 2
+			;;
+		-c)
+			check_ck  "$2"
+			if [ $? -ne 0 ];then	
+			echo -e "\e[1;31mParameters ERROR! \e[0m"
+			echo -e "\e[1;32m \te.g. `basename $0` -c 5 \e[0m"
+			exit 3
+			fi			
+			CK=$2
+			shift 2
+			;;
+		-t)
+			check_type "$2"
+			if [ $? -ne 0 ];then	
+			echo -e "\e[1;31mParameters ERROR! \e[0m"
+			echo -e "\e[1;32m \te.g. `basename $0` -t 1 \e[0m"
+			exit 3
+			fi			
+			nt=$2
+			shift 2
+			;;
+		-w)
+			write=$2
+			shift 2
+			;;
+		*)
+			echo -e "\e[1;32mParameters ERROR!\e[0m"
+			echo -e "\e[1;31m \te.g. `basename $0` -d eth0 -c 5 \e[0m"
+			exit 3;;
+		esac
+	done
+fi
+
+
+DEVICE=${DEVICE:-$DEVICES}
+CK=${CK:-$COUNT}
+#nt=${nt:-$NETTYPE}
+write=${write:-1}
+
+for dev in `echo $DEVICE`
+do
+	for ((i=0;i<$CK;i++))
+	do
+			case $write in
+			1)
+			speed $dev $nt
+			;;
+			2)
+			speed $dev $nt >> $DIR-$(date +%Y-%m-%d).log
+			;;
+			3)
+			speed $dev $nt | tee -a $DIR-$(date +%Y-%m-%d).log
+			;;
+			''|*)
+			echo -e "\e[1;32mSorry,Now just support 1(display),2(write),3(1 and 2). \e[0m"
+			exit 3
+			;;
+			esac
+	done
+done
+

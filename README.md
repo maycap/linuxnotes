@@ -2,20 +2,6 @@
 Some notes about Linux
 
 ***
-###On [managescript catalog](./shellscript)
-
-This is script to manage some Middleware
-
-* [Mnginx](./managescript/Mnginx) 
-
-This is the start script for manager nginx start or stop or restart
-
-* [Mhaproxy](./managescript/Mhaproxy)
-
-This is the start script for manager haproxy start or stop or restart
-
-
-***
 ###On [worknotes](./worknotes)
 
 This is notes for linux manage works
@@ -32,6 +18,30 @@ This is notes about pptpd to restrict user login repeatedly
 
 This is notes about EXSI command operation
 
+***
+###On [managescript catalog](./managescript)
+
+This is script to manage some Middleware
+
+* [Mnginx](./managescript/Mnginx) 
+
+This is the start script for manager nginx start or stop or restart
+
+* [Mhaproxy](./managescript/Mhaproxy)
+
+This is the start script for manager haproxy start or stop or restart
+
+***
+### On [giftscript catalog](./giftscript)
+This script to work Conveniently
+
+* [Tlogs](./giftscript/Tlogs)
+
+This is the test script for looking tomcat_catalina.out
+
+* [Tbandwidth](./giftscript/Tbandwidth)
+
+This is test net  speed kb/s or packet/s
 
 ***
 ###Some words###
