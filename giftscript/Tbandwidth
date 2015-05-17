@@ -12,8 +12,6 @@
 ### END INFO
 
 DIR='/usr/monitor/bandwidth'
-MUSER='wangless@163.com'
-
 
 #update interval in seconds
 INTERVAL="1"
