@@ -2,15 +2,15 @@
 Some notes about Linux
 
 ***
-###On [shellscript catalog](./shellscript)
+###On [managescript catalog](./shellscript)
 
 This is script to manage some Middleware
 
-* [Mnginx](./shellscript/Mnginx) 
+* [Mnginx](./managescript/Mnginx) 
 
 This is the start script for manager nginx start or stop or restart
 
-* [Mhaproxy](./shellscript/Mhaproxy)
+* [Mhaproxy](./managescript/Mhaproxy)
 
 This is the start script for manager haproxy start or stop or restart
 
