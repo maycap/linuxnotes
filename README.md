@@ -37,16 +37,19 @@ This is notes about use ssl on nginx
 ***
 ###On [managescript catalog](./managescript)
 
-This is script to manage some Middleware
+This is the scripts to manage some Middleware
 
 * [Mnginx](./managescript/Mnginx) 
 
-This is the start script for manager nginx start or stop or restart
+This is the script for manager nginx start or stop or restart
 
 * [Mhaproxy](./managescript/Mhaproxy)
 
-This is the start script for manager haproxy start or stop or restart
+This is the script for manager haproxy start or stop or restart
 
+* [Mredis](./managescript/Mredis)
+
+This is the script for manager redis start or stop or restart
 ***
 ### On [giftscript catalog](./giftscript)
 This script to work Conveniently

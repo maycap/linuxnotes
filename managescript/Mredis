@@ -1,0 +1,126 @@
+#!/bin/bash
+#
+#description:
+#Mredis		This is the script for manager redis start or stop or restart
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: null
+# Should-Start: null
+# version：1.0
+# date:2014-6-19
+### END INFO
+
+
+PROGDIR=/web/redis2.8
+#PROGNAME=redis2.8
+DAEMON=$PROGDIR/src/redis-server
+#CONFIG=$PROGDIR/
+#PIDFILE=$PROGDIR/logs/$PROGNAME.pid
+DESC="redis daemon"
+
+test -x $DAEMON || exit 0
+
+
+start(){
+	echo  -e "Starting $DESC:-p $1"
+	case $1 in 
+	6379)
+		$DAEMON  /web/redis2.8/6379.conf &
+		;;
+	6380)
+		$DAEMON  /web/redis2.8_session/6380.conf &
+		;;
+	6381)
+		$DAEMON  /web/redis2.8_i18n/6381.conf  & 
+		;;
+	6382)
+		$DAEMON  /web/redis2.8_mdm/6382.conf & 
+		;;
+	6383)
+		$DAEMON /web/redis2.8_im/6383.conf &
+		;;
+	all)
+		$DAEMON  /web/redis2.8/6379.conf &
+		$DAEMON  /web/redis2.8_session/6380.conf &
+		$DAEMON  /web/redis2.8_i18n/6381.conf  &
+		$DAEMON  /web/redis2.8_mdm/6382.conf &
+		$DAEMON /web/redis2.8_im/6383.conf &
+		;;
+	*)
+		echo -e "\e[1;31m \t$DESC: -p  $1 NOT exist!\e[0m"
+		;;
+	esac
+}
+
+stop(){
+	echo  "Stopping $DESC:-p $1"
+	if [[ $1 -ne "all" ]];then
+		redispid=`pidstat -r -l | grep redis-server | grep -v grep | grep *:${1} | awk '{print $3}'`
+		if [[ -z ${redispid} ]];then
+			echo -e "\e[1;31m \t$DESC: -p $1 not running!\e[0m"
+		else
+			kill $redispid
+		fi	
+	elif [[ $1 -eq  "all" ]];then
+		allpid=`pidstat -r -l | grep redis-server | grep -v grep | grep *: | awk '{print $3}'`
+		if [[ -z ${allpid} ]];then
+			echo -e "\e[1;31m \t$DESC: not running!\e[0m"
+		else
+			kill `echo $allpid`
+		fi
+	echo -e "\e[1;31m \tUsage:\e[0m \e[1;34m$PROGNAME{start|stop|restart|reload|status} [port|all]\e[0m" >&2
+	fi
+		
+}
+
+restart(){
+	echo  "Restarting $DESC:$1"
+	stop $1
+	sleep 1
+	start $1
+}
+
+status(){
+	echo "Status $DESC:$1"
+	if [[ $1 -ne "all" ]];then
+		ps -ef | grep redis | grep *:${1} | grep -v grep 
+		if [ $? -ne 0 ];then
+			echo -e "\e[1;31m \t$DESC: -p $1 not running!\e[0m"
+		fi
+	elif [[ $1 -eq "all"  ]];then
+		ps -ef | grep redis | grep *: | grep -v grep 
+		if [ $? -ne 0 ];then
+			echo -e "\e[1;31m \t$DESC:  not running!\e[0m"
+		fi
+	fi		
+}
+
+if [ $# -lt 2 ];then
+	echo -e "\t\e[1;32m Mredis is used to manage redis-server.\e[0m"
+	echo -e "\t\e[1;31m Usage:\e[0m \e[1;34m$PROGNAME{start|stop|restart|reload|status} [port|all]\e[0m" >&2
+	exit 1
+fi
+
+case "$1" in
+	status)
+		status $2
+		;;
+	start)
+		start $2
+		exit 0
+		;;
+	stop)
+		stop $2
+		exit 0
+		;;
+	restart|reload)
+		restart $2
+		exit 0
+		;;
+	*)
+	echo -e "\t\e[1;31m Usage:\e[0m \e[1;34m$PROGNAME{start|stop|restart|reload|status} [port|all]\e[0m" >&2
+		exit 1
+		;;
+esac
+
