@@ -19,7 +19,8 @@
 	        ssl_prefer_server_ciphers   on;
 	        ......
 	}
-	由于功能相互依赖，被依赖的应用，location /myapp/ 也要加入ssl配置中，具体可通过https访问应用，chrome查看报错提示，依次添加。
+	由于功能相互依赖，被依赖的应用，location /myapp/ 也要加入ssl配置中。
+	具体可通过https访问应用，chrome查看报错提示，依次添加。
 
 ###自定义证书
 
