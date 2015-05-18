@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 #description:
-#Mredis		This is the script for manager redis start or stop or restart
+#Mredis		This is the script to manage redis start or stop or restart
 #
 #### BEGIN INFO
 # Provides: maycap
