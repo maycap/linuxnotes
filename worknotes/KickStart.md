@@ -73,8 +73,8 @@
 		    # A slightly different configuration for an internal subnet.
 		    subnet 192.168.100.0 netmask 255.255.100.0 {
 		    range 192.168.100.110 192.168.100.120;
-		    option domain-name-servers KangChangWei;
-		    option domain-name "KangChangWei";
+		    # option domain-name-servers yourdomain;
+		    option domain-name "yourdomain";
 		    option routers 192.168.1.1;
 		    default-lease-time 600;
 		    max-lease-time 7200;
@@ -82,6 +82,11 @@
 		    next-server 192.168.100.254;
 		    }
 	
+	在/etc/init.d/dhcpd 默认启动用户是dhcpd，若是启动不了，改成root即可
+	
+		cat /etc/init.d/dhcpd
+		user=root
+		group=root
 
 * ####ks.cfg
 	
@@ -142,3 +147,14 @@
 			%end
 	
 * ####PXE 引导启动即可
+
+***
+
+###感慨：
+这种使用率不高的系统，再次使用时，请确保 xinetd，dhcpd,httpd服务是开启的。然后装机仍是出现问题，请相信过去的成功是真实存在的，然后确认iptables,selinux这两货的存在！
+
+	service iptables stop
+	setenforce 0
+	
+		
+	

@@ -22,6 +22,14 @@ This is notes about EXSI command operation
 
 This is notes about Synchronous SVN code to apache work catalog
 
+* [lvm](./worknotes/lvm.md)
+
+This is notes about a few examples of lvm 
+
+* [hadoop](./worknotes/hadoop.md)
+
+This is notes about hadoop install step
+
 ***
 ###On [managescript catalog](./managescript)
 
