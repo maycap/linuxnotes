@@ -25,9 +25,9 @@
 
 	# cd /etc/nginx
 	# openssl genrsa -des3 -out jaylin.key 1024
-	# openssl req -new -days 3650 -key jaylin.key -out jaylin.csr
+	# openssl req -new -key jaylin.key -out jaylin.csr
 	# cp jaylin.key jaylin.key.orgi
 	# openssl rsa -in jaylin.key.orgi -out jaylin.key
-	# openssl x509 -req -days 365 -in jaylin.csr -signkey jaylin.key -out jaylin.crt
+	# openssl x509 -req -days 3650 -in jaylin.csr -signkey jaylin.key -out jaylin.crt
 
 	采用简单的方式可以生成密钥对，却避免不了重启nginx需要手动输入必须设置的密码，不利于自动化启动与管理。
