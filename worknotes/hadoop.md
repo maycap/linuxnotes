@@ -28,6 +28,14 @@
 	export CLASSPATH=.:$CALSSPATH:$JAVA_HOME/lib:$JRE_HOME/lib
 	export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 
+####添加hosts
+	vim /etc/hosts
+	192.168.100.100 HMaster
+	192.168.100.101 HSlave1
+	192.168.100.102 HSlave2
+	192.168.100.103 HSlave3
+	192.168.100.104 HClient
+
 ####配置hadoop
 hadoop默认配置文件在hadoop-2.6/etc/hadoop/下
 
