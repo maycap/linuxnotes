@@ -113,7 +113,8 @@
 			# System keyboard
 			keyboard us
 			# System language
-			lang zh_CN
+			# lang zh_CN
+			lang en_US.UTF-8
 			# SELinux configuration
 			selinux --disabled
 			# Do not configure the X Window System
