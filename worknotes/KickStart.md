@@ -103,8 +103,9 @@
 			url --url=http://192.168.100.254/
 			# Root password
 			rootpw  --iscrypted $6$gJz9rJzgVM0h7TvX$LHJz06m/P6CfEjQifcrSOKy6UDc55RvfRzebSmn7RCeUmJvZ4FLR.oZWsdXqkC3VPgJ9OyW2rzoEbMdyT8t/X.
-			# Network information
-			network  --bootproto=dhcp --device=eth0 --onboot=on
+			# Network information,not point interface is good chioce
+			#network  --bootproto=dhcp --device=eth0 --onboot=on
+			network  --bootproto=dhcp --onboot=on
 			# System authorization information
 			auth  --useshadow  --passalgo=md5
 			# Use text mode install
