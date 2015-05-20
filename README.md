@@ -34,6 +34,10 @@ This is notes about hadoop install step
 
 This is notes about use ssl on nginx 
 
+* [python](./worknotes/python.md)
+
+This is notes about python2.6 -> python2.7 
+
 ***
 ###On [managescript catalog](./managescript)
 
