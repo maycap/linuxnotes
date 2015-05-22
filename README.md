@@ -38,6 +38,10 @@ This is notes about use ssl on nginx
 
 This is notes about python2.6 -> python2.7 
 
+* [TroubleShoot](./worknotes/TroubleShoot.md)
+
+This is ntoes about some troubleshoot of work
+
 ***
 ###On [managescript catalog](./managescript)
 
