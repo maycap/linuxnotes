@@ -10,7 +10,11 @@ centos6.5默认是python2.6.6，支持一些内容，需要升级
 python官网下载地址是：https://www.python.org/downloads，参考实例：
 
 	yum install -y zlib zlib-devel openssl   openssl-devel
-	#来个倒叙，否则惨不忍睹，又要重新编译
+	#来个倒叙，否则惨不忍睹，又要重新编译--pip
+
+	yum install -y readline readline-devel sqlite3
+	#安装ipython需要的插件
+	
 	
 	wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tar.xz
 	tar xvf Python-2.7.9.tar.xz
@@ -72,5 +76,21 @@ troubleshoot:
 	wget https://pypi.python.org/packages/source/p/pip/pip-6.1.1.tar.gz --no-check-certificate
 	tar zxvf pip-6.1.1.tar.gz
 	python setup.py install
+
+###安装ipython
+为了调试方便，ipython是个不错的测试工具，若是提示warnning 警告，需要yum install，然后重新编译python2.7.9。
+	
+	pip install ipython
+
+
+
+###salt
+	#安装pyzmq报错，提示安装
+	gcc: error trying to exec 'cc1plus': execvp
+	yum install gcc-c++
+
+	ImportError: No module named zmq
+	pip install pyzmq
+	
 
 	
