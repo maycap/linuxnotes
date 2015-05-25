@@ -13,7 +13,8 @@
 	步骤 2:tar -xvf javasqlite-20130214.tar.gz
 	步骤 3:./configure --prefix=/opt/sqlite
 	步骤 4:make && make install
-	步骤 5:cp /opt/sqlite/lib/* /sbin/lib64/
+	步骤 5:cp /opt/sqlite/lib/* /sbin/lib64/ -a
+		/bin/cp /opt/sqlite/lib/* /usr/lib/ -a
 
 >./configure 报错找不到 try --with-sqlite/--with-sqlite3
 
