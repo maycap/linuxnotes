@@ -38,7 +38,7 @@ This is notes about use ssl on nginx
 
 This is notes about python2.6 -> python2.7 
 
-* [clustershell](./worknots/clustershell.md)
+* [clustershell](./worknotes/clustershell.md)
 
 This is notes about simple introduction of clustershell
 
