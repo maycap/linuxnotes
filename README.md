@@ -42,6 +42,10 @@ This is notes about python2.6 -> python2.7
 
 This is notes about simple introduction of clustershell
 
+* [cacti](./worknotes/cacti.md)
+
+This is notes about cacti some troubleshoot
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work
