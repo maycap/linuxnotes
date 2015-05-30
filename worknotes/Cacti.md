@@ -156,7 +156,8 @@ spine替换cmd.php
 	service snmpd restart
 	注意selinux,iptables，是否允许
 
-	批量工具：[clustershell](./clustershell.md)
+批量工具推荐：[clustershell](./clustershell.md)
+
 	clush -b -w @app yum -y install net-snmp
 	clush -b -w @app -c /etc/snmp/snmpd.conf --dest=/etc/snmp
 	clush -b -w @app chkconfig snmpd on
