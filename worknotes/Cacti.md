@@ -44,18 +44,22 @@ Cacti 在英文中的意思是仙人掌的意思，Cacti是一套基于PHP、MyS
 
 ###配置思路简单总结###
 	1.下载模板，导入模板和配置文件
-	2.console->Devices->Add  
-		Host Template ->ucd/net SNMP Host
-	Graph Template Name:
-		ucd/net - CPU Usage
-		ucd/net - Load Average
-		ucd/net - Memory Usage
-	Data Query Name:
-		SNMP - Get Disk IO
-		SNMP - Get Mounted Partitions
-		SNMP - Interface Statistics
 
-	3.New Graphs->Host: app13	
+	2.Host Templates->add->centos_1
+		Associated Graph Templates
+		0) ucd/net - CPU Usage	Delete
+		0) ucd/net - Load Average	Delete
+		0) ucd/net - Memory Usage
+
+		Associated Data Queries
+		0) SNMP - Get Disk IO	Delete
+		0) SNMP - Get Mounted Partitions	Delete
+		0) SNMP - Interface Statistics
+
+	3.console->Devices->Add  
+		Host Template ->centos_1
+
+	4.New Graphs->Host: app13	
 		Graph Template Name : all 
 		Data Query [SNMP - Get Disk IO]
 			Index -- dm-0 代表逻辑分区，ll /dev/mapper/** 查看
@@ -64,7 +68,7 @@ Cacti 在英文中的意思是仙人掌的意思，Cacti是一套基于PHP、MyS
 		Data Query [SNMP - Interface Statistics]
 			Index -- 选择外网网卡，graph type：In/Out Bits (64-bit Counters)
 
-	4.Graph Trees->Default Tree->Add
+	5.Graph Trees->Default Tree->Add
 		Parent Item -- 父目录
 		Tree Item Type -- Header:目录，Host:节点
 
