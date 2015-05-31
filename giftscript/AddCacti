@@ -1,7 +1,7 @@
 #!/bin/sh
 #
 #description:
-#Tuserload	this is the script to Batch add cacti monitor nodes
+#AddCacti	this is the script to Batch add cacti monitor nodes
 #
 #### BEGIN INFO
 # Provides: maycap

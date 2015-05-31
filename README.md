@@ -82,6 +82,10 @@ This is test net  speed kb/s or packet/s
 
 This is the check script for cheking loading user to mail
 
+* [AddCacti](./giftscript/AddCacti)
+
+This is the script to Batch add cacti monitor nodes
+
 ***
 ###Some words###
 Linux note by [maycap](https://github.com/maycap),Welcome advice
