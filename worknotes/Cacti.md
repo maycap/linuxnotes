@@ -72,6 +72,33 @@ Cacti 在英文中的意思是仙人掌的意思，Cacti是一套基于PHP、MyS
 		Parent Item -- 父目录
 		Tree Item Type -- Header:目录，Host:节点
 
+
+熟悉流程后，使用脚本批量添加，脚本为 [AddCacti](../giftscript/AddCacti) 
+列表名字为：cacti.list，内容如下：
+
+	[root@cacti bin]# cat cacti.list 
+	vm14-192.168.100.14
+	vm15-192.168.100.15
+	vm16-192.168.100.16
+	...
+
+	[root@cacti bin]# ./add_cacti.sh 
+	Now add device vm14 ...
+	Adding vm14 (192.168.100.14) as "centos_1" using SNMP v2 with community "public"
+	Success - new device-id: (34)
+	Now add graphs ...
+	Graph Added - graph-id: (192) - data-source-ids: (339, 339)
+	Graph Added - graph-id: (193) - data-source-ids: (340, 341, 342)
+	Graph Added - graph-id: (194) - data-source-ids: (343, 344, 345)
+	Graph Added - graph-id: (195) - data-source-ids: (346, 347, 348)
+	Graph Added - graph-id: (196) - data-source-ids: (349, 349)
+	Graph Added - graph-id: (197) - data-source-ids: (350, 350)
+	Graph Added - graph-id: (198) - data-source-ids: (351, 351)
+	Graph Added - graph-id: (199) - data-source-ids: (352, 352)
+	Added Node node-id: (31)
+	Now add device vm15 ...
+
+
 	
 ###TROUBLESHOOT###
 初始登录失败

@@ -1,0 +1,76 @@
+#!/bin/sh
+#
+#description:
+#Tuserload	this is the script to Batch add cacti monitor nodes
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: cacti
+# Should-Start: null
+# version：1.0
+# date:2015-5-31 
+### END INFO
+
+device=/web/vhosts/cacti/cli/add_device.php
+graphs=/web/vhosts/cacti/cli/add_graphs.php
+tree=/web/vhosts/cacti/cli/add_tree.php
+
+LIST=/root/bin/cacti.list
+
+#Console -> Host Tempaltes -- ID
+Host_Template=9
+Community=public
+Graph_Tree='Default Tree'
+Parent_Node='vmhost'
+
+for i in `cat $LIST`
+do
+	hostname=${i%-*}
+	ip=${i#*-}
+	echo "Now add device $hostname ..."
+	php $device --description=$hostname --ip=$ip --template=$Host_Template --community=$Community
+	
+	echo "Now add graphs ..."
+	
+	#add interface 64 bits 
+	HOST_ID=`php $graphs --list-hosts | grep $ip | awk '{print $1}'`
+	Graph_Template=`php $graphs --list-graph-templates | grep 'Interface - Traffic (bits/sec)' | awk '{print $1}'`
+	Snmp_query=`php $graphs --list-snmp-queries | grep 'SNMP - Interface Statistics' | awk '{print $1}'`
+	Snmp_query_type=`php $graphs --list-query-types --snmp-query-id=$Snmp_query | grep 'Bits (64-bit Counters)' | awk '{print $1}'`
+	php $graphs --host-id=$HOST_ID --graph-type=ds --graph-template-id=$Graph_Template --snmp-query-id=$Snmp_query --snmp-query-type-id=$Snmp_query_type --snmp-field=ifDescr --snmp-value="eth0"
+	#php $graphs --host-id=$HOST_ID --graph-type=ds --graph-template-id=$Graph_Template --snmp-query-id=$Snmp_query --snmp-query-type-id=$Snmp_query_type --snmp-field=ifType --snmp-value="ethernetCsmacd(6)"
+
+	#add ucd/net - CPU Usage - Load Average  - Memory Usage
+	Graph_Template=`php $graphs --list-graph-templates | grep 'ucd/net - CPU Usage' | awk '{print $1}'`
+	php $graphs --host-id=$HOST_ID --graph-type=cg --graph-template-id=$Graph_Template
+	Graph_Template=`php $graphs --list-graph-templates | grep 'ucd/net - Load Average' | awk '{print $1}'`
+	php $graphs --host-id=$HOST_ID --graph-type=cg --graph-template-id=$Graph_Template
+	Graph_Template=`php $graphs --list-graph-templates | grep 'ucd/net - Memory Usage' | awk '{print $1}'`
+	php $graphs --host-id=$HOST_ID --graph-type=cg --graph-template-id=$Graph_Template
+
+	#add Host MIB - Available Disk Space
+	Graph_Template=`php $graphs --list-graph-templates | grep 'Host MIB - Available Disk Space' | awk '{print $1}'`
+	Snmp_query=`php $graphs --list-snmp-queries | grep 'SNMP - Get Mounted Partitions' | awk '{print $1}'`
+	Snmp_query_type=`php $graphs --list-query-types --snmp-query-id=$Snmp_query | grep 'Available Disk Space' | awk '{print $1}'`
+	php $graphs --host-id=$HOST_ID --graph-type=ds --graph-template-id=$Graph_Template --snmp-query-id=$Snmp_query --snmp-query-type-id=$Snmp_query_type --snmp-field=hrStorageDescr  --snmp-value="/"
+	php $graphs --host-id=$HOST_ID --graph-type=ds --graph-template-id=$Graph_Template --snmp-query-id=$Snmp_query --snmp-query-type-id=$Snmp_query_type --snmp-field=hrStorageDescr  --snmp-value="/web"
+	php $graphs --host-id=$HOST_ID --graph-type=ds --graph-template-id=$Graph_Template --snmp-query-id=$Snmp_query --snmp-query-type-id=$Snmp_query_type --snmp-field=hrStorageDescr  --snmp-value="Swap space"
+
+	#add Host MIB - Disk IO - Bytes per Second
+	Graph_Template=`php $graphs --list-graph-templates | grep 'Host MIB - Disk IO - Bytes per Second' | awk '{print $1}'`
+	Snmp_query=`php $graphs --list-snmp-queries | grep 'SNMP - Get Disk IO' | awk '{print $1}'`
+	Snmp_query_type=`php $graphs --list-query-types --snmp-query-id=$Snmp_query | grep 'Host MIB - Disk IO - Bytes per second' | awk '{print $1}'`
+	php $graphs --host-id=$HOST_ID --graph-type=ds --graph-template-id=$Graph_Template --snmp-query-id=$Snmp_query --snmp-query-type-id=$Snmp_query_type --snmp-field=hrDiskIODescr  --snmp-value="dm-0"
+
+	#add tree
+	Tree_id=`php $tree --list-trees | grep "$Graph_Tree" | awk '{print $1}'`
+	Parent_id=`php $tree --list-nodes --tree-id=$Tree_id | grep "$Parent_Node" | awk '{print $2}'`
+	php $tree  --host-id=$HOST_ID --type=node --node-type=host --tree-id=$Tree_id --parent-node=$Parent_id
+done
+
+
+
+# cat cacti.list
+# vm14-192.168.100.14
+# vm15-192.168.100.15
+# vm16-192.168.100.16
