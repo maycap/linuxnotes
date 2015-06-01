@@ -46,6 +46,10 @@ This is notes about simple introduction of clustershell
 
 This is notes about cacti some troubleshoot
 
+* [slony](./worknotes/slony.md)
+
+This is notes about slony simple use
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work
@@ -85,6 +89,10 @@ This is the check script for cheking loading user to mail
 * [AddCacti](./giftscript/AddCacti)
 
 This is the script to Batch add cacti monitor nodes
+
+* [init_schema](./giftscript/init_schema)
+
+This is slony copy schema and auto configure slony set shell script
 
 ***
 ###Some words###

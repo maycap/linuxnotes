@@ -1,0 +1,385 @@
+#!/bin/sh
+#
+#description:
+#init_schema	this is slony copy schema and auto configure slony set shell script.
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: slony cluster is running
+# Should-Start: null
+# version：1.0
+# date:2014-11-25 
+### END INFO
+
+#this is CONSTANT
+CONFIG='./cluster.config'
+PSQL='/usr/bin/psql'
+SLONIK='/opt/pgsql/bin/slonik'
+SYN=0
+SQLTMP=/tmp/sql.$$
+COMMENT_DATE="`date +"%Y/%m/%d/%T"`"
+
+#check psql and slonik 
+if [[ -f $PSQL || -L $PSQL ]];then
+	:
+else
+	PSQL=`which psql`  2>/dev/null 1>/dev/null
+	rc=$?
+	if [ $rc -ne 0 ];then
+		echo "Postgresql psql is not avaliable! Please check!"
+		exit $rc
+	else
+		:
+	fi
+fi
+
+if [[ -f $SLONIK || -L $SLONIK ]];then
+	:
+else
+	SLONIK=`which slonik` 2>/dev/null 1>/dev/null
+	rc=$?
+	if [ $rc -ne 0 ];then
+		echo "Slony slonik is not avaliable! Please check!"
+		exit $rc
+	else
+		:
+	fi
+fi
+
+
+#Above is  Functions
+
+#check config exist and check config format
+check_config(){
+	CLUSTERTMP=$1
+	CONFIGTMP=$2
+	if [ -s $CONFIG ];then
+		grep $CLUSTERTMP $CONFIGTMP 2>&1 >/dev/null
+		if [ $? -eq 0 ];then
+			return 0;
+		else
+			echo "No this cluster \"$CLUSTERTMP\" on config  $CONFIGTMP!"
+			return 2;
+		fi	
+	
+	else
+		echo "Don't find config file!"
+		return 1;
+	fi
+}
+
+#check -c select configure file is exist
+check_exist(){
+	CONFIGTMP="$1"
+	if [ -s "$CONFIGTMP" ];then
+		return 0
+	else
+		return 1
+	fi
+}
+
+
+#check -f select sql file is exist
+check_sql(){
+	SQL=$1
+	if [ -f $SQL ];then
+		return 0;
+	else
+		echo "SQL file not exist!"
+		return 1;
+	fi
+}
+
+
+#use psql to excute sql
+excute_sql(){
+	
+	host=$1
+	port=$2
+	db=$3
+	sql=$4
+	schemaname=$5
+
+	#modify sql to excute sql on selected schema
+	cp $sql $SQLTMP
+	sed -i 1i"SET search_path = \"$schemaname\", pg_catalog;" $SQLTMP
+	sed -i 1a"create schema \"$schemaname\";" $SQLTMP
+	
+	echo "Now create schema on $host $port $db..."
+	$PSQL -U postgres -h $host -p $port -d $db -f "$SQLTMP" 2>/dev/null 1>/dev/null
+	if [ $? -ne 0 ];then
+		echo "$host:$port:$db is bad! Please check database!"
+		exit 2
+	else
+		echo "$host:$port:$db is ok!"
+	fi
+	rm -fr $SQLTMP
+}
+
+#Get all tables name in selected schema on selected database. Use sql query!
+Get_all_tables(){
+	host=$1
+	port=$2
+	dbname=$3
+	schema=$4
+	$PSQL -U $PGUSER  -h $host -p $port -d $dbname -A -t -c "select tablename from pg_tables where schemaname = '$schema'"
+}
+
+
+#this is check parameters
+if [ "$#" -eq 0 ];then
+	echo "Usage:`basename $0` -n [cluster] -f [sql] -S [schemaname] -m \"comment\" "
+	exit 1
+	
+else
+	if [ "${1##-}" = "$1" ];then
+		echo "Parameters ERROR!"
+		echo "e.g. `basename $0` -n [cluster] -f [sql] -S [schemaname] -m \"comment\" "
+		exit 1
+	fi
+
+	if [ "$1" = "-h" ] ;then	
+		echo -e "`basename $0` is the config slony script ,copy schema and auto config.\n"
+		echo -e "Usage:"
+		echo -e "\t`basename $0` [OPTION]... "
+		echo -e "\tExample: -n [cluster] -f [sql] -S [schemaname] -m \"comment\" \n"
+		echo -e "General options:"
+		echo -e "\t-h request for help."
+		echo -e "\t-n select cluster name."
+		echo -e "\t-S new schema name."
+		echo -e "\t-f select sql."
+		echo -e "\t-t new setid."
+		echo -e "\t-T new table id."
+		echo -e "\t-m this is comment."
+		echo -e "\t-c select your configure file(default $CONFIG)."
+		echo -e "\t-v look version."
+		echo -e "\t-s syn (0|all,1|master,2|slave) DDL.\n"
+		echo -e "Report bugs to <gencat@21tb.com>."
+		exit 0
+	fi
+	
+	if [ "$1" = "-v" ];then
+		echo "version 1.2"
+		echo "Create by Maycap."
+		echo "Thanks for used."
+		exit 0
+	fi
+
+
+	tag=`expr $# % 2`
+	if [ $tag -ne 0 ];then
+		echo "Parameters Error or lost! Please retry!"
+		exit 2
+	fi
+	
+	while [ "$1" != "${1##-}" ];do
+		case $1 in
+		'')	
+			echo "Parameters ERROR!"
+			echo e.g. `basename $0` -n [cluster] -f [sql]
+			exit 3;;
+		-n)
+			check_config $2 $CONFIG
+			rc=$?
+			if [ $rc -ne 0 ];then
+				exit $rc
+			fi	 
+			CLUSTER=$2
+			shift 2
+			;;
+		-f)
+			check_sql $2
+			rc=$?
+			if [ $rc -ne 0 ];then
+				exit $rc
+			fi
+			SQL=$2
+			shift 2
+			;;
+		-s)
+			SYN=$2
+			shift 2
+			;;
+		-t)
+			SETID=$2
+			shift 2	
+			;;
+		-T)
+			TABLEID=$2
+			shift 2
+			;;
+		-m)
+			COMMENT="$2"
+			shift 2
+			;;
+		-c)
+			check_exist "$2"
+			rc=$?
+			if [ $rc -ne 0 ];then
+				echo "Your configure file not exist!Please check or use default!"
+				exit $rc
+			fi
+			CONFIG="$2"
+			shift 2
+			;;
+		-S)
+			SCHEMANAME=$2
+			shift 2
+			;;
+		*)
+			echo "Parameters ERROR!"
+			echo e.g. `basename $0` -n [cluster] -f [sql] -S [schemaname]
+			exit 3;;
+		esac
+	done
+fi
+
+#check clustername and sql and schemaname all not null.
+if [[ -z $CLUSTER  || -z $SQL || -z $SCHEMANAME ]];then
+	echo "Lost parameter!"
+	echo e.g. `basename $0` -n [cluster] -f [sql] -S [schemaname] -t [setid] -T [tableid]
+	exit 1
+fi
+
+
+#Parse the config file
+masterhost=`grep $CLUSTER $CONFIG |awk -F':' '/masterhost/{print $2}'`
+masterport=`grep $CLUSTER $CONFIG |awk -F':' '/masterport/{print $2}'`
+masterdbname=`grep $CLUSTER $CONFIG |awk -F':' '/masterdbname/{print $2}'`
+masternode=`grep $CLUSTER $CONFIG |awk -F':' '/masternode/{print $2}'`
+slavehost=(`grep $CLUSTER $CONFIG |awk -F':' '/slavehost/{print $2}'|tr ',' ' '`)
+slaveport=(`grep $CLUSTER $CONFIG |awk -F':' '/slaveport/{print $2}'|tr ',' ' '`)
+slavedbname=(`grep $CLUSTER $CONFIG |awk -F':' '/slavedbname/{print $2}'|tr ',' ' '`)
+slavenode=(`grep $CLUSTER $CONFIG |awk -F':' '/slavenode/{print $2}'|tr ',' ' '`)
+
+#check schemaname is avaliable
+schemaflag=`$PSQL -h $masterhost -p $masterport -d $masterdbname -A -t -c " select * from pg_namespace where nspname = '$SCHEMANAME'"`
+if [[ -z $schemaflag ]];then
+	:
+else
+	echo "The schema name ($SCHEMANAME) is used!"
+	exit 1
+fi
+
+
+#check user specify setid and tableid is avaliable
+if [ -z $SETID ];then
+	MAXSETID=`$PSQL -h $masterhost -p $masterport -d $masterdbname -A -t -c "select max(set_id) from _$CLUSTER.sl_set"`
+	SETID=${SETID:-`expr $MAXSETID + 1`}
+else
+	setflag=`$PSQL -h $masterhost -p $masterport -d $masterdbname -A -t -c "select * from _$CLUSTER.sl_set where set_id = $SETID"`
+	if [[ -z $setflag ]];then
+		:
+	else
+		echo "The set id ($SETID) is used!"
+		exit 1
+	fi
+fi
+
+if [ -z $TABLEID ];then
+	MAXTABLEID=`$PSQL -h $masterhost -p $masterport -d $masterdbname -A -t -c "select max(tab_id) from _$CLUSTER.sl_table"`
+	TABLEID=${TABLEID:-`expr $MAXTABLEID + 1`}
+else
+	tabflag=`$PSQL -h $masterhost -p $masterport -d $masterdbname -A -t -c "select * from _$CLUSTER.sl_table where tab_id = $TABLEID"`
+	if [[ -z $tabflag ]];then
+		:
+	else
+		echo "The table id ($TABLEID) is used!"
+		exit 1
+	fi
+fi
+
+
+#select -s to excute specified database
+case $SYN in
+0|all)
+	excute_sql $masterhost $masterport $masterdbname $SQL $SCHEMANAME
+	for i in `seq ${#slavehost[@]}`
+	do
+		pos=`expr $i - 1`
+		excute_sql ${slavehost[$pos]} ${slaveport[$pos]} ${slavedbname[$pos]} $SQL $SCHEMANAME
+	done
+	#exit 0
+	;;
+1|master)
+	excute_sql $masterhost $masterport $masterdbname $SQL $SCHEMANAME
+	#exit 0
+	;;
+2|slaver)
+	for i in `seq ${#slavehost[@]}`
+	do
+		pos=`expr $i - 1`
+		excute_sql ${slavehost[$pos]} ${slaveport[$pos]} ${slavedbname[$pos]} $SQL $SCHEMANAME
+	done
+	#exit 0	
+	;;
+*)
+	echo "Error parameter!"
+	exit 1
+esac
+
+#Create slony script shell
+echo "Now config slony...."
+
+#Get all tables name in selected schema on selected database. Use shell!
+tableslist=(`awk '/CREATE TABLE/{print $3}' $SQL | awk -F '(' '{print $1}'`) 
+
+
+#echo some prompt
+echo "Slony Cluster $CLUSTER setid will be $SETID."
+echo "New add table will be $TABLEID."
+
+#this is slony script shell
+ADDSHELL=ADD_SET_$SCHEMANAME.sh
+>$ADDSHELL
+
+#Create ....
+echo '#!/bin/sh' >>$ADDSHELL
+echo "$SLONIK<<_EOF_" >>$ADDSHELL
+echo "cluster name = $CLUSTER;" >>$ADDSHELL
+
+#Query master conninfo and write script
+master_conninfo=`$PSQL -h $masterhost -p $masterport -d $masterdbname -A -t -c "select pa_conninfo from _$CLUSTER.sl_path where pa_server=$masternode"`
+echo "node $masternode admin conninfo = '$master_conninfo';" >>$ADDSHELL
+
+#Query slave conninfo and write script
+Cnode=${#slavenode[@]}
+for i in `seq $Cnode`
+do
+	pos=`expr $i - 1`
+	slave_conninfo=`$PSQL -h $masterhost  -p $masterport -d $masterdbname -A -t -c "select pa_conninfo from _$CLUSTER.sl_path where pa_server=${slavenode[$pos]}"`
+	echo "node $slavenode admin conninfo = '$slave_conninfo';" >>$ADDSHELL
+done
+
+#Create set id for new schema set
+echo "create set ( id = $SETID,origin=$masternode,comment='$COMMENT_DATE $COMMENT');" >>$ADDSHELL
+
+#Add table to slony script
+count=${#tableslist[@]}
+for i in `seq $count`
+do
+	pos=`expr $i - 1`
+	ID=`expr $TABLEID + $i`
+	con="set add table ( set id = $SETID,origin = $masternode,id=$ID,fully qualified name = '$SCHEMANAME.${tableslist[$pos]}',comment='$COMMENT_DATE $COMMENT');"
+	echo "$con" >>$ADDSHELL
+done
+
+#subscibe set to start replication of Slony-I set
+for i in `seq $Cnode`
+do
+	pos=`expr $i - 1`
+	echo "subscribe set (id=$SETID,provider=$masternode,receiver=${slavenode[$pos]});" >>$ADDSHELL
+done
+
+echo '_EOF_' >>$ADDSHELL
+
+#excute slony script 
+echo "Now init new set..."
+/bin/sh $ADDSHELL
+if [ $? -eq 0 ];then
+	echo "All Done!"
+else
+	echo "Please call manager!"
+fi
+
+
