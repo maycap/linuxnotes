@@ -50,6 +50,10 @@ This is notes about cacti some troubleshoot
 
 This is notes about slony simple use
 
+* [nagios](./worknotes/nagios.md)
+
+This is notes about nagios simple use
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work
