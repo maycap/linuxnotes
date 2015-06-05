@@ -50,3 +50,18 @@
 	restart tomcat 
 
 由于linux是文件系统，可以直接复制使用，另外一台服务器若要使用，直接scp过去即可。
+
+***
+###执行sh编码问题###
+
+	: No such file or direct﻿orybin/sh
+	: command not founde 2: 
+
+	vim 
+	set ff=unix
+
+	line 1: ﻿#!/bin/bash: No such file or directory
+
+	touch test.sh	
+	cat XXXX  
+	除去第一行，重新复制到新建脚本中即可

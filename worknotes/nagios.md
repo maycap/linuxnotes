@@ -348,3 +348,21 @@ Nagios是一款用于系统和网络监控的应用程序。它可以在你设�
 	
 	echo "Now start nrpe..."
 	/usr/local/nagios/bin/nrpe -c /usr/local/nagios/etc/nrpe.cfg -d
+
+###插件###
+
+>check_memory.pl
+
+	检测应用占用的内存，源码地址为：
+	http://www.thorko.de/git/public/plain/perl/master/v1.0/check_memory.pl
+	
+	#./check_memory.pl -w 100000 -c 200000 -p httpd 
+	OK: httpd, memory: 92288 KB | memory: 92288 KB
+
+>check_mem.sh
+
+	检测系统内存使用情况，源码地址为：
+	https://exchange.nagios.org/components/com_mtree/attachment.php?link_id=4174&cf_id=24
+
+	#./check_mem -w 80 -c 90 
+	
