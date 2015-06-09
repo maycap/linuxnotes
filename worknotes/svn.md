@@ -84,3 +84,18 @@
 >删lock
 
 	svn propdel svn:sync-lock --revprop -r 0 file:///web/svnbak/repos
+
+>httpd -- subversion.conf
+
+	<Location /svn/ >
+		DAV svn
+		SVNParentPath /web/svnbak
+		SVNListParentPath on
+		AuthType Basic
+		AuthName "Authorization Realm"
+		AuthUserFile /web/svnbak/repos/conf/passwd
+		AuthzSVNAccessFile  /web/svnbak/repos/conf/authz
+		Require valid-user
+	</Location>
+
+建议使用 /svn/ 作为基目录，repos为父目录，惨不忍睹
