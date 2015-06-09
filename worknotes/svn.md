@@ -48,3 +48,39 @@
 		mount -t nfs 192.168.1.200:/web/php_sys_svn /web/php_sys_svn
 		ln -s /web/php_sys_svn **(apache 家目录）
 	网页访问确认即可。
+
+
+###备份###
+
+>环境
+
+	主机：192.168.1.200
+	从机：192.168.1.201
+
+>备份机前期操作
+
+	mkdir -p /web/svnbak/repos
+	svnadmin create /web/svnbak/repos
+	
+	cd /web/svnbak/repos/hooks
+	cp pre-revprop-change.tmpl pre-revprop-change
+	chmod 755 pre-revprop-change
+
+	#修改pre-revprop-change内容
+	echo “Changing revision properties other than svn:log is prohibited” >&2
+	exit 0（1修改为0）
+	
+> 初始化
+
+	svnsync init file:///web/svnbak/repos http://192.168.1.200/svn/repos --username test --password test
+	
+	会出现以下信息：
+	Copied properties for revision 0.
+
+>同步文件
+
+	svnsync sync file:///web/svnbak/repos
+
+>删lock
+
+	svn propdel svn:sync-lock --revprop -r 0 file:///web/svnbak/repos

@@ -366,3 +366,42 @@ Nagios是一款用于系统和网络监控的应用程序。它可以在你设�
 
 	#./check_mem -w 80 -c 90 
 	
+
+###监控windows###
+
+nscp是windows下nagios监控client的一个合集。其包含check plugins 、check_nt、check_nrpe 、nsca client 、wmi checks 。一般需要的监测项基本都包含在内了。下载地址 http://sourceforge.net/projects/nscplus/files/nscplus/
+
+>默认安装路径 C:\Program Files\NSClient++ ，配置文件nsclient.ini
+
+	[/modules]
+	CheckDisk = 1
+	CheckEventLog = 1
+	CheckExternalScripts = 1
+	CheckNSCP = 1
+	CheckHelpers = 1
+	CheckSystem = 1
+	NRPEServer = 1
+	NSCAClient = 1
+	NSClientServer = 1
+	; Undocumented section
+	[/settings/default]
+	; ALLOWED HOSTS - A comaseparated list of allowed hosts. You can use netmasks (/ syntax) or * to create ranges.
+	allowed hosts = 192.168.8.200
+	[/modules]
+
+>启动前设置，如果选择了其他插件，除了check_nt，则需要
+
+services.msc --> NSClient++ 属性--> 登录 ---> 允许服务与桌面交互 --> 确定 
+
+>检测方式
+
+	./check_nt -H 192.168.1.113 -p 12489 -v UPTIME
+	System Uptime - 22 day(s) 2 hour(s) 8 minute(s) |uptime=31808
+
+	./check_nrpe -H 192.168.1.113
+	I (0,4,1,90 2013-02-04) seem to be doing fine...
+
+>客户机检测
+
+	nestat -ano|findstr 5666
+	nestat -ano|findstr 12489
