@@ -87,6 +87,8 @@
 
 >httpd -- subversion.conf
 
+	#yum install httpd subversion mod_dav_svn
+
 	<Location /svn/ >
 		DAV svn
 		SVNParentPath /web/svnbak
@@ -99,3 +101,47 @@
 	</Location>
 
 建议使用 /svn/ 作为基目录，repos为父目录，惨不忍睹
+
+>主动钩子同步
+
+为了同时同步，想要在主服务器上使用钩子，备份服务器必须可以远程访问。采用传统的apache模式，很容易做到。切记账户分清，只有同步账户可写，其余都是只读。
+
+	vim post-commit
+	usr/bin/svnsync sync http://192.168.100.14/svn/repos --username=user  --password=passwd  2>>/tmp/svnsync.log
+
+
+
+>bug
+
+第二天过来磁盘满了，原始svn才3.8G，svnbak占用了173G,重新sync 报错如下
+
+	svnsync: OPTIONS of 'http://192.168.1.200/svn/repos': 200 OK 
+解释为不存在，修改源httpd--- /svn/  -- ，重新开始，报错为
+
+	svn: E130003: The OPTIONS response contains invalid XML (200 OK)	
+查看源服务器，得知原始路径为8000，使用的地址为转发地址，可能导致回环，重新测试
+
+	mkdir /opt/svn
+	svnadmin create /opt/svn/repos
+	svnsync init file:///opt/svn/repos/ http://192.168.1.200:8000/svn/repos
+	svnsync sync file:///opt/svn/repos/
+
+问题得以解决
+
+
+
+***
+###源码安装最新版###
+yum虽然方便，版本总是落后，而且莫名的bug也不好理解，先更新到最新版试试。官网下载地址 http://subversion.apache.org/download/ ，下载不了，请切换 Mirror。新版依赖serf,官网地址https://code.google.com/p/serf/
+
+	wget http://apache.dataguru.cn/subversion/subversion-1.8.13.tar.bz2
+	sha1sum subversion-1.8.13.tar.bz2   ---肉眼看下，对比下
+
+	https://code.google.com/p/serf/
+	下载丢进 subversion-1.8.13/temp 即可
+
+	cd  subversion-1.8.13
+	./get-deps.sh   --安装依赖
+	./configure --prefix=/usr/local/subversion --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr --enable-mod-activation --with-apache-libexecdir=/usr/local/httpd/modules --with-apxs=/usr/local/httpd/bin/apxs --with-serf=/usr/local/serf
+	./make && make install
+
