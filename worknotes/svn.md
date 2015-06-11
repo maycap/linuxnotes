@@ -106,6 +106,8 @@
 
 为了同时同步，想要在主服务器上使用钩子，备份服务器必须可以远程访问。采用传统的apache模式，很容易做到。切记账户分清，只有同步账户可写，其余都是只读。
 
+	#前提 先手动执行下，存下主机密码
+
 	vim post-commit
 	usr/bin/svnsync sync http://192.168.100.14/svn/repos --username=user  --password=passwd  2>>/tmp/svnsync.log
 
