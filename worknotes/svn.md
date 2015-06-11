@@ -144,6 +144,22 @@ yum虽然方便，版本总是落后，而且莫名的bug也不好理解，先�
 
 	cd  subversion-1.8.13
 	./get-deps.sh   --安装依赖
-	./configure --prefix=/usr/local/subversion --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr --enable-mod-activation --with-apache-libexecdir=/usr/local/httpd/modules --with-apxs=/usr/local/httpd/bin/apxs --with-serf=/usr/local/serf
+	./configure --prefix=/usr/local/subversion --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr --enable-mod-activation --with-apache-libexecdir=/usr/local/httpd/modules --with-apxs=/usr/sbin/apxs --with-serf=/usr/local/serf
 	./make && make install
 
+###单独编译mod\_dav\_svn###
+>需要安装httpd-devel
+
+	yum install httpd-devel
+
+>解压编译
+
+	./configure --with-apxs=/usr/sbin/apxs
+	make && make install
+
+>替换
+
+	到/usr/local/libexec，将mod_svn_dav.so和mod_authz_svn.so复制到/etc/httpd/modules/下。
+	确认apache配置文件中有如下两行：
+	LoadModule dav_svn_module modules/mod_dav_svn.so
+	LoadModule authz_svn_module modules/mod_authz_svn.so
