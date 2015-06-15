@@ -20,7 +20,8 @@
 	echo $a | tr . ' '
 
 >awk使用外部变量
-a=q.w.e
+	
+	a=q.w.e
 	b=2
 	echo $a | awk -F . "{print $"${b}" }"   --- awk -F . ‘{print $2}'
 
