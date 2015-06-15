@@ -6,6 +6,10 @@ Some notes about Linux
 
 This is notes for linux manage works
 
+* [linux_skill](./worknotes/linux_skill.md)
+
+This is notes about kills on linux 
+
 * [KickStart](./worknotes/KickStart.md)
 
 This is notes about KickStart to install centos 
