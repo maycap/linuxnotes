@@ -19,11 +19,25 @@
 
 	echo $a | tr . ' '
 
->awk使用外部变量
+>awk
 	
+	#使用环境变量
 	a=q.w.e
 	b=2
-	echo $a | awk -F . "{print $"${b}" }"   --- awk -F . ‘{print $2}'
+	echo $a | awk -F . '{print $2}'
+	echo $a | awk -F . "{print $"${b}" }"  
+	echo $a | awk  -v r=$b -F. '{print $r}'
+
+	#从file文件中找出长度大于80的行
+	awk 'length>80' file
+	 
+	#按连接数查看客户端IP
+	netstat -ntu | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr
+	 
+	#打印99乘法表
+	seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'
+
+	
 
 ####加密类
 
@@ -73,3 +87,6 @@
 	0 3 * * * /path/to/clear_cache_swap.sh
 
 	warning:当所有的用户都从磁盘读取数据时，这将导致服务器崩溃并损坏数据库。
+
+####redis
+
