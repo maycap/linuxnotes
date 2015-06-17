@@ -58,6 +58,10 @@ This is notes about slony simple use
 
 This is notes about nagios simple use
 
+* [lvs-keepalived](./worknotes/lvs-keepalived.md)
+
+This is notes about lvs keepalived 
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work
