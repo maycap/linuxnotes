@@ -88,5 +88,10 @@
 
 	warning:当所有的用户都从磁盘读取数据时，这将导致服务器崩溃并损坏数据库。
 
-####redis
+####ssh
+
+>远程重启tomcat时，简单采用ssh，会报JAVA_HOME找不到，可采用
+
+	ssh user@host "source /etc/profile;/path/to/tomcat/bin/shutdown.sh"
+	
 

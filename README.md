@@ -62,6 +62,10 @@ This is notes about nagios simple use
 
 This is notes about lvs keepalived 
 
+* [squid](./worknotes/squid.md)
+
+This is notes about squid 
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work

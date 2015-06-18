@@ -117,3 +117,9 @@
 	注释匿名anon_*开头的即可
 
 	chroot_local_user=YES  --限制为自身家目录，确保安全
+
+###编译###
+在使用基础内核时，一般没有gcc，g++，编译源码前需要
+	
+	yum -y install gcc gcc-c++
+
