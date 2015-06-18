@@ -52,8 +52,9 @@ squid是款优秀的代理服务器,普通代理、透明代理、反向代理�
 
 	see: (in squid.conf)
 	
-	cache_effective_user   nobody 
-	cache_effective_group  nobody
+		cache_effective_user   nobody
+
+		cache_effective_group  nobody
 
 	chown -R nobody:nobody /usr/local/squid/var
 
