@@ -116,13 +116,13 @@ slony有点类似postgresql库的概念，一个完整的slony复制称为一个
 	# cat master_uc.slon
 	########################
 	cluster_name=uc
-	conn_info="dbname=uc host=cloud2 user=postgres password=Eln4postgres port=5432"
+	conn_info="dbname=uc host=cloud2 user=postgres password=mypassword port=5432"
 	########################
 
 	# cat slave_uc.slon
 	########################
 	cluster_name=uc
-	conn_info="dbname=report host=cloud2 user=postgres password=Eln4postgres port=5433"
+	conn_info="dbname=report host=cloud2 user=postgres password=mypassword port=5433"
 	########################
 
 
@@ -148,6 +148,20 @@ slony有点类似postgresql库的概念，一个完整的slony复制称为一个
 	stop_slove.sh:kill -quit `cat /web/slony/report/uc/slave_uc.slon.pid`
 	stop_slove.sh:rm -rf /web/slony/report/uc/slave_uc.slon.pid
 	stop_slove.sh:rm -rf /web/slony/report/uc/slave_uc.slon.log
+
+>添加新表，slony不停，向原先的set添不进去，需要create 
+
+	#!/bin/sh
+	#drop trigger  _els_denyaccess on t_els_study_delay
+	/web/pgsql/bin/slonik<<_EOF_
+	cluster name = els;
+	node 1 admin conninfo = 'dbname=std1 host=cloud2 user=postgres password=mypassword port=5433';
+	node 2 admin conninfo = 'dbname=report_std1 host=cloud2 user=postgres password=mypassword port=5433';
+	create set ( id = 3,origin=1,comment='add els set');
+	set add table ( set id = 3,origin = 1,id=22,fully qualified name = 'public.t_els_study_delay',comment='add new table');
+	subscribe set (id=3,provider=1,receiver=2);
+	_EOF_
+
 
 ###脚本配置###
 
@@ -195,3 +209,42 @@ slony有点类似postgresql库的概念，一个完整的slony复制称为一个
 	gem_slaveport:9434
 	gem_slavedbname:cap
 	gem_slavenode:2
+
+
+###问题###
+
+>slony正在运行时，删除修改表失败
+
+	PGRES_FATAL_ERROR ERROR:  Slony-I: setAddTable_int(): table "public"."t_els_course_study_record" has no index t_els_course_study_record_pkey
+
+	
+	#查看对应表结构
+	CONSTRAINT "pk_t_els_exam_user" PRIMARY KEY ("exam_user_id")
+
+	CONSTRAINT "t_els_exam_user_pkey" PRIMARY KEY ("exam_user_id")
+
+应先停掉slony，在新建表，然后在删除原先触发器
+
+	_els_logtrigger
+	_els_truncatedeny
+	_els_truncatetrigger
+	_els_denyaccess
+
+>更新表脚本
+
+	#!/bin/sh
+	
+	for i in `cat uc.list`
+	do
+		echo "Now dump $i"
+		psql -U postgres  -p 5433 std1 -c "drop trigger _uc_logtrigger on $i"
+		psql -U postgres  -p 5433 std1 -c "drop trigger _uc_truncatedeny on $i"
+		psql -U postgres  -p 5433 std1 -c "drop trigger _uc_truncatetrigger on $i"
+		psql -U postgres  -p 5433 std1 -c "drop trigger _uc_denyaccess on $i"
+		pg_dump -U postgres  -p 5433 -t $i std1 -s > $i.sql
+		echo "同步report---$i"
+		psql -U postgres -p 5433 -d report_std1 -c "drop table $i"
+		psql -U postgres -p 5433 -d report_std1 -f ./$i.sql
+		rm -fr ./$i.sql
+	done
+
