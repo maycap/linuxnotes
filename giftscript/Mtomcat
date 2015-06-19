@@ -1,0 +1,69 @@
+#!/bin/sh
+#
+#description:
+#Mtomcat	This is the script to restart tomcat in rotation
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: null
+# Should-Start: null
+# version：1.0
+# date:2015-6-19
+### END INFO
+
+
+list=$1
+host=$2
+
+#check parameters number
+if [ $# -ne 2 ];then
+	echo -e "\e[1;32m`basename $0` need two parameters"
+	echo -e "Usage: `basename $0` list host \e[0m"
+	exit 1
+fi
+
+#check list is exist
+if [ -f $list ];then
+	:
+else
+	echo -e "\e[1;31mNot found list $list!\e[0m"
+	exit 2
+fi
+
+#check host is connect
+ssh $host hostname 2>/dev/null 1>/dev/null
+if [  $? -ne 0 ];then
+	echo -e "\e[1;31mNot connect host $host!\e[0m"
+	exit 3
+fi
+
+
+SERVICEPATH='/web/service'
+TMPFILE=/tmp/$$
+touch $TMPFILE
+
+#Search the tomcat for compliance and write result lists to TMPFILE
+for i in `cat $list`
+do
+	result=`ssh $host find $SERVICEPATH -maxdepth 5 -name $i.xml`
+	if [ ${#result} -gt 2 ];then
+		path=`echo $result | awk -F '/conf' '{print $1}'`
+		echo $path >> $TMPFILE
+	fi
+done
+
+#restart tomcat list in rotation
+#ssh not load the host environment variable,so you should load something(/etc/profile)  by hand.
+for j in `cat $TMPFILE | sort | uniq`
+do
+	echo -e "\e[1;32mNow restart $host $j...\e[0m"
+	ssh $host "source /etc/profile;$j/bin/shutdown.sh"
+	ssh $host "rm -fr $j/logs/*"
+	ssh $host "rm -fr $j/log/*"
+	ssh $host "rm -fr $j/work/*"
+	sleep 3
+	ssh $host "source /etc/profile;$j/bin/startup.sh"
+done	
+
+#rm the temp file
+rm -fr $TMPFILE

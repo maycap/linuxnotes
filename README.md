@@ -110,6 +110,10 @@ This is the script to Batch add cacti monitor nodes
 
 This is slony copy schema and auto configure slony set shell script
 
+* [Mtomcat](./giftscript/Mtomcat)
+
+This is the script to restart tomcat in rotation
+
 ***
 ###Some words###
 Linux note by [maycap](https://github.com/maycap),Welcome advice
