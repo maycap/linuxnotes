@@ -139,15 +139,15 @@ slony有点类似postgresql库的概念，一个完整的slony复制称为一个
 
 	#cat stop_master.sh
 	##uc
-	stop_master.sh:kill -quit `cat /web/slony/report/uc/master_uc.slon.pid`
-	stop_master.sh:rm -rf /web/slony/report/uc/master_uc.slon.pid
-	stop_master.sh:rm -rf /web/slony/report/uc/master_uc.slon.log
+	kill -quit `cat /web/slony/report/uc/master_uc.slon.pid`
+	rm -rf /web/slony/report/uc/master_uc.slon.pid
+	rm -rf /web/slony/report/uc/master_uc.slon.log
 
 	#cat stop_slave.sh
 	##uc
-	stop_slove.sh:kill -quit `cat /web/slony/report/uc/slave_uc.slon.pid`
-	stop_slove.sh:rm -rf /web/slony/report/uc/slave_uc.slon.pid
-	stop_slove.sh:rm -rf /web/slony/report/uc/slave_uc.slon.log
+	kill -quit `cat /web/slony/report/uc/slave_uc.slon.pid`
+	rm -rf /web/slony/report/uc/slave_uc.slon.pid
+	rm -rf /web/slony/report/uc/slave_uc.slon.log
 
 >添加新表，slony不停，向原先的set添不进去，需要create 
 
