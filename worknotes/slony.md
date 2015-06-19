@@ -149,7 +149,7 @@ slony有点类似postgresql库的概念，一个完整的slony复制称为一个
 	rm -rf /web/slony/report/uc/slave_uc.slon.pid
 	rm -rf /web/slony/report/uc/slave_uc.slon.log
 
->添加新表，slony不停，向原先的set添不进去，需要create 
+>添加新表，slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to currently subscribed set 1 - must attach to an unsubscribed set" ，需要create set
 
 	#!/bin/sh
 	#drop trigger  _els_denyaccess on t_els_study_delay
