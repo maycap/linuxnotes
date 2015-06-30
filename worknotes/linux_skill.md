@@ -37,7 +37,14 @@
 	#打印99乘法表
 	seq 9 | sed 'H;g' | awk -v RS='' '{for(i=1;i<=NF;i++)printf("%dx%d=%d%s", i, NR, i*NR, i==NR?"\n":"\t")}'
 
-	
+>大小写
+
+	a="ATest"
+	echo ${a,}
+	echo ${a,,}
+	## 前面输出aTest，后面输出的是atest。	
+
+
 
 ####加密类
 

@@ -36,3 +36,19 @@ WAL log的最大数量，系统默认值是3。该值越大，在执行介质恢
 	checkpoint_timeout = 6min               # range 30s-1h
 	checkpoint_completion_target = 0.9      # checkpoint target duration, 0.0 - 1.0
 	checkpoint_warning = 30s                # 0 disables
+
+
+
+
+###TRUOBLE###
+>启动不了，去除限制
+
+	#config pgsql env
+	echo  'kernel.shmmax = 17179869184' >> /etc/sysctl.conf
+	echo  'kernel.shmall = 8388608' >> /etc/sysctl.conf
+	echo  'kernel.sem = 500 2048000 128 4096' >> /etc/sysctl.conf
+	
+	sysctl -p
+	
+	修改 /etc/security/limits.d/90-nproc.conf  去掉限制
+	#*          soft    nproc     1024
