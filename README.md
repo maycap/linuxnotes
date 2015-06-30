@@ -14,8 +14,7 @@ This is notes about kills on linux
 
 This is notes about KickStart to install centos 
 
-* [
-* pptpd](./worknotes/pptpd.md)
+* [pptpd](./worknotes/pptpd.md)
 
 This is notes about pptpd to restrict user login repeatedly
 
