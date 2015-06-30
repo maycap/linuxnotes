@@ -76,3 +76,61 @@ WAL log的最大数量，系统默认值是3。该值越大，在执行介质恢
 	
 	修改 /etc/security/limits.d/90-nproc.conf  去掉限制
 	#*          soft    nproc     1024
+
+
+###实验###
+
+1. pg_dump、pg_restore测试简单性能
+
+>文件大小 
+	
+	5.5G	/web/arh_greenting.tar
+>方法
+
+	$ time pg_restore  -p 5433 -d ccpm2 /web/arh_greenting.tar
+
+>结果
+
+<table>
+ <tr>
+    <td>\</td>
+	<td>参数</td>
+	<td>耗时</td>
+ </tr>
+ <tr>
+    <td>item1</td>
+	<td>32MB 3 5min 0.9</td>
+	<td>real	6m14.161s
+		user	0m1.755s
+		sys		0m2.819s</td>
+ </tr>
+ <tr>
+    <td>item2</td>
+	<td>128MB 3 5min 0.9</td>
+	<td>real	5m52.441s
+		user	0m1.743s
+		sys		0m3.110s
+	</td>
+ </tr>
+ <tr>
+	<td>item3</td>
+	<td>256MB 3 5min 0.9</td>
+	<td>real	5m44.444s
+		user	0m1.840s
+		sys		0m2.969s
+	</td>
+ </tr>
+ <tr>
+	<td>item4</td>
+	<td>256MB 5 5min 0.9</td>
+	<td>real	5m38.562s
+		user	0m1.640s
+		sys		0m3.179s
+	</td>
+ </tr>
+</table>
+
+日志出现：
+
+	LOG:  checkpoints are occurring too frequently (3 seconds apart)
+	HINT:  Consider increasing the configuration parameter "checkpoint_segments".
