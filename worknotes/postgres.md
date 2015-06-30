@@ -1,9 +1,33 @@
 ##postgres优化##
 
-###前言###
-数据库白，参考别人博客，觉得有效，记录下postgres优化。
+###前言##
+数据库学习笔记
 
 ###问题--方法###
+
+####基础配置####
+>监听
+	
+	listen_addresses '*'
+	port = 5432 
+
+>连接数
+
+	max_connections = 2000
+
+>访问控制
+
+	vim pg_hba.conf
+
+>共享内存
+
+	shared_buffers = 128MB   
+
+>时区
+
+	timezone = 'Asia/Shanghai'
+	log_timezone = 'Asia/Shanghai'
+	
 
 #####内存使用率高#####
 
