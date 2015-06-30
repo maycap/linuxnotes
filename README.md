@@ -14,7 +14,8 @@ This is notes about kills on linux
 
 This is notes about KickStart to install centos 
 
-* [pptpd](./worknotes/pptpd.md)
+* [
+* pptpd](./worknotes/pptpd.md)
 
 This is notes about pptpd to restrict user login repeatedly
 
@@ -65,6 +66,10 @@ This is notes about lvs keepalived
 * [squid](./worknotes/squid.md)
 
 This is notes about squid 
+
+* [postgres](./worknotes/postgres.md)
+
+This is notes about postgres
 
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
