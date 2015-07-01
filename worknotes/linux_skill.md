@@ -74,6 +74,11 @@
 	yum install sg3_utils
 	sg_vpd  /dev/sda --page=0xb1
 
+	yum install epel-release
+	yum install inxi
+	inxi
+	
+
 >清除Cache
 
 	# sync; echo 1 > /proc/sys/vm/drop_caches    ---仅清除页面缓存（PageCache）
