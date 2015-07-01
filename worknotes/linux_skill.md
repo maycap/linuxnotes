@@ -9,6 +9,7 @@
 >查看机器公网IP：
 
 	curl ifconfig.me
+	telnet cip.cc  ---  ip.cip.cc 返回纯ip
 
 >查看网站使用服务器：
 
