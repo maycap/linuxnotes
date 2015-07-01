@@ -3,8 +3,7 @@
 ###前言##
 数据库学习笔记
 
-###问题--方法###
-
+***
 ####基础配置####
 >监听
 	
@@ -62,7 +61,7 @@ WAL log的最大数量，系统默认值是3。该值越大，在执行介质恢
 	checkpoint_warning = 30s                # 0 disables
 
 
-
+***
 
 ###TRUOBLE###
 >启动不了，去除限制
@@ -78,9 +77,47 @@ WAL log的最大数量，系统默认值是3。该值越大，在执行介质恢
 	#*          soft    nproc     1024
 
 
+***
+
 ###实验###
 
 1. pg_dump、pg_restore测试简单性能
+
+>配置
+
+<table>
+	<tr>
+		<td>item</td>
+		<td>配置</td>	
+	</tr>
+	<tr>
+		<td>cpu</td>
+		<td> Intel(R) Core(TM) i3-3240 CPU @ 3.40GHz</td>
+	</tr>
+	<tr>
+		<td>cpu MHz</td>
+		<td>1600.000</td>
+	</tr>
+	<tr>
+		<td>cache size</td>
+		<td>3072 KB</td>
+	</tr>
+	<tr>
+		<td>核数</td>
+		<td>4</td>
+	</tr>
+	<tr>
+		<td>memory</td>
+		<td>32G</td>
+	</tr>
+	<tr>
+		<td>device rotation rate</td>
+		<td>7200 rpm</td>
+	<tr>
+		<td>postgresql version</td>
+		<td>9.3.2</td>
+	</tr>
+</table>
 
 >文件大小 
 	
@@ -92,42 +129,42 @@ WAL log的最大数量，系统默认值是3。该值越大，在执行介质恢
 >结果
 
 <table>
- <tr>
-    <td>\</td>
-	<td>参数</td>
-	<td>耗时</td>
- </tr>
- <tr>
-    <td>item1</td>
-	<td>32MB 3 5min 0.9</td>
-	<td>real	6m14.161s
-		user	0m1.755s
-		sys		0m2.819s</td>
- </tr>
- <tr>
-    <td>item2</td>
-	<td>128MB 3 5min 0.9</td>
-	<td>real	5m52.441s
-		user	0m1.743s
-		sys		0m3.110s
-	</td>
- </tr>
- <tr>
-	<td>item3</td>
-	<td>256MB 3 5min 0.9</td>
-	<td>real	5m44.444s
-		user	0m1.840s
-		sys		0m2.969s
-	</td>
- </tr>
- <tr>
-	<td>item4</td>
-	<td>256MB 5 5min 0.9</td>
-	<td>real	5m38.562s
-		user	0m1.640s
-		sys		0m3.179s
-	</td>
- </tr>
+	<tr>
+    	<td>\</td>
+		<td>参数</td>
+		<td>耗时</td>
+ 	</tr>
+ 	<tr>
+    	<td>item1</td>
+		<td>32MB 3 5min 0.9</td>
+		<td>real	6m14.161s
+			user	0m1.755s
+			sys		0m2.819s</td>
+ 	</tr>
+ 	<tr>
+    	<td>item2</td>
+		<td>128MB 3 5min 0.9</td>
+		<td>real	5m52.441s
+			user	0m1.743s
+			sys		0m3.110s
+		</td>
+ 	</tr>
+ 	<tr>
+		<td>item3</td>
+		<td>256MB 3 5min 0.9</td>
+		<td>real	5m44.444s
+			user	0m1.840s
+			sys		0m2.969s
+		</td>
+	</tr>
+	<tr>
+		<td>item4</td>
+		<td>256MB 5 5min 0.9</td>
+		<td>real	5m38.562s
+			user	0m1.640s
+			sys		0m3.179s
+		</td>
+	</tr>
 </table>
 
 日志出现：
