@@ -34,9 +34,9 @@ This is notes about a few examples of lvm
 
 This is notes about hadoop install step
 
-* [nginx_ssl](./worknotes/nginx_ssl.md)
+* [nginx](./worknotes/nginx.md)
 
-This is notes about use ssl on nginx 
+This is notes about use nginx 
 
 * [python](./worknotes/python.md)
 
