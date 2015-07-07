@@ -57,3 +57,54 @@
 	proxy_http_version 1.1;
 	proxy_set_header Upgrade $http_upgrade;
 	proxy_set_header Connection "upgrade";
+
+
+###代理mail
+一般情况下，客户端发起的邮件请求在经过nginx这个邮件代理服务器后，从网络通信的角度来看，nginx实现邮件代理功能时会把一个请求分为以下4个阶段：
+
+	接收并解析客户端初始请求的阶段。
+	向认证服务器验证请求合法性，并获取上游邮件服务器地址的阶段。
+	nginx根据用户信息多次与上游服务器交互验证合法性的阶段。
+	nginx在客户端与上游邮件服务器间纯粹透传TCP流的阶段。
+
+一般情况下，客户端发起的邮件请求在经过nginx这个邮件代理服务器后，从网络通信的角度来看，nginx实现邮件代理功能时会把一个请求分为以下4个阶段：
+
+	mail {  
+	    // 邮件认证服务器的访问URL  
+	    auth_http IP:PORT/auth.php;  
+	  
+	    // 当透传上，下游间的TCP流时，每个请求所使用的内存缓冲区大小  
+	    proxy_buffer 4k;  
+	  
+	    server {  
+	        /*对于POP3协议，通常都是监听110端口。POP3协议接收初始客户端请求的缓冲区固定为128字节，配置文件中无法设置*/  
+	        listen 110;  
+	        protocol pop3;  
+	        proxy on;  
+	    }  
+	  
+	    server {  
+	        // 对于IMAP，通常都是监听143端口  
+	        listen 143;  
+	        protocol imap;  
+	        // 设置接收初始客户端请求的缓冲区大小  
+	        imap_client_buffer 4k;  
+	        proxy on;  
+	    }  
+	  
+	    server {  
+	        // 对于SMTP，通常都是监听25端口  
+	        listen 25;  
+	        protocol smtp;  
+	        proxy on;  
+	        // 设置接收初始客户端请求的缓冲区大小  
+	        smtp_client_buffer 4k;  
+	    }  
+	}
+
+问题：
+
+	nginx: [emerg] unknown directive "mail" in 
+	
+	请检查nginx -V  是否含有  --with-mail
+	
