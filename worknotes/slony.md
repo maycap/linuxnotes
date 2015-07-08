@@ -149,7 +149,9 @@ slony有点类似postgresql库的概念，一个完整的slony复制称为一个
 	rm -rf /web/slony/report/uc/slave_uc.slon.pid
 	rm -rf /web/slony/report/uc/slave_uc.slon.log
 
->添加新表，slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to currently subscribed set 1 - must attach to an unsubscribed set" ，需要create set
+>添加新表
+
+slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to currently subscribed set 1 - must attach to an unsubscribed set" ，需要create set
 
 	#!/bin/sh
 	#drop trigger  _els_denyaccess on t_els_study_delay
@@ -162,6 +164,17 @@ slony有点类似postgresql库的概念，一个完整的slony复制称为一个
 	subscribe set (id=3,provider=1,receiver=2);
 	_EOF_
 
+>合并set
+
+	#!/bin/sh
+	/opt/pgsql/bin/slonik<<_EOF_
+	cluster name = els;
+	node 1 admin conninfo = 'dbname=std1 host=cloud2 user=postgres password=mypassword port=5433';
+	node 2 admin conninfo = 'dbname=report_std1 host=cloud2 user=postgres password=mypassword port=5433';
+	MERGE SET ( ID = 1, ADD ID = 2, ORIGIN = 1 );
+	_EOF_
+
+可以合并写在一起，更方便
 
 ###脚本配置###
 
