@@ -74,6 +74,10 @@ This is notes about postgres
 
 This is notes about linux memory
 
+* [cobbler](./worknotes/cobbler.md)
+
+This is notes about install cobbler
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work

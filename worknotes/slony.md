@@ -5,6 +5,15 @@
 
 ***
 
+###安装###
+	tar jxvf slony1-2.0.3.tar.bz2
+	cd slony1-2.0.3.tar.bz2
+	export PGMAIN=/usr/local/pgsql
+	./configure --with-pgconfigdir=$PGMAIN/bin --with-perltools
+	gmake all
+	gmake install
+
+
 ###传统配置###
 
 slony有点类似postgresql库的概念，一个完整的slony复制称为一个集群，在schema下表现为_$CLUSTER。通过内部表信息，可以看到执行到哪一步，以及是否缺少信息，执行过程的日志自然更方便。集群下可以有无数个集合，slony复制以set作为一个集，集内部可以定义数个需要同步的表信息，前提需要ddl必须相同！同步开始前，从库会被清空，因此无须复制数据到从库！
