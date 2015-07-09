@@ -101,4 +101,41 @@ Cobbler是一个快速网络安装linux的服务，而且在经过调整也可�
 	#yum -y instlal syslinux
 	#dhcp失败，查看配置文件，修改/etc/init.d/dhcpd中的user,group	
 
->客户端测试即可
+>客户端测试安装
+
+
+>客户端指定重装
+	
+	rpm -ivh 'http://mirrors.hust.edu.cn/epel//6/x86_64/epel-release-6-8.noarch.rpm'
+	yum install koan
+	
+	#查看cobbler上的系统列表
+	koan --server=192.168.100.82 --list=profiles
+	
+	#选择操作系统安装
+	koan --server=192.168.10.1 --profile=CentOS6.5-x86_64 --replace-self
+	
+###cobbler_web
+
+>安装
+
+	yum -y install cobbler-web
+	
+>修改或添加用户
+
+	htdigest /etc/cobbler/users.digest "Cobbler" cobbler  
+
+>配置cobbler_web可以登录
+
+	sed -i 's/authn_denyall/authn_configfile/g' /etc/cobbler/modules.conf
+
+>重启cobber和http
+
+	service cobblerd restart
+	service httpd restart
+
+>访问
+
+	http://192.168.100.82/cobber_web
+
+	
