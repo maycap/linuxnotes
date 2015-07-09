@@ -70,6 +70,10 @@ This is notes about squid
 
 This is notes about postgres
 
+* [linux_mem](./worknotes/linux_mem.md)
+
+This is notes about linux memory
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work
