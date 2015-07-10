@@ -126,6 +126,10 @@ This is slony copy schema and auto configure slony set shell script
 
 This is the script to restart tomcat in rotation
 
+* [Mtomcat](./giftscript/Mpostgres)
+
+This is the script to exec sql
+
 ***
 ###Some words###
 Linux note by [maycap](https://github.com/maycap),Welcome advice
