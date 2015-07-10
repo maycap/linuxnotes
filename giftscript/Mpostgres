@@ -148,3 +148,10 @@ done
 		
 	
 
+#cat pg.list
+#report:cloud2-5433-report
+#report:cloud2-5433-report_std1
+#share_center:cloud2-5433-share_center
+#std:cloud2-5433-std1
+#oms:cloud2-5433-oms
+#default:cloud2-5433-default
