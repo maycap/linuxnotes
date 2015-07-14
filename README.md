@@ -78,6 +78,10 @@ This is notes about linux memory
 
 This is notes about install cobbler
 
+* [http_php_mysql](./worknotes/http_php_mysql.md)
+
+This is notes about install http php mysql example
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work
