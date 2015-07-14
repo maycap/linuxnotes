@@ -4,6 +4,12 @@
 记录平时见到的一些技巧，以备不时之需
 
 ***
+####yum源问题
+
+>添加epel源，参考 http://fedoraproject.org/wiki/EPEL 选取对应版本的‘epel-release’，添加源后即可查询到，以EL6为例：
+
+	yum install http://mirrors.opencas.cn/epel/6/i386/epel-release-6-8.noarch.rpm
+
 ####网络类
 
 >查看机器公网IP：
