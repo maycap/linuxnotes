@@ -7,7 +7,7 @@
 # Provides: maycap
 # Required-Start: null
 # Should-Start: null
-# version：1.1
+# version：1.2
 # date:2014-6-20
 ### END INFO
 
@@ -15,6 +15,7 @@ follow=0
 troubh=0
 DPATHTAG=0
 temp_logs=/tmp/$$.logs
+FPATH=/web/service
 
 check_name(){
 if [ -z $1 ];then	
@@ -22,16 +23,16 @@ if [ -z $1 ];then
 	exit 1
 fi
 
-if [ ! -e /web/service ];then
+if [ ! -e $FPATH ];then
 	echo -e "\e[1;31m\t service may be moved,Please used -d\e[0m"
 	exit 4
 fi
-tag=`ls /web/service | grep tomcat | grep $1 | wc -l`
+tag=`ls $FPATH | grep tomcat | grep $1 | wc -l`
 if [ $tag -ne 1 ];then
-	ls /web/service | grep tomcat | grep $1
+	ls $FPATH | grep tomcat | grep $1
 	return 1
 else
-	dir=`ls /web/service | grep $1`
+	dir=`ls $FPATH | grep $1`
 	return 0
 fi
 }
@@ -182,7 +183,7 @@ check_log()
 {	
 	if [ $2 -eq 0 ];then
 	>$temp_logs
-	grep -n $1 /web/service/$DIR/logs/catalina.out >> $temp_logs
+	grep -n $1 $FPATH/$DIR/logs/catalina.out >> $temp_logs
 	total=`cat $temp_logs | wc -l`
 	echo "TOTAL $1 : $total"
 	cat $temp_logs
@@ -199,13 +200,13 @@ check_log()
 look_log(){
 	if [ $3 -eq 0 ];then
 		if [ $2 -eq 0 ];then
-			tail -n $1 /web/service/$DIR/logs/catalina.out
+			tail -n $1 $FPATH/$DIR/logs/catalina.out
 		else
 			tail -n $1 "$4"
 		fi
 	else
 		if [ $2 -eq 0 ];then
-			tail -n $1 -f /web/service/$DIR/logs/catalina.out
+			tail -n $1 -f $FPATH/$DIR/logs/catalina.out
 		else
 			tail -n $1 -f "$4"
 		fi
@@ -223,7 +224,7 @@ if [ $troubh -eq 0 ];then
 	if [ -z $sednum ];then
 		look_log $num $DPATHTAG  $follow "$DPATH"
 	elif [ $DPATHTAG -eq 0 ];then
-		sed -n "$sednum" /web/service/$DIR/logs/catalina.out
+		sed -n "$sednum" $FPATH/$DIR/logs/catalina.out
 	else
 		sed -n "$sednum" $DPATH
 fi

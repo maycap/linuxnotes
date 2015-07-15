@@ -51,6 +51,10 @@
 	;date.timezone =
 
 	#修改php配置用关于数据库信息的连接信息
+
+	#php上传图片错误
+	：Fatal error: Call to undefined function imagecreatefromjpeg()  
+	yum install php-gd
 			
 >备用的扩展
 
@@ -64,4 +68,5 @@
 	3.安装mysql扩展
 	yum -y install mysql-connector-odbc mysql-devel libdbi-dbd-mysql
 	
+
 	
