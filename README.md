@@ -82,6 +82,10 @@ This is notes about install cobbler
 
 This is notes about install http php mysql example
 
+* [kvm](./worknotes/kvm.md)
+
+This is notes about kvm
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work

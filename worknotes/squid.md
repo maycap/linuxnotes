@@ -40,6 +40,16 @@ squid是款优秀的代理服务器,普通代理、透明代理、反向代理�
 	
 	logformat combined   %>a %[ui %[un [%tl] "%rm %ru HTTP/%rv" %>Hs %<st "%{Referer}>h" "%{User-Agent}>h" %Ss:%Sh
 	
+	#当cache高于95%的时候开始删除cache,直到保持80%的cache容量
+	cache_swap_low 80
+	cache_swap_high 95	
+
+	#允许使用purge清空缓存
+	acl AdminBoxes src 127.0.0.1 172.16.0.1 192.168.0.1
+	acl Purge method PURGE
+	http_access allow AdminBoxes Purge
+	http_access deny Purge
+
 	cache_effective_user nobody	
 	cache_effective_group nobody	
 
@@ -56,6 +66,31 @@ squid是款优秀的代理服务器,普通代理、透明代理、反向代理�
 		cache_effective_group  nobody
 
 	chown -R nobody:nobody /usr/local/squid/var
+
+
+###参考清空脚本
+
+>cat clear_squid.cache.sh 
+
+	#!/bin/sh
+
+	#缓存路径
+	squidcache_path=/usr/local/squid/var/cache/squid
+	squidclient_path=/usr/local/squid/bin/squidclient
+
+	grep -a -r $1 $squidcache_path/* | strings | grep "http:"| awk -F'ttp:' '{print "http:" $2;}' > cache_list.list
+	for url in `cat cache_list.list`; do
+		$squidclient_path -m PURGE -p 80 $url
+	done
+	
+>用法：
+
+	1、清除所有Flash缓存（扩展名.swf）：
+	./clear_squid_cache.sh swf
+	2、清除URL中包含sina.com.cn的所有缓存：
+	./clear_squid_cache.sh sina.com.cn
+	3、清除文件名为zhangyan.jpg的所有缓存：
+	./clear_squid_cache.sh zhangyan.jpg
 
 
 

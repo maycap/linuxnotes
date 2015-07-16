@@ -75,6 +75,10 @@
 
 ####系统类
 
+>查看cpu
+
+	numactl --hardware
+
 >查看磁盘属性
 
 	yum install sg3_utils

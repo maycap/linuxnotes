@@ -108,3 +108,23 @@
 	
 	请检查nginx -V  是否含有  --with-mail
 	
+
+###密码访问控制
+
+有时候部署升级程序，需要外网访问入口，通过nginx设置密码，达到简单控制目的。
+
+	#nginx简单配置
+	location /upgrade/ { 
+			proxy_pass http://cloud4:7070;
+            auth_basic "secret";  //虚拟主机认证命名 
+            auth_basic_user_file /usr/local/nginx/passwd.db; //虚拟主机用户名密码认证数据库 
+        }
+
+	#用htpasswd生成密码,可以在其他机器生成，然后传输过去
+	htpasswd -c htpasswd.db upgrade
+
+	chmod 400 htpasswd.db   //相当更安全些  
+
+	
+
+	 
