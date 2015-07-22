@@ -15,6 +15,7 @@
 	步骤 4:make && make install
 	步骤 5:cp /opt/sqlite/lib/* /sbin/lib64/ -a
 		/bin/cp /opt/sqlite/lib/* /usr/lib/ -a
+	步骤6：如上述5失效，复制到jdk调用目录下
 
 >./configure 报错找不到 try --with-sqlite/--with-sqlite3
 
@@ -28,8 +29,8 @@
 	Could not initialize class SQLite.Database
 
 	jdk调用不到libsqlite_jni.la  libsqlite_jni.so
-	这两个文件就是编译后在/opt/sqlite/lib的文件，其实复制不是重点。
-	重点是要让jdk可以调用，也就是在其CLASSPATH指定的目录下。
+	这两个文件就是编译后在/opt/sqlite/lib的文件，
+	重点是要让程序可以调用，或者在系统环境中，或者在CLASSPATH指定的目录下。
 	echo $CLASSPATH ，复制过去
 	or
 	vi /etc/profile 添加CLASSPATH

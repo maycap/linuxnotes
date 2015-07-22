@@ -97,7 +97,45 @@ kvm系统采用全虚拟化，在cpu,io采用硬件辅助半虚拟化，性能�
 	#--location=/mnt/centos
 	#会选择pxe--装机，选择cobber，可选择性，比ks好控制些
 	
+>qcow2格式，使用ks安装，启动console
+
+	#创建储蓄镜像，镜像大小是动态增加的，类似于exsi--thin模式。    
+    qemu-img create -f qcow2 -o compat=0.10 /web/images/centos63-webtest.img 40G
+
+	#cat create.sh
+	virt-install --name=test2  --os-variant=rhel6 \
+	--ram 2048 --vcpus=2 --virt-type kvm \
+	--disk path=/web/images/test2.img,format=qcow2,size=8,bus=virtio \
+	--accelerate --location=http://192.168.100.254 \
+	--vnc --vncport=5912 --vnclisten=0.0.0.0 \
+	--network bridge=br0,model=virtio --noautoconsole \
+	--extra-args='console=tty0 console=ttyS0,115200n8 ks=http://192.168.100.254/ks.cfg'
+
+	#在额外选项中，可设置虚拟机支持console
+
+
+>报错记录
+
+	'drive-virtio-disk0' uses a qcow2 feature which is not supported by this qemu version: QCOW version 3
+
+	#解决方法，创建时默认格式为1.1，查看如下：
+	#qemu-img info /web/images/test1.img 
+	image: /web/images/test1.img
+	file format: qcow2
+	virtual size: 7.0G (7516192768 bytes)
+	disk size: 196K
+	cluster_size: 65536
+	Format specific information:
+	    compat: 1.1
+	    lazy refcounts: false
+	    refcount bits: 16
+	    corrupt: false
 	
+	#修改支持老版，在此创建即可
+	qemu-img amend -f qcow2 -o compat=0.10 test.qcow2
+
+	
+
 5.vnc连接装机
 	
 	#下载vnc -- http://vnc.en.softonic.com/

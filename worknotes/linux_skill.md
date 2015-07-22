@@ -116,6 +116,26 @@
 
 	warning:当所有的用户都从磁盘读取数据时，这将导致服务器崩溃并损坏数据库。
 
+>修改时区
+	
+	#查看时区
+	cat /etc/sysconfig/clock 
+		ZONE="Asia/Shanghai"
+	
+	#替换时区
+	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+	
+	#时区写入bios
+	clock -w
+
+	#查看硬件时区
+	hwclock
+
+	#同步网络时间
+	#NTP服务器(上海) ：ntp.api.bz
+	ntpdate -u 210.72.145.44        --中国国家授时中心
+
+
 ####ssh
 
 >远程重启tomcat时，简单采用ssh，会报JAVA_HOME找不到，可采用
