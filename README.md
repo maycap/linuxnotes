@@ -86,6 +86,10 @@ This is notes about install http php mysql example
 
 This is notes about kvm
 
+* [jetty](./worknotes/jetty.md)
+
+This is notes about jetty
+
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
 This is ntoes about some troubleshoot of work
