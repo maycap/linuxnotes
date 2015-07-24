@@ -178,7 +178,7 @@ Jetty版本对应JVM版本，演示案例则需要对应的java版本启动
 	CLASSPATH=/web/jdk1.7.0_67/lib:/web/jdk1.7.0_67/jre/lib
 
 	#JVM设置
-	JAVA_OPTIONS="$JAVA_OPTS -server -Xms512m -Xmx512m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:SurvivorRatio=16 -XX:MaxTenuringThreshold=5 -XX:+UseConcMarkSweepGC -XX:+UseCMSCompactAtFullCollection -XX:CMSMaxAbortablePrecleanTime=500 -XX:+CMSClassUnloadingEnabled -verbose.gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:$CATALINA_HOME/logs/gc.log -Djava.awt.headless=true"
+	JAVA_OPTIONS="$JAVA_OPTS -server -Xms512m -Xmx512m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:SurvivorRatio=16 -XX:MaxTenuringThreshold=5 -XX:+UseConcMarkSweepGC -XX:+UseCMSCompactAtFullCollection -XX:CMSMaxAbortablePrecleanTime=500 -XX:+CMSClassUnloadingEnabled -verbose.gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:$JETTY_HOME/logs/gc.log -Djava.awt.headless=true"
 
 	#校验方式
 	$JETTY_HOME/bin/jetty.sh check
