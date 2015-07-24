@@ -245,7 +245,7 @@ slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to current
 
 	CONSTRAINT "t_els_exam_user_pkey" PRIMARY KEY ("exam_user_id")
 
-应先停掉slony，在新建表，然后在删除原先触发器
+应先停掉slony，在新建表，然后在删除原先触发器;仅修改除非器不需要停掉slony。
 
 	_els_logtrigger
 	_els_truncatedeny
