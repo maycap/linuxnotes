@@ -1,0 +1,113 @@
+#!/bin/sh
+#
+#description:
+#Mhaproxy	This is the script to manage haproxy service 
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: mv this /etc/init.d/
+# Should-Start: null
+# version：1.0
+# date:2015-7-16
+### END INFO
+
+
+#Source function library.
+. /etc/rc.d/init.d/functions
+
+#Source networking configuration
+. /etc/sysconfig/network
+
+#Check that networking is up.
+[ "$NETWORKING" = "no" ] && exit 0
+
+config="/web/haproxy/sbin/haproxy.cfg"
+exec="/web/haproxy/sbin/haproxy"
+PIDFILE="/web/haproxy/haproxy.pid"
+prog=$(basename $exec)
+
+[ -e /etc/sysconfig/$prog ] && . /etc/sysconfig/$prog
+
+lockfile=/var/lock/subsys/haproxy
+
+check(){
+	$exec -c -V -f $config
+}
+
+start(){
+	$exec -c -q -f $config
+	if [ $? -ne 0 ];then
+		echo "Errors in configuration file, check with $prog check."
+		return 1
+	fi
+
+	echo -n $"Starting $prog:"
+	#start it up here,usually somethin like "daemon $exec"
+	daemon $exec -D -f $config -p $PIDFILE
+	retval=$?
+	echo
+	[ $retval -eq 0 ] && touch $lockfile
+	return $retval
+}
+
+stop(){
+	echo -n $"Stoping $prog:"
+	#stop it here,often "killproc $prog"
+	killproc $prog
+	retval=$?
+	echo
+	[ $retval -eq 0 ] && rm -f $lockfile
+	return $retval
+}
+
+restart(){
+	$exec -c -q -f $config
+	if [ $? -ne 0 ];then
+		echo "Errors in configuration file, check with $prog check."
+		return 1
+	fi
+	stop
+	start
+}
+
+reload(){
+	$exec -c -q -f $config
+	if [ $? -ne 0 ];then
+		echo "Errors in configuration file, check with $prog check."
+		return 1
+	fi
+	echo -n $"Reloading $prog:"
+	$exec -D -f $config -p $PIDFILE -sf $(cat $PIDFILE)
+	retval=$?
+	echo
+	return $retval
+}
+
+force_reload(){
+	restart
+}
+
+fdr_status(){
+	status $prog
+}
+
+case $1 in
+	start|stop|restart|reload)
+		$1
+		;;
+	force-reload)
+		force_reload
+		;;
+	checkconfig)
+		check
+		;;
+	status)
+		fdr_status
+		;;
+	condrestart|try-restart)
+		[ ! -f $lockfile ] || restart
+		;;
+	*)
+		echo $"Usage: $0 {start|stop|status|checkconfig|restart|try-restart|reload|force-reload}"
+		exit 2
+esac
