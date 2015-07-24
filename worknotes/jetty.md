@@ -185,7 +185,7 @@ Jetty版本对应JVM版本，演示案例则需要对应的java版本启动
 
 2.添加虚拟目录
 
-	#在etc/jetty.conf下添加一个XML配置
+	#在etc/jetty.conf中添加新的XML配置选项
 	eim-server.xml
 
 	#cat eim-server.xml
@@ -208,6 +208,8 @@ Jetty版本对应JVM版本，演示案例则需要对应的java版本启动
 	#这是相对路径
 	log4j.appender.dailyRoll.file=log/eim-server.log	
 	
+4.启动服务
+	bin/jetty.sh start
 
 
 	
