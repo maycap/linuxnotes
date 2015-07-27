@@ -105,10 +105,6 @@ Jetty是一个开源的项目，可以提供http服务端，客户端和javax.se
 		<td>配置扩展目录，需要激活包含此目录</td>
 	</tr>	
 	<tr>
-		<td>notice.html</td>
-		<td>许可证信息和例外</td>
-	</tr>
-	<tr>
 		<td>start.d/</td>
 		<td>start.ini扩展目录</td>
 	</tr>
@@ -121,7 +117,7 @@ Jetty是一个开源的项目，可以提供http服务端，客户端和javax.se
 		<td>jar启动Jetty</td>
 	</tr>
 	<tr>
-		<td>notice</td>
+		<td>webapps</td>
 		<td>Jetty默认配置运行webapps的目录</td>
 	</tr>
 </table>
@@ -169,6 +165,28 @@ Jetty版本对应JVM版本，演示案例则需要对应的java版本启动
 	----这个是读取当前目录下的start.ini，比如我们在Jetty目录修订为8081。
 		进入demo-base，运行jetty,端口已然是演示实例下start.ini的设置。
 
+
+	
+>虚拟主机配置，采用最简war方式，直接放在webapps
+
+	#cat test.xml
+	<?xml version="1.0"  encoding="ISO-8859-1"?>
+	<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
+	 
+	<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+	  <Set name="contextPath">/test</Set>
+	  <Set name="war"><Property name="jetty.webapps"/>/webapps/test.war</Set>
+	  <Set name="virtualHosts">
+	    <Array type="java.lang.String">
+	      <Item>127.0.0.1</Item>
+	      <Item>www.test.com</Item>
+	      <Item>www.test.net</Item>
+	      <Item>www.test.org</Item>
+	    </Array>
+	  </Set>
+	</Configure>
+
+
 >添加虚拟应用
 
 1.根据应用jdk配置$JETTY_HOME/bin/jetty.sh
@@ -178,12 +196,14 @@ Jetty版本对应JVM版本，演示案例则需要对应的java版本启动
 	CLASSPATH=/web/jdk1.7.0_67/lib:/web/jdk1.7.0_67/jre/lib
 
 	#JVM设置
-	JAVA_OPTIONS="$JAVA_OPTS -server -Xms512m -Xmx512m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:SurvivorRatio=16 -XX:MaxTenuringThreshold=5 -XX:+UseConcMarkSweepGC -XX:+UseCMSCompactAtFullCollection -XX:CMSMaxAbortablePrecleanTime=500 -XX:+CMSClassUnloadingEnabled -verbose.gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:$JETTY_HOME/logs/gc.log -Djava.awt.headless=true"
+	JAVA_OPTIONS="$JAVA_OPTIONS -server -Xms512m -Xmx512m -XX:NewSize=256m -XX:MaxNewSize=256m -XX:PermSize=128m -XX:MaxPermSize=256m -XX:SurvivorRatio=16 -XX:MaxTenuringThreshold=5 -XX:+UseConcMarkSweepGC -XX:+UseCMSCompactAtFullCollection -XX:CMSMaxAbortablePrecleanTime=500 -XX:+CMSClassUnloadingEnabled -verbose.gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:$JETTY_HOME/logs/gc.log -Djava.awt.headless=true"
 
 	#校验方式
 	$JETTY_HOME/bin/jetty.sh check
 
 2.添加虚拟目录
+
+方法1：在etc中添加
 
 	#在etc/jetty.conf中添加新的XML配置选项
 	eim-server.xml
@@ -203,6 +223,18 @@ Jetty版本对应JVM版本，演示案例则需要对应的java版本启动
 	  </Call>
 	</Configure>
 
+方法2：在webapps中添加,效果等价，配置不同！
+
+	[webapps]$ cat eim-server.xml 
+	<?xml version="1.0"?>
+	<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
+	
+	<Configure id="Contexts" class="org.eclipse.jetty.webapp.WebAppContext">
+		<Set name="contextPath">/eim-server</Set>
+		<Set name="resourceBase">/web/eln4share/eim-server</Set>
+	</Configure>
+
+
 3.应用下若是启用log4j.properties，注意日志路径
 	
 	#这是相对路径
@@ -213,7 +245,6 @@ Jetty版本对应JVM版本，演示案例则需要对应的java版本启动
 	bin/jetty.sh start
 
 
-	
 
 
 
