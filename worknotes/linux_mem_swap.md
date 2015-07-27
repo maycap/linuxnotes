@@ -137,6 +137,8 @@ Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在C
 	Locked:                0 kB
 	VmFlags: rd ex mr mw me dw 
 
+	#插曲 Rss = Shared_Clean + Shared_Dirty + Private_Clean + Private_Dirty
+
 “VmFlags”字段需要单独说明。该成员表示内核与所述特定虚拟存储器区域中两字母编码相关联的标志方式。标识码如下：（不同版本，标志意思可能不同）
 
 	rd  - readable
