@@ -115,7 +115,27 @@ Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在C
 
 如果系统的物理内存用光了，则会用到swap。系统就会跑得很慢，但仍能运行;如果Swap空间用光了，那么系统就会发生错误。通常会出现“application is out of memory”的错误，严重时会造成服务进程的死锁。
 
->命令：
+>设置使用,在/etc/sysctl.conf
+
+	#当内存未被征用量不足10%时（而不是实际使用量），开始使用swap分区
+	vm.swappiness = 10
+
+>动态添加swap
+
+	#创建用于交换分区的文件
+	dd if=/dev/zero of=/web/swap_mount_4G bs=1024 count=4096000
+
+	#设置交换分区文件
+	mkswap /swap_mount_4G
+
+	#立即启用交换分区文件
+	swapon /swap_mount_4G 
+
+	#若要想使开机时自启用，则需修改文件/etc/fstab中的swap行
+	/web/swap_mount_4G swap swap defaults 0 0
+
+
+>查看命令：
 	
 	free,top,vmstat
 
