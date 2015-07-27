@@ -161,7 +161,91 @@ kvm系统采用全虚拟化，在cpu,io采用硬件辅助半虚拟化，性能�
 
 	virsh console guest4
 	
+7.导出XML配置，修改，生成
 
+	#导出域配置文件
+	virsh dumpxml  test4  > /web/test4.xml 
+
+	<domain type='kvm' id='14'>       --id,删除自动生成
+	  <name>test6</name>              --名字不可重
+	  <memory unit='KiB'>4194304</memory>    --唯一，删掉，自动创建
+	  <currentMemory unit='KiB'>4194304</currentMemory>
+	  <vcpu placement='static'>2</vcpu>
+	  <os>
+	    <type arch='x86_64' machine='rhel6.6.0'>hvm</type>
+	    <boot dev='hd'/>
+	  </os>
+	  <features>
+	    <acpi/>
+	    <apic/>
+	    <pae/>
+	  </features>
+	  <clock offset='localtime'/>
+	  <on_poweroff>destroy</on_poweroff>
+	  <on_reboot>restart</on_reboot>
+	  <on_crash>restart</on_crash>
+	  <devices>
+	    <emulator>/usr/libexec/qemu-kvm</emulator>
+	    <disk type='file' device='disk'>
+	      <driver name='qemu' type='qcow2' cache='none'/>
+	      <source file='/web/images/test6.img'/>        --指定虚拟磁盘位置
+	      <target dev='vda' bus='virtio'/>
+	      <alias name='virtio-disk0'/>
+	      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+	    </disk>
+	    <controller type='usb' index='0' model='ich9-ehci1'>
+	      <alias name='usb0'/>
+	      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x7'/>
+	    </controller>
+	    <controller type='usb' index='0' model='ich9-uhci1'>
+	      <alias name='usb0'/>
+	      <master startport='0'/>
+	      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0' multifunction='on'/>
+	    </controller>
+	    <controller type='usb' index='0' model='ich9-uhci2'>
+	      <alias name='usb0'/>
+	      <master startport='2'/>
+	      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x1'/>
+	    </controller>
+	    <controller type='usb' index='0' model='ich9-uhci3'>
+	      <alias name='usb0'/>
+	      <master startport='4'/>
+	      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x2'/>
+	    </controller>
+	    <interface type='bridge'>
+	      <mac address='52:54:00:11:22:33'/>     --mac重复会导致ip一样而不会报错，前六位不动，修改后六位
+	      <source bridge='br0'/>
+	      <target dev='vnet4'/>                  --网络配置，一下都可删掉，防止冲突
+	      <model type='virtio'/>				 	
+	      <alias name='net0'/>
+	      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+	    </interface>
+	    <serial type='pty'>
+	      <target port='0'/>
+	      <alias name='serial0'/>
+	    </serial>
+	    <console type='pty' tty='/dev/pts/6'>   --具体指定删掉
+	      <target type='serial' port='0'/>
+	      <alias name='serial0'/>
+	    </console>
+	    <input type='tablet' bus='usb'>
+	      <alias name='input0'/>
+	    </input>
+	    <input type='mouse' bus='ps2'/>
+	    <graphics type='vnc' port='5915' autoport='no' listen='0.0.0.0'>
+	      <listen type='address' address='0.0.0.0'/>    --vnc端口不可重
+	    </graphics>
+	    <video>                                         --不用视频即可删掉多余
+	      <model type='cirrus' vram='9216' heads='1'/>
+	      <alias name='video0'/>
+	      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+	    </video>
+	    <memballoon model='virtio'>
+	      <alias name='balloon0'/>
+	      <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
+	    </memballoon>
+	  </devices>
+	</domain>
 
 	
 	
