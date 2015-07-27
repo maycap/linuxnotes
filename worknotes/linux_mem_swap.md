@@ -173,9 +173,11 @@ Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在C
 
 >当swap报警时，处理方法
 
-	#查看应用swap占用率，处理对应应用
+	#使用iotop
+	yum install iotop
+
+	#基于smap内容，查看应用swap占用率
 	for i in $( cd /proc;ls |grep "^[0-9]"|awk ' $0 >100') ;do awk '/Swap:/{a=a+$2}END{print '"$i"',a/1024"M"}' /proc/$i/smaps 2>/dev/null ; done | sort -k2nr | head
 
 	#强行清除交换分区
-
 	swapoff -a && swapon -a
