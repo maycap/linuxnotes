@@ -70,9 +70,9 @@ This is notes about squid
 
 This is notes about postgres
 
-* [linux_mem](./worknotes/linux_mem.md)
+* [linux_mem_swap](./worknotes/linux_mem_swap.md)
 
-This is notes about linux memory
+This is notes about linux memory and swap
 
 * [cobbler](./worknotes/cobbler.md)
 
