@@ -6,6 +6,8 @@ Jetty是一个开源的项目，可以提供http服务端，客户端和javax.se
 
 ###Jetty内容介绍
 
+环境使用jetty的jdk版本为1.7,测试案例为9.2，参考文档为[http://www.eclipse.org/jetty/documentation](http://www.eclipse.org/jetty/documentation)
+
 >jetty Versions
 
 
@@ -169,19 +171,19 @@ Jetty版本对应JVM版本，演示案例则需要对应的java版本启动
 	
 >虚拟主机配置，采用最简war方式，直接放在webapps
 
-	#cat test.xml
-	<?xml version="1.0"  encoding="ISO-8859-1"?>
+	<?xml version="1.0" encoding="UTF-8"?>
 	<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure_9_0.dtd">
 	 
 	<Configure class="org.eclipse.jetty.webapp.WebAppContext">
-	  <Set name="contextPath">/test</Set>
-	  <Set name="war"><Property name="jetty.webapps"/>/webapps/test.war</Set>
+	  <Set name="contextPath">/blah</Set>
+	  <Set name="war"><Property name="jetty.webapps"/>/webapps/blah.war</Set>
 	  <Set name="virtualHosts">
 	    <Array type="java.lang.String">
+	      <Item>333.444.555.666</Item>
 	      <Item>127.0.0.1</Item>
-	      <Item>www.test.com</Item>
-	      <Item>www.test.net</Item>
-	      <Item>www.test.org</Item>
+	      <Item>www.blah.com</Item>
+	      <Item>www.blah.net</Item>
+	      <Item>www.blah.org</Item>
 	    </Array>
 	  </Set>
 	</Configure>
