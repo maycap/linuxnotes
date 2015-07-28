@@ -1,9 +1,41 @@
 ##linux_mem_swap##
 
 ###前言###
-与linux_skill并不同，此笔记主要记录linux上关于内存使用的区别，简单来说就是top,free，ps中关于内存使用的解释。外加swap检测与处理。
+与linux_skill并不同，此笔记主要记录linux上关于内存和交换分区。
 
 ***
+
+###buffer和cache
+
+cache可以说是个混合大名词了，旗下有三大分支：cpu\_cache、page\_cache、buffer\_cache
+
+
+>cpu_cache:高速缓存，是位于CPU与主内存间的一种容量较小但速度很高的存储器
+
+由于CPU的速度远高于主内存，CPU直接从内存中存取数据要等待一定时间周期，Cache中保存着CPU刚用过或循环使用的一部分数据，当CPU再次使用该部分数据时可从Cache中直接调用,这样就减少了CPU的等待时间,提高了系统的效率。
+
+Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在CPU内部，L2 Cache早期一般是焊在主板上,现在也都集成在CPU内部，常见的容量有256KB或512KB L2 Cache。	
+
+>page_cache:vfs文件系统层的cache
+
+
+对于一个ext3文件系统而言，每个文件都会有一棵radix树管理文件的缓存页，这些被管理的缓存页被称之为page cache。所以，page cache是针对文件系统而言的。例如，ext3文件系统的页缓存就是page cache。
+
+>buffer_cache:是针对设备的，每个设备都会有一棵radix树管理数据缓存块
+
+为了提高磁盘设备的IO性能，我们采用内存作为磁盘设备的cache。用户操作磁盘设备的时候，首先将数据写入内存，然后再将内存中的脏数据定时刷新到磁盘。这个用作磁盘数据缓存的内存就是所谓的buffer cache。
+
+>buffer\_cache  VS   page\_cache
+
+在以前的Linux系统中，有很完善的buffer cache软件层，专门负责磁盘数据的缓存。在磁盘设备的上层往往会架构文件系统，为了提高文件系统的性能，VFS层同样会提供文件系统级别的page cache。这样就导致系统中存在两个cache，并且重叠在一起，显得没有必要和冗余。为了解决这个问题，在现有的Linux系统中对buffer cache软件层进行了弱化，并且和page cache进行了整合。Buffer cache和page cache都采用radix tree进行维护，只有当访问裸设备的时候才会使用buffer cache，正常走文件系统的IO不会使用buffer cache。
+
+>free中的buffer和cache
+
+	buffer : 作为buffer cache的内存，是块设备的读写缓冲区，更靠近存储设备，或者直接就是disk的缓冲区。
+    cache: 作为page cache的内存, 文件系统的cache，是memory的缓冲区。
+
+ 如果 cache 的值很大，说明cache住的文件数很多。如果频繁访问到的文件都能被cache住，那么磁盘的读IO 必会非常小。
+
 ###free###
 如此常见的命令，直接上数据如下：
 
@@ -52,37 +84,6 @@
 	total（Mem） = used(-/+ buffers/cache) + free(-/+ buffers/cache)
 	32107 = 31726 + 7979
 
-###buffer和cache
-
-cache可以说是个混合大名词了，旗下有三大分支：cpu\_cache、page\_cache、buffer\_cache
-
-
->cpu_cache:高速缓存，是位于CPU与主内存间的一种容量较小但速度很高的存储器
-
-由于CPU的速度远高于主内存，CPU直接从内存中存取数据要等待一定时间周期，Cache中保存着CPU刚用过或循环使用的一部分数据，当CPU再次使用该部分数据时可从Cache中直接调用,这样就减少了CPU的等待时间,提高了系统的效率。
-
-Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在CPU内部，L2 Cache早期一般是焊在主板上,现在也都集成在CPU内部，常见的容量有256KB或512KB L2 Cache。	
-
->page_cache:vfs文件系统层的cache
-
-
-对于一个ext3文件系统而言，每个文件都会有一棵radix树管理文件的缓存页，这些被管理的缓存页被称之为page cache。所以，page cache是针对文件系统而言的。例如，ext3文件系统的页缓存就是page cache。
-
->buffer_cache:是针对设备的，每个设备都会有一棵radix树管理数据缓存块
-
-为了提高磁盘设备的IO性能，我们采用内存作为磁盘设备的cache。用户操作磁盘设备的时候，首先将数据写入内存，然后再将内存中的脏数据定时刷新到磁盘。这个用作磁盘数据缓存的内存就是所谓的buffer cache。
-
->buffer\_cache  VS   page\_cache
-
-在以前的Linux系统中，有很完善的buffer cache软件层，专门负责磁盘数据的缓存。在磁盘设备的上层往往会架构文件系统，为了提高文件系统的性能，VFS层同样会提供文件系统级别的page cache。这样就导致系统中存在两个cache，并且重叠在一起，显得没有必要和冗余。为了解决这个问题，在现有的Linux系统中对buffer cache软件层进行了弱化，并且和page cache进行了整合。Buffer cache和page cache都采用radix tree进行维护，只有当访问裸设备的时候才会使用buffer cache，正常走文件系统的IO不会使用buffer cache。
-
-
->free中的buffer和cache
-
-	buffer : 作为buffer cache的内存，是块设备的读写缓冲区，更靠近存储设备，或者直接就是disk的缓冲区。
-    cache: 作为page cache的内存, 文件系统的cache，是memory的缓冲区。
-
- 如果 cache 的值很大，说明cache住的文件数很多。如果频繁访问到的文件都能被cache住，那么磁盘的读IO 必会非常小。
 
 ***
 ###top
