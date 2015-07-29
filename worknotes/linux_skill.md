@@ -21,6 +21,12 @@
 
 	curl -I  website
 
+>获取google SPF 记录中包含的网段
+
+	nslookup -q=TXT _netblocks.google.com 8.8.8.8   --失败则替换为114.114.114.114
+	nslookup -q=TXT _netblocks2.google.com 8.8.8.8
+	nslookup -q=TXT _netblocks3.google.com 8.8.8.8
+
 ####编辑类
 >替换输出：
 
