@@ -227,7 +227,7 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 
 4.若是要直接访问，不加虚拟目录
 
-	--先修改$CATALINA_BASE/conf/wb.xml
+	--先修改$CATALINA_BASE/conf/web.xml
     <init-param>
         <param-name>listings</param-name>
         <param-value>false</param-value>    -->true
@@ -237,7 +237,7 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 	<Context path="" docBase="/web/mytest" >
 	</Context>
 
-5.多JDK环境
+>多JDK环境
 
 jdk版本整体改动是很困难的，但是少数项目可能使用新版jdk，因此承载新webapp项目的tomcat可能需要指定jdk版本，而不是读取环境变量中的。参考上述JPDA_ADDRESS，依然在setenv.sh中
 
@@ -267,8 +267,42 @@ jdk版本整体改动是很困难的，但是少数项目可能使用新版jdk�
 	export JRE_HOME=/web/jdk1.7.0_67/jre
 	export CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib
 	
+>连接数设置，在server.xml中
+
+1.打开共享的线程池:
+
+	--默认是注释掉，去掉注释即可	
+	<Service name="Catalina">
+	
+	<!--The connectors can use a shared executor, you can define one or more named thread pools-->
+	<!--
+		<Executor name="tomcatThreadPool" namePrefix="catalina-exec-"
+		maxThreads="150" minSpareThreads="4" maxIdleTime="600000"/>
+	-->
+
+	--属性值介绍：
+	name：共享线程池的名字。这是Connector为了共享线程池要引用的名字，该名字必须唯一。
+	namePrefix:在JVM上，每个运行线程都可以有一个name 字符串。这一属性为线程池中每个线程的name字符串设置了一个前缀，Tomcat将把线程号追加到这一前缀的后面。
+	maxThreads：该线程池可以容纳的最大线程数。；
+	maxIdleTime：在Tomcat关闭一个空闲线程之前，允许空闲线程持续的时间(以毫秒为单位)。只有当前活跃的线程数大于minSpareThread的值，才会关闭空闲线程。
+	minSpareThreads：Tomcat应该始终打开的最小不活跃线程数。
+	threadPriority：线程的等级。默认是Thread.NORM_PRIORITY。
+
+2.在Connector中指定使用共享线程池：
+
+	--手动加入
+	<Connector executor="tomcatThreadPool"
+           port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" 
+           minProcessors="5"
+           maxProcessors="75"
+           acceptCount="1000"/>
+ 
+	--属性值介绍：
+	executor：表示使用该参数值对应的线程池；
+	minProcessors：服务器启动时创建的处理请求的线程数；
+	maxProcessors：最大可以创建的处理请求的线程数；
+	acceptCount：指定当所有可以使用的处理请求的线程数都被使用时，可以放到处理队列中的请求数，超过这个数的请求将不予处理。	
 	
 
-	
-	
-	
