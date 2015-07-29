@@ -265,7 +265,7 @@ jdk版本整体改动是很困难的，但是少数项目可能使用新版jdk�
 
 	export JAVA_HOME=/web/jdk1.7.0_67
 	export JRE_HOME=/web/jdk1.7.0_67/jre
-	export CLASSPATH=$CLASSPATH:$JAVA_HOME/lib:$JAVA_HOME/jre/lib
+	export CLASSPATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib
 	
 	
 
