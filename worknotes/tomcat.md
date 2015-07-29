@@ -163,6 +163,16 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 	<Context path="/mytest" docBase="/web/mytest" >
 	</Context>
 
+	！！友情提示，在默认设置下：
+	网页访问的虚拟目录取决于：项目自身设置的访问目录层级,与path路径设置并没有必然联系。
+	一般项目打包名就是虚拟目录名，则配置文件可归为下：
+
+	#cat  myappname.xml
+	<Context path="/myappname" docBase="/web/myappname" >
+	</Context>
+
+	==》为了减少非必要问题，设置一样比较简单易管理。
+
 
 >虚拟目录引申
 
