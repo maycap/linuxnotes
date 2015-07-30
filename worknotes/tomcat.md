@@ -157,15 +157,10 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 
 从官网新下的tomcat默认没有，只要运行一下，会自动创建一个目录为：$CATALINA_BASE/conf/Catalina/localhost/。采用XML配置文件格式，可简单配置虚拟应用如下：
 
+	！！友情提示:
+	webapp访问的虚拟目录取决于：项目自身设置的访问目录层级，一个项目在编译后，项目访问名已固定。一般项目打包名就是虚拟目录名，则配置文件可归为下：
+
 	#访问方式 http://127.0.0.1:8080/mytest
-
-	#cat  mytest.xml
-	<Context path="/mytest" docBase="/web/mytest" >
-	</Context>
-
-	！！友情提示，在默认设置下：
-	网页访问的虚拟目录取决于：项目自身设置的访问目录层级,与path路径设置并没有必然联系。
-	一般项目打包名就是虚拟目录名，则配置文件可归为下：
 
 	#cat  myappname.xml
 	<Context path="/myappname" docBase="/web/myappname" >
@@ -174,7 +169,20 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 	==》为了减少非必要问题，设置一样比较简单易管理。
 
 
->虚拟目录引申
+如果项目需要直接访问，不加虚拟目录
+
+	--先修改$CATALINA_BASE/conf/web.xml
+    <init-param>
+        <param-name>listings</param-name>
+        <param-value>false</param-value>    -->true
+    </init-param>
+
+	#cat  mytest.xml
+	<Context path="" docBase="/web/mytest" >
+	</Context>
+
+
+>端口修改配置
 
 1.首先修改默认端口，主文件conf/server.xml
 
@@ -198,7 +206,7 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 	https port		=>	8601
 	AJP port		=>	8801
 
-2.开启调试端口
+>开启调试端口
 
 生成环境问题，线下重现，断点调试，是个常见的过程，tomcat开启断点功能是很必须的。主配置文件为$CATALINA_BASE/bin/catalina.sh
 
@@ -222,7 +230,7 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 	vim CATALINA_BASE/bin/startup.sh
 	exec "$PRGDIR"/"$EXECUTABLE" jpda start "$@"
 
-3.设置JVM
+>设置JVM
 
 内存是最容易出问题的地方，JVM设置下是必要的。基于上文catalina.sh的友情建议，写在setenv.sh里，参考如下：
 
@@ -235,17 +243,6 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 	-verbose.gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps \
 	-Xloggc:$CATALINA_HOME/logs/gc.log -Djava.awt.headless=true"
 
-4.若是要直接访问，不加虚拟目录
-
-	--先修改$CATALINA_BASE/conf/web.xml
-    <init-param>
-        <param-name>listings</param-name>
-        <param-value>false</param-value>    -->true
-    </init-param>
-
-	#cat  mytest.xml
-	<Context path="" docBase="/web/mytest" >
-	</Context>
 
 >多JDK环境
 
