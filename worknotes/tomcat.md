@@ -161,7 +161,7 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 	webapp访问的虚拟目录取决于：项目自身设置的访问目录层级，一个项目在编译后，项目访问名已固定。
 	一般项目打包名就是虚拟目录名，则配置文件可归为下：
 
-	#访问方式 http://127.0.0.1:8080/mytest
+	#访问方式 http://127.0.0.1:8080/myappname
 
 	#cat  myappname.xml
 	<Context path="/myappname" docBase="/web/myappname" >
