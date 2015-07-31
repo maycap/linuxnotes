@@ -147,5 +147,13 @@
 >远程重启tomcat时，简单采用ssh，会报JAVA_HOME找不到，可采用
 
 	ssh user@host "source /etc/profile;/path/to/tomcat/bin/shutdown.sh"
+
+
+###SOA
+
+>zookeeper客户端
+
+	#连接查看注册信息
+	bin/zkCli.sh -server host ip     
 	
 
