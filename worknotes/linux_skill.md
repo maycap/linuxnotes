@@ -32,6 +32,18 @@
 
 	echo $a | tr . ' '
 
+>grep
+
+grep的语法支持正则表达式,下面是一些有用的参数：
+
+	-A num, --after-context=num: 在结果中同时输出匹配行之后的num行
+	-B num, --before-context=num: 在结果中同时输出匹配行之前的num行，有时候我们需要显示几行上下文。
+	-i, --ignore-case: 忽略大小写
+	-n, --line-number: 显示行号
+	-R, -r, --recursive: 递归搜索子目录
+	-v, --invert-match: 输出没有匹配的行
+
+
 >awk
 	
 	#使用环境变量
