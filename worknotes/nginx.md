@@ -125,6 +125,27 @@
 
 	chmod 400 htpasswd.db   //相当更安全些  
 
-	
 
-	 
+***
+
+###下载静态文件出现错误
+
+>ERR\_CONTENT\_LENGTH\_MISMATCH
+
+某个应用调用abc.js出现如下错误：错误 354 (net::ERR_CONTENT_LENGTH_MISMATCH)：服务器意外关闭了连接。单独访问js所在路径，发现是可以的。查看nginx错误日志：
+
+	tail -f logs/error.log
+
+	2015/08/04 11:04:00 [crit] 15320#0: *6667 open() "/web/nginx/proxy_temp/0/44/0000001440" failed (13: Permission denied) while reading upstream
+
+原因：nginx会缓存大文件到proxy_temp目录中，然而对这个目录没有读写权限
+
+查看对应proxy_temp 权限发现是原同事copy过来，权限为nginx。而nginx配置为并未设置启动用户，采用了默认了nobody账户，导致proxy_temp没有权限写入。
+
+	#添加一项配置或者去掉注释：
+	user  nginx;
+ 
+	#reload
+	/web/nginx/sbin/nginx -t
+	/web/nginx/sbin/nginx -s reload
+
