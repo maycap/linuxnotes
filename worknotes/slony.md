@@ -235,7 +235,7 @@ slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to current
 
 ###问题###
 
->slony正在运行时，删除修改表失败
+>slony正在运行时，删除修改表失败,这种情况就比较惨烈。需要停掉slony，删除触发器，再复制主库ddl，执行到从库
 
 	PGRES_FATAL_ERROR ERROR:  Slony-I: setAddTable_int(): table "public"."t_els_course_study_record" has no index t_els_course_study_record_pkey
 
@@ -245,7 +245,9 @@ slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to current
 
 	CONSTRAINT "t_els_exam_user_pkey" PRIMARY KEY ("exam_user_id")
 
-应先停掉slony，在新建表，然后在删除原先触发器;仅修改除非器不需要停掉slony。
+
+
+正常出现表结构不一致导致失败，不需要停掉slony。由于slony本身会自动重试，只要删除主库触发器，复制主库ddl，新建从库对应表即可。触发器参考如下：
 
 	_els_logtrigger
 	_els_truncatedeny
