@@ -69,6 +69,13 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	echo ${a,,}
 	## 前面输出aTest，后面输出的是atest。	
 
+>字符匹配
+
+	[root@HSlave1 ~]# echo $a
+	abcdef
+	[root@HSlave1 ~]# echo $a  | sed -r 's/ab(.*)ef/\1/g'
+	cd
+
 
 
 ####加密类
