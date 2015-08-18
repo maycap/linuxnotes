@@ -174,5 +174,32 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	#连接查看注册信息
 	bin/zkCli.sh -server host ip     
+
+
+###rsync
+
+>有没有/问题
+	
+	rsync -av /web/work   test:/web/work    ---结果是 test:/web/work/work/*
+
+	rsync -av /web/wrok/  test:/web/work    ---结果是 test:/web/work/*
+
+	=>通过v选项可以看出复制目录层级，target目录不影响
+
+>假同步
+
+	-n, --dry-run               perform a trial run with no changes made
+
+>同步跳过某些文件
+
+	--exclude=PATTERN       exclude files matching PATTERN
+    --exclude-from=FILE     read exclude patterns from FILE
+
+	rsync -av /web/eln4share/xuemall/  --exclude="WEB-INF/classes/env.properties"  web@xx.xx.xx.xx:/web/eln4share/xuemall/
+
+
+	
+
+
 	
 
