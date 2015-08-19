@@ -107,11 +107,14 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 >查看磁盘属性
 
 	yum install sg3_utils
+	#显示硬盘转速
 	sg_vpd  /dev/sda --page=0xb1
 
 	yum install epel-release
 	yum install inxi
-	inxi
+
+	#显示详细信息（-b简略信息)
+	inxi -F  
 	
 
 >清除Cache
@@ -173,7 +176,7 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 >zookeeper客户端
 
 	#连接查看注册信息
-	bin/zkCli.sh -server host ip     
+	bin/zkCli.sh -server host port     
 
 
 ###rsync
