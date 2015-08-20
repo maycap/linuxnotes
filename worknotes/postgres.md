@@ -86,6 +86,17 @@ WAL log的最大数量，系统默认值是3。该值越大，在执行介质恢
 	#*          soft    nproc     1024
 
 
+>PGDATA/base/pgsql_tmp
+
+突然一个邮件报警，磁盘快满，结合前面负载飙升，io很高。通过监控历史得出与某个sql的执行有因果关系。联系相关人停掉运行，在通过查询获取正在跑的相关sql，客户端强行关闭，参考命令如下：
+	
+	select pg_cancel_backend('N'); 
+	select pg_terminate_backend('N');
+
+sql杀完，负载掉下去，发现磁盘一下子多了几百G出来。对照前面数据，得出是base/pgsql_tmp空了。参考官网说明等得出：
+
+数据库临时文件大多时候是由于排序操作导致，当需求内存大于work\_mem所设置的内存时，产生临时文件，形式如：PGDATA/base/pgsql\_tmp/ppp.NNN。其中ppp就是sql自身pid，NNN是为了区分不同文件的后缀。
+
 ***
 
 ###实验###
