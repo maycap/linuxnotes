@@ -18,18 +18,6 @@ This is notes about postgres configure
 
 This is notes about postgres manager
 
-* [KickStart](./worknotes/KickStart.md)
-
-This is notes about KickStart to install centos 
-
-* [pptpd](./worknotes/pptpd.md)
-
-This is notes about pptpd to restrict user login repeatedly
-
-* [EXSI](./worknotes/EXSI.md)
-
-This is notes about EXSI command operation
-
 * [svn](./worknotes/svn.md)
 
 This is notes about Synchronous SVN code to apache work catalog
@@ -37,10 +25,6 @@ This is notes about Synchronous SVN code to apache work catalog
 * [lvm](./worknotes/lvm.md)
 
 This is notes about a few examples of lvm 
-
-* [hadoop](./worknotes/hadoop.md)
-
-This is notes about hadoop install step
 
 * [nginx](./worknotes/nginx.md)
 
@@ -97,6 +81,22 @@ This is notes about jetty
 * [tomcat](./worknotes/tomcat.md)
 
 This is notes about tomcat
+
+* [pptpd](./worknotes/pptpd.md)
+
+This is notes about pptpd to restrict user login repeatedly
+
+* [EXSI](./worknotes/EXSI.md)
+
+This is notes about EXSI command operation
+
+* [hadoop](./worknotes/hadoop.md)
+
+This is notes about hadoop install step
+
+* [KickStart](./worknotes/KickStart.md)
+
+This is notes about KickStart to install centos 
 
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
