@@ -10,6 +10,14 @@ This is notes for linux manage works
 
 This is notes about kills on linux 
 
+* [postgres_conf](./worknotes/postgres_conf.md)
+
+This is notes about postgres configure
+
+* [postgres_manager](./worknotes/postgres_manager.md)
+
+This is notes about postgres manager
+
 * [KickStart](./worknotes/KickStart.md)
 
 This is notes about KickStart to install centos 
@@ -65,10 +73,6 @@ This is notes about lvs keepalived
 * [squid](./worknotes/squid.md)
 
 This is notes about squid 
-
-* [postgres](./worknotes/postgres.md)
-
-This is notes about postgres
 
 * [linux_mem_swap](./worknotes/linux_mem_swap.md)
 
