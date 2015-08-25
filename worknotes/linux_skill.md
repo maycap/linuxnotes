@@ -200,8 +200,13 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	rsync -av /web/eln4share/xuemall/  --exclude="WEB-INF/classes/env.properties"  web@xx.xx.xx.xx:/web/eln4share/xuemall/
 
+###git
 
+>放弃本地修改，强行更新
+	git fetch --all
+	git reset --hard origin/master
 	
+
 
 
 	
