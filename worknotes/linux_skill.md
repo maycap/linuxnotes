@@ -49,9 +49,13 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	#使用环境变量
 	a=q.w.e
 	b=2
+
+	#这种写法其实际是双括号变为单括号的常量,传递给了awk.
+	echo $a | awk -F . '{print "'$b'"}'  
+
 	echo $a | awk -F . '{print $2}'
 	echo $a | awk -F . "{print $"${b}" }"  
-	echo $a | awk  -v r=$b -F. '{print $r}'
+	echo $a | awk  -v r="$b" -F. '{print $r}'
 
 	#从file文件中找出长度大于80的行
 	awk 'length>80' file
