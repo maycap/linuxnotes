@@ -210,6 +210,16 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	git fetch --all
 	git reset --hard origin/master
+
+###iptables
+
+>列出含有序号的INPUT规则，通过num删除
+
+	iptables -L INPUT --line-numbers 
+
+	#举例：删除指定的第4行规则
+	iptables -D INPUT 4
+	
 	
 
 
