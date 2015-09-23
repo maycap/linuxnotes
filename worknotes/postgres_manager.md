@@ -141,4 +141,22 @@ sql回滚和强杀：
 
 	#命令恢复
 	pg_dump uc -t uc_group_20150814 -a > psql uc -t uc_group	
+
+
+####模拟内存表
+
+1.建立tmpfs（ramfs无法限制使用大小）
+	
+	mkdir /web/tmpfs_8G
+	mount -t tmpfs -o size=8G tmpfs /web/tmpfs_8G
+	chown -R postgres.postgres /web/tmpfs_8G
+
+2.建立表空间
+
+	psql> create tablespace tmpfs location '/web/tmpfs_8G';
+
+3.使用表空间
+
+	psql> create database tmpfsdb template template0 owner postgres tablespace tmpfs;
+
 	
