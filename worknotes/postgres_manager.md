@@ -159,4 +159,34 @@ sql回滚和强杀：
 
 	psql> create database tmpfsdb template template0 owner postgres tablespace tmpfs;
 
+
+####垃圾收集与分析
+
+>Name
+
+	VACUUM -- 垃圾收集以及可选地分析一个数据库
+
+>Synopsis
+
+	VACUUM [ FULL | FREEZE ] [ VERBOSE ] [ table ]
+	VACUUM [ FULL | FREEZE ] [ VERBOSE ] ANALYZE [ table [ (column [, ...] ) ] ]
+
+>参数
 	
+	FULL
+	选择"完全"清理，这样可以恢复更多的空间， 但是花的时间更多并且在表上施加了排它锁。
+	
+	FREEZE
+	选择激进的元组"冻结"。
+	
+	VERBOSE
+	为每个表打印一份详细的清理工作报告。
+	
+	ANALYZE
+	更新用于优化器的统计信息，以决定执行查询的最有效方法。
+	
+	table
+	要清理的表的名称（可以有模式修饰）。缺省时是当前数据库中的所有表。
+	
+	column
+	要分析的具体的列/字段名称。缺省是所有列/字段。
