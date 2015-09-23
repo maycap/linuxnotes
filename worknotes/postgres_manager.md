@@ -4,6 +4,30 @@
 postgres数据库管理笔记
 
 ***
+####数据库安装
+
+>必须包
+
+	yum install gcc readline-devel zlib-devel
+
+>源码编译
+
+	
+	groupadd postgres
+	useradd -g postgres postgres
+
+	tar -xf postgresql-9.2.3..tar.gz
+	cd postgresql-9.2.3
+	./configure --prefix=/web/pgsql
+	make
+	make install
+
+	mkdir /web/data
+	chown -R postgres.postgres /web/data
+	su - postgres
+	/web/pgsql/bin/initdb -D /web/data
+
+
 ####授权管理
 
 	#创建用户
