@@ -191,3 +191,61 @@ sql杀完，负载掉下去，发现磁盘一下子多了几百G出来。对照�
 
 	LOG:  checkpoints are occurring too frequently (3 seconds apart)
 	HINT:  Consider increasing the configuration parameter "checkpoint_segments".
+
+
+***
+####wal主从备份
+
+主库修改
+
+>修改pg_hba.conf，增加replica用户，进行同步
+
+	host  replication       replica          192.168.1.0/24        trust
+
+>修改postgresql.conf
+
+	wal_level = hot_standby  # 这个是设置主为wal的主机
+	
+	max_wal_senders = 32 # 这个设置了可以最多有几个流复制连接，差不多有几个从，就设置几个
+	wal_keep_segments = 256 ＃ 设置流复制保留的最多的xlog数目
+	wal_sender_timeout = 60s ＃ 设置流复制主机发送数据的超时时间
+	
+	max_connections = 100 # 这个设置要注意下，从库的max_connections必须要大于主库的
+
+
+>给postgres设置密码，登录和备份权限
+
+	postgres# CREATE ROLE replica login replication encrypted password 'replica'
+
+
+从库配置
+
+>初始化
+
+	#等价方式
+	scp -r 192.168.1.213:/web/data .
+
+	pg_basebackup -F p --progress -D /web/data -h 192.168.1.213 -p 5432 -U replica --password
+
+>recovery.conf
+
+	cp /web/pgsql/share/recovery.conf.sample /web/data/recovery.conf
+
+	#vim 
+	standby_mode = on  # 这个说明这台机器为从库
+	primary_conninfo = 'host=192.168.1.213 port=5432 user=replica password=replica'  # 这个说明这台机器对应主库的信息
+	
+	recovery_target_timeline = 'latest' # 这个说明这个流复制同步到最新的数据
+
+
+状态查看：
+
+>主库反馈信息
+
+	postgres=# select * from pg_stat_replication;
+
+	ps -ef | grep sender
+
+>从库反馈信息
+
+	ps -ef | grep receiver 
