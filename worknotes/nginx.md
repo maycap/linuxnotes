@@ -6,6 +6,33 @@
 
 ***
 
+###nginx升级
+
+>源码下载
+
+	http://nginx.org/download/ 
+
+>获取配置、编译
+
+	nginx -V 
+	
+	./configure  (configure arguments)
+	make && make install
+
+>指定独立用户，或者使用root
+	
+	groupadd nginx
+	useradd -M -s /sbin/nologin -g nginx nginx
+	chown -R nginx.nginx /web/nginx
+
+>TROUBSHOOT
+
+	#before configure nginx
+   	yum install gcc openssl-devel pcre-devel zlib-devel
+
+	#libGeoIP.so.1 error
+	ln -s /usr/local/lib/libGeoIP.so.1 /usr/lib64/
+
 ###nginx主配置
 	server {
 	        listen       443;
