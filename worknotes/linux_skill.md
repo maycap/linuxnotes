@@ -27,6 +27,13 @@
 	nslookup -q=TXT _netblocks2.google.com 8.8.8.8
 	nslookup -q=TXT _netblocks3.google.com 8.8.8.8
 
+>转发3389，访问远程桌面
+
+	iptables -t nat -A PREROUTING -d [跳转机外网IP] -p tcp --dport 3389 -j DNAT --to-destination [winIP]:3389
+	
+	iptables -t nat -A POSTROUTING -d [winIP] -p tcp --dport 3389 -j SNAT --to-source [跳转机内网IP]
+
+
 ####编辑类
 >替换输出：
 
