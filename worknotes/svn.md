@@ -130,6 +130,19 @@
 
 问题得以解决
 
+>bug2
+
+手动执行可以同步，钩子调用失败没报错如下：
+
+	svnsync: /home/apache/.subversion/servers:1: Section header expected
+	
+	-----------------------------------------------------------------------
+	ATTENTION!  Your password for authentication realm:
+
+原因为：自动调用需要验证密码缓存，导致失败，添加 --no-auth-cache
+
+	vim post-commit
+	usr/bin/svnsync sync http://192.168.100.14/svn/repos --username=user  --password=passwd  2>>/tmp/svnsync.log  --no-auth-cache
 
 
 ***
