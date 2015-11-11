@@ -185,6 +185,16 @@ slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to current
 
 可以合并写在一起，更方便
 
+>移除table
+	
+	#!/bin/sh
+	/opt/pgsql/bin/slonik<<_EOF_
+	cluster name = els;
+	node 1 admin conninfo = 'dbname=std1 host=cloud2 user=postgres password=mypassword port=5433';
+	node 2 admin conninfo = 'dbname=report_std1 host=cloud2 user=postgres password=mypassword port=5433';
+	set drop  table ( origin = 1,id=11);
+	_EOF_
+
 ###脚本配置###
 
 在初始完集群的情况下，曾经写了一个，自动建库，自动建立slony基于全库表配置的脚本。可自定义setid,tableid，schemaname,以及指定配置文件，基于一主多从，从库已逗号分隔。
