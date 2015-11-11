@@ -183,7 +183,6 @@ slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to current
 	MERGE SET ( ID = 1, ADD ID = 2, ORIGIN = 1 );
 	_EOF_
 
-可以合并写在一起，更方便
 
 >移除table
 	
@@ -194,6 +193,8 @@ slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to current
 	node 2 admin conninfo = 'dbname=report_std1 host=cloud2 user=postgres password=mypassword port=5433';
 	set drop  table ( origin = 1,id=11);
 	_EOF_
+
+都可合并处理
 
 ###脚本配置###
 
