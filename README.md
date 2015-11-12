@@ -16,6 +16,10 @@ This is notes about postgres configure
 
 * [postgres_manager](./worknotes/postgres_manager.md)
 
+This is notes about psql use
+
+* [psql_use](./worknotes/psql_use.md)
+
 This is notes about postgres manager
 
 * [svn](./worknotes/svn.md)
