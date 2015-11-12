@@ -10,6 +10,31 @@
 
 	yum install http://mirrors.opencas.cn/epel/6/i386/epel-release-6-8.noarch.rpm
 
+>yum本地源
+
+	mkdir -p /mnt/centos
+	mount -o loop CentOS-6.5-x86_64-bin-DVD1.iso /mnt/centos/
+
+	
+	cat /etc/yum.repos.d/CentOS-Media.repo
+
+	# To use this repo, put in your DVD and use it with the other repos too:
+	#  yum --enablerepo=c6-media [command]
+	#  
+	# or for ONLY the media repo, do this:
+	#
+	#  yum --disablerepo=\* --enablerepo=c6-media [command]
+	 
+	[c6-media]
+	name=CentOS-$releasever - Media
+	baseurl=file:///media/CentOS/
+	        file:///media/cdrom/
+	        file:///media/cdrecorder/
+	gpgcheck=0
+	enabled=1
+	gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+	
+
 ####网络类
 
 >查看机器公网IP：
