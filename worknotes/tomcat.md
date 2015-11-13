@@ -182,6 +182,17 @@ webapps是默认的运行web应用实例的目录，也是常见使用官方war�
 	<Context path="" docBase="/web/mytest" >
 	</Context>
 
+>上述失效，走下述
+	修改 Tomcat/conf/server.xml文件
+
+	<Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true"
+            xmlValidation="false" xmlNamespaceAware="false">
+
+	--添加如下一行即可
+        <Context path="" docBase="/web/yourapp" reloadable="true" />
+	
+
 
 >端口修改配置
 
