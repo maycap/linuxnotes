@@ -50,3 +50,8 @@
 
 		>vim-cmd vmsvc/power.on <vmid>
 
+
+***
+>VMware vSphere Client使用端口
+
+	HTTPS(443)与902端口

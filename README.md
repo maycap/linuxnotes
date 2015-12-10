@@ -86,6 +86,14 @@ This is notes about jetty
 
 This is notes about tomcat
 
+* [RH7](./worknotes/RH7.md)
+
+This is notes about RH7 uses
+
+* [apache_httpd](./worknotes/apache_httpd.md)
+
+This is notes about RH7 uses
+
 * [pptpd](./worknotes/pptpd.md)
 
 This is notes about pptpd to restrict user login repeatedly

@@ -58,6 +58,12 @@
 			iptables-save > nat-1.1
 			service iptables save
 
+* ####内核转发开启后，直接添加转发规则也可
+
+		iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j SNAT --to-source 外网ip地址/或者内网IP地址
+
+		注: 如果本地需要访问内网，可以设置为内网IP地址，如果是本地需要通过VPN端访问公网，可以设置为外网IP地址
+
 
 * ####VPN控制
 
