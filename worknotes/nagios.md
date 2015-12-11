@@ -170,6 +170,11 @@ Nagios是一款用于系统和网络监控的应用程序。它可以在你设�
 	cfg_dir=/usr/local/nagios/etc/monitor
 	
 
+邮件发送者设置
+
+	tail /etc/mail.rc 
+
+	set from=nagios@hf.nagios.com
 
 
 利用nrpe收集数据
