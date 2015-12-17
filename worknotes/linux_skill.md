@@ -152,6 +152,19 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	#显示详细信息（-b简略信息)
 	inxi -F  
 	
+>挂载ntfs
+
+	#安装文件系统包
+	wget http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.2-2.el6.rf.x86_64.rpm
+	rpm -ivh rpmforge-release-0.5.2-1.el6.rf.i686.rpm
+	yum install ntfs-3g
+	
+	#找出挂载点
+	fdisk -l
+
+	#挂载
+	mount -t ntfs-3g /dev/sdb1 /mnt/winC
+
 
 >清除Cache
 
