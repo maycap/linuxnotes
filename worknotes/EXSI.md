@@ -50,6 +50,10 @@
 
 		>vim-cmd vmsvc/power.on <vmid>
 
+* ####添加用户
+
+		/usr/lib/vmware/auth/bin/adduser -h / -s /bin/sh -G root youruser
+
 
 ***
 >VMware vSphere Client使用端口
