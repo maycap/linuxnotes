@@ -152,7 +152,49 @@
 
 	chmod 400 htpasswd.db   //相当更安全些  
 
+###静态文件缓存
 
+	#缓存目录设置
+	proxy_temp_path   /web/nginx/proxy_temp_dir 1 2;
+	
+	proxy_cache_path  /usr/local/nginx/proxy_cache_dir/cache1  levels=1:2 keys_zone=cache1:100m inactive=1d max_size=10g;
+
+	#keys_zone=cache1:100m 表示这个zone名称为cache1，分配的内存大小为100MB
+	#/usr/local/nginx/proxy_cache_dir/cache1 表示cache1这个zone的文件要存放的目录
+	#levels=1:2 表示缓存目录的第一级目录是1个字符，第二级目录是2个字符，即/usr/local/nginx/proxy_cache_dir/cache1/a/1b这种形式
+	#inactive=1d 表示这个zone中的缓存文件如果在1天内都没有被访问，那么文件会被cache manager进程删除掉
+	#max_size=10g 表示这个zone的硬盘容量为10GB
+
+
+	#在日志格式中加入$upstream_cache_status
+
+	#具体location设置
+	#设置资源缓存的zone
+
+    proxy_cache cache1;   --缓存名称
+
+    #设置缓存的key
+    proxy_cache_key $host$uri$is_args$args;
+
+    #设置状态码为200和304的响应可以进行缓存，并且缓存时间为10分钟
+    proxy_cache_valid 200 304 10m;
+
+	#添加回应头中的缓存命中状况(MISS,HIT...）
+	add_header X-Cache '$upstream_cache_status';
+
+    expires 30d;
+
+	-----------------备注----------------------
+	alias /web/eln4share/web-static;
+	这种文件就在本地，是不会走缓存的
+
+	proxy_set_header X-FORWARDED-FOR $proxy_add_x_forwarded_for;
+	proxy_set_header Host $host;
+	proxy_pass http://xxx.xxx.com/web-static/;
+	
+	这种才会先缓存到 proxy_temp,再写入proxy_path。因此在proxy_path中可以看到缓存文件
+
+	
 ***
 
 ###下载静态文件出现错误
