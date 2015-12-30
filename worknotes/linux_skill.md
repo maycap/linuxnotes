@@ -33,7 +33,39 @@
 	gpgcheck=0
 	enabled=1
 	gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6
+
+>yum 问题记录
+
+	[root@core /]# yum list
+
+	Loaded plugins: fastestmirror
 	
+	Determining fastest mirrors
+	
+	Error: Cannot retrieve metalink for repository: epel. Please verify its path and try again
+		
+	--->解决方法
+	yum upgrade ca-certificates --disablerepo=epel
+
+>yum 系列问题
+
+	1. yum  install salt-minion
+	
+	....
+	file /usr/lib64/python2.6/zipfile.pyo from install of python-libs-2.6.6-64.el6.x86_64 conflicts with file from package python-2.6.6-36.el6.x86_64
+
+	Error Summary
+
+	--->缩小范围
+	2. yum install python-libs  问题一样
+	
+	最后得出应先升级python
+
+	yum update python
+
+	然后在 yum  install salt-minion
+		
+
 
 ####网络类
 
