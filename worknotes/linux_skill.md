@@ -176,6 +176,8 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	numactl --hardware
 
+	cat /proc/cpuinfo
+
 >查看磁盘属性
 
 	yum install sg3_utils
