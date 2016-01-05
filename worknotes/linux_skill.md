@@ -168,6 +168,10 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 ####系统类
 
+>查看服务器型号
+
+	dmidecode | grep Product
+
 >查看cpu
 
 	numactl --hardware
