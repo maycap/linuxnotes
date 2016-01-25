@@ -6,6 +6,45 @@
 LVM系统教程很多，只记下常使用的一些组合命令以及遇到的坑。
 ***
 
+####parted分区
+
+	1.划分分区大小
+	# parted  /dev/xvdb
+	(parted) mklabel gpt
+	(parted) print 
+	(parted) mkpart primary ext4 0% 100%        (百分比自动调整性能)                              
+	(parted) print
+	(parted) quit
+	
+	2.格式化分区类型
+	# mkfs.ext4 /dev/xvdb1
+	
+	Writing inode tables: done                            
+	Creating journal (32768 blocks): done
+	Writing superblocks and filesystem accounting information:  (直接回车确认)
+	done
+	
+	3.挂在分区
+	# mkdir /web
+	# mount /dev/xvdb1 /web
+	
+	[root@iZ253dtx6qxZ /]# df -h
+	Filesystem      Size  Used Avail Use% Mounted on
+	/dev/xvda1       20G  1.5G   18G   8% /
+	tmpfs            16G     0   16G   0% /dev/shm
+	/dev/xvdb1      985G  200M  935G   1% /web
+	
+	4.设置fstab，开机自动挂载
+	# vim /etc/fstab
+	/dev/xvdb1		/web			ext4	defaults	0 0
+
+
+####vg扩容
+
+	vgextend rootvg /dev/sdb 	
+
+
+
 ####减少分区大小，增加新分区
 	1.umount /dev/vg_eln4/web
 	  
