@@ -22,6 +22,10 @@ This is notes about psql use
 
 This is notes about postgres manager
 
+* [git](./worknotes/git.md)
+
+This is notes about git use
+
 * [svn](./worknotes/svn.md)
 
 This is notes about Synchronous SVN code to apache work catalog
