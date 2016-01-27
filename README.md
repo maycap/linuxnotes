@@ -22,7 +22,7 @@ This is notes about psql use
 
 This is notes about postgres manager
 
-* [git](./worknotes/git.md)
+* [git_use](./worknotes/git_use.md)
 
 This is notes about git use
 
