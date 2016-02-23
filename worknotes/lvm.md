@@ -24,6 +24,10 @@ LVM系统教程很多，只记下常使用的一些组合命令以及遇到的�
 	Writing superblocks and filesystem accounting information:  (直接回车确认)
 	done
 	
+	
+
+>直接挂载（不推荐）
+
 	3.挂在分区
 	# mkdir /web
 	# mount /dev/xvdb1 /web
@@ -38,6 +42,22 @@ LVM系统教程很多，只记下常使用的一些组合命令以及遇到的�
 	# vim /etc/fstab
 	/dev/xvdb1		/web			ext4	defaults	0 0
 
+>加入lvm
+
+	3.创建物理卷PV
+
+	pvcreate /dev/sdb1
+	pvdisplay
+
+	4.创建卷组VG
+
+	vgcreate VG_21tb  /dev/sdb1
+	vgdisplay
+
+	#移除卷组
+	vgremove  VG_21tb
+
+	
 
 ####vg扩容
 
