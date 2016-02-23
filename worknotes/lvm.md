@@ -57,8 +57,6 @@ LVM系统教程很多，只记下常使用的一些组合命令以及遇到的�
 	#移除卷组
 	vgremove  VG_21tb
 
-	
-
 ####vg扩容
 
 	vgextend rootvg /dev/sdb 	
