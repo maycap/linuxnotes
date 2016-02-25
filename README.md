@@ -90,6 +90,11 @@ This is notes about jetty
 
 This is notes about tomcat
 
+* [SUSE](./worknotes/suse.md)
+
+This is notes about suse11 uses
+
+
 * [RH7](./worknotes/RH7.md)
 
 This is notes about RH7 uses
