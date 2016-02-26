@@ -53,6 +53,10 @@
 
 	boot.local中命令启动完毕，才会启动ip配置。因此若命令中涉及ip访问之类，将开不机！
 
+>定时任务
+
+	echo "5 1 * * * allTask.sh " >> /var/spool/cron/tabs/root
+
 
 ###编译类
 
