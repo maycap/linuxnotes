@@ -22,6 +22,12 @@ This is notes about psql use
 
 This is notes about postgres manager
 
+
+* [supervisor](./worknotes/supervisor.md)
+
+This is notes about supervisor which can auto start your program
+
+
 * [git_use](./worknotes/git_use.md)
 
 This is notes about git use
