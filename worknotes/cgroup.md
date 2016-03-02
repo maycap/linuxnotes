@@ -147,9 +147,13 @@ control groups被称之为root cgroup，此时整个系统中的tasks(进程)都
 
 	cat /cgroup/mem/mygroup/memory.limit_in_bytes 
 
-4.	查看cgroup
+4. 查看cgroup
 
-	lscgroupa
+	lscgroup
+
+5. 查看进程使用cgroup
+
+	ps -O cgroup  -e
 
 
 >对进程控制task
@@ -167,6 +171,12 @@ control groups被称之为root cgroup，此时整个系统中的tasks(进程)都
 	
 	sh -c "echo \$$ > /cgroup/cpu_and_mem/group1/tasks &&  python /home/web/jtoy/Jtoy.py &"
 
+
+>配置快照
+
+	手动添加如何自动保存为配置，可以使用 cgsnapshot
+
+	cgsnapshot > /tmp/xxxxx.conf
 
 
 ###写入配置
