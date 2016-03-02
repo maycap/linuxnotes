@@ -23,6 +23,11 @@ This is notes about psql use
 This is notes about postgres manager
 
 
+* [cgroup](./worknotes/cgroup.md)
+
+This is notes about cgroup 
+
+
 * [supervisor](./worknotes/supervisor.md)
 
 This is notes about supervisor which can auto start your program
