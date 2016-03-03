@@ -61,6 +61,11 @@ This is notes about simple introduction of clustershell
 
 This is notes about cacti some troubleshoot
 
+* [bandwidthd](./worknotes/bandwidthd.md)
+
+This is notes about bandwidthd 
+
+
 * [slony](./worknotes/slony.md)
 
 This is notes about slony simple use
