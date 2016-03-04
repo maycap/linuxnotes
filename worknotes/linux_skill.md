@@ -308,6 +308,27 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	iptables -D INPUT 4
 	
 	
+###权限类
+
+>粘滞位
+
+	普通文件的sticky位会被linux内核忽略，  
+	目录的sticky位表示这个目录里的文件只能被owner和root删除,验证如下： 
+
+	[dev@nagios tmp]$ id web
+	uid=6001(web) gid=6002(web) groups=6002(web)
+	[dev@nagios tmp]$ id dev
+	uid=6002(dev) gid=6002(web) groups=6002(web)
+	[dev@nagios tmp]$ ll
+	total 8
+	drwxrwxr-t 2 web web 4096 Mar  4 09:27 test
+	drwxrwxr-x 2 web web 4096 Mar  4 09:27 test2
+
+	[dev@nagios tmp]$ rm -fr test/a
+	rm: cannot remove `test/a': Operation not permitted
+	[dev@nagios tmp]$ rm -fr test2/b 
+	[dev@nagios tmp]$ 
+
 
 
 
