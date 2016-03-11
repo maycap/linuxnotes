@@ -162,4 +162,35 @@
 	登录测试即可实现限制单独账户功能
 
 
+###vpn客户端
 
+>安装
+
+	# yum install ppp pptp pptp-setup  
+
+>创建VPN连接
+
+	pptpsetup --create pppname --server ip --username user --password psword --start
+
+	# 如果报错
+	FATAL: Module ppp_mppe not found.  
+	/usr/sbin/pptpsetup: couldn't find MPPE support in kernel.  
+
+	# modprobe ppp_mppe  
+
+>连接VPN连接
+
+	# pppd call pppname   //这里就是刚才创建的链接名
+
+	#如果报错如下：
+	Using interface ppp0  
+	Connect: ppp0 <--> /dev/pts/3  
+	CHAP authentication succeeded  
+	LCP terminated by peer (MPPE required but peer refused)  
+	Modem hangup   
+
+	# vim /etc/ppp/peers/pppname  //pppname是上面创建的连接  
+  
+	文件尾部，加上以下内容  
+	  
+	require-mppe-128  
