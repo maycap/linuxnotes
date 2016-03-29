@@ -248,4 +248,32 @@ kvm系统采用全虚拟化，在cpu,io采用硬件辅助半虚拟化，性能�
 	</domain>
 
 	
+8.动态添加磁盘
+
+	#添加iso，指定挂载为vdd
+	virsh # attach-disk xp2 /code/kvm/NetKVM.iso vdd
+
+9.修改配置文件添加
+
+	<disk type='file' device='cdrom'>
+      <driver name='qemu' type='raw'/>
+      <source file='/code/kvm/NetKVM.iso'/>
+      <target dev='hdc' bus='ide'/>
+      <readonly/>
+      <alias name='ide0-1-0'/>
+      <address type='drive' controller='0' bus='1' target='0' unit='0'/>
+    </disk>
+
+	#动态添加未必识别，指定配置文件需要先关闭，start or create  xp2 才可获取
+
+
+***
+
+>安装xp网卡不识别
+
+
+	#下载网卡驱动，挂载上去，更新网卡驱动即可
+	http://www.famzah.net/download/kvm/virtio-windows/24.09.2009/NetKVM.iso
+	
+
 	
