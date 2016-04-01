@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+#description:
+#CleanNexus	This is the script to clean nexus war 
+#Retain only the first WARNCOUNT
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: null
+# Should-Start: null
+# version：1.0
+# date:2016-4-1
+### END INFO
+
+BASE='/web/sonatype-work/nexus/storage/snapshots'
+WARNCOUNT=10
+
+for i in `find  $BASE  -type d -name *SNAPSHOT`
+do	
+	count=` ls $i/*.war 2>/dev/null | wc -l`
+	if [ $count -gt $WARNCOUNT ];then
+		TAGFILE=`ls -t $i/*.war | sed -n ${WARNCOUNT}p`
+		find $i ! -newer $TAGFILE -name *.war  -exec rm -fr {} \;
+	fi
+done	
