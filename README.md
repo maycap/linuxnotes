@@ -23,6 +23,11 @@ This is notes about psql use
 This is notes about postgres manager
 
 
+* [psql_use](./worknotes/mysql.md)
+
+This is notes about mysql install and config
+
+
 * [cgroup](./worknotes/cgroup.md)
 
 This is notes about cgroup 
