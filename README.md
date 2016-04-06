@@ -23,7 +23,7 @@ This is notes about psql use
 This is notes about postgres manager
 
 
-* [psql_use](./worknotes/mysql.md)
+* [mysql](./worknotes/mysql.md)
 
 This is notes about mysql install and config
 
