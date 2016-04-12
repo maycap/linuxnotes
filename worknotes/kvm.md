@@ -82,6 +82,11 @@ kvm系统采用全虚拟化，在cpu,io采用硬件辅助半虚拟化，性能�
 
 4.安装镜像
 
+>查看执行系统格式
+
+	virt-install --os-variant list
+
+
 >virt-install命令方式
 
 	virt-install --name=guest4 --file=/web/images/guest4.dsk --file-size=8 \
@@ -274,6 +279,30 @@ kvm系统采用全虚拟化，在cpu,io采用硬件辅助半虚拟化，性能�
 
 	#下载网卡驱动，挂载上去，更新网卡驱动即可
 	http://www.famzah.net/download/kvm/virtio-windows/24.09.2009/NetKVM.iso
+
+>exsi5.5 二次虚拟化
+
+	1. egrep -c '(vmx|svm)' /proc/cpuinfo 
+	查看cpu是否支持虚拟化
+
+	2. 关闭虚拟机
+
+	3. vim  kvm1.vmx
+	 
+	#尾行计入四行配置，开启cpu虚拟化
+	nce.enable = TRUE
+	hypervisor.cpuid.v0 = FALSE
+	featMask.vm.hv.capable ="Min:1"
+	vhv.enable= TRUE
+
+	4. 启动虚拟机
+	
+	5. lsmod | grep kvm
+	检测kvm模块是否加载
+	
+
+
+
 	
 
 	
