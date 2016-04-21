@@ -26,6 +26,13 @@ postgres数据库配置笔记
 
 	timezone = 'Asia/Shanghai'
 	log_timezone = 'Asia/Shanghai'
+
+>null排序
+
+	Nulls first/last
+	
+	参数first，默认null值为无限大
+	参数last，默认null值为无限小
 	
 ###fsync (boolean)
 	
