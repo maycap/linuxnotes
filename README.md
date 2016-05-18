@@ -146,7 +146,18 @@ This is notes about KickStart to install centos
 
 * [TroubleShoot](./worknotes/TroubleShoot.md)
 
-This is ntoes about some troubleshoot of work
+This is notes about some troubleshoot of work
+
+***
+###On [netnotes](./netnotes)
+
+This is notes for network
+
+
+* [NetSpeed](./netnotes/NetSpeed.md)
+
+This is notes about net speed
+
 
 ***
 ###On [managescript catalog](./managescript)
