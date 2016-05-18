@@ -194,6 +194,67 @@
 	
 	这种才会先缓存到 proxy_temp,再写入proxy_path。因此在proxy_path中可以看到缓存文件
 
+###正则匹配
+
+简而言之，举例如下：
+
+    if ($request_uri ~ "^(\/)?$"){
+        set $iftmp Y;
+    }
+	
+	if ($host ~ "(www\.shishi\.com|www\.xn--ee3aa\.com)"){
+		set $iftmp "${iftmp}Y";
+	}
+
+	if ($iftmp = YY ) {
+		rewrite ^(.*)$ http://$host/shishi/index.do permanent;
+	}
+
+参考内容：
+
+>正则匹配：
+
+	=	表示精确匹配
+	~	表示区分大小写的正则匹配
+	~*	表示不区分大小写的正则匹配
+	/ 	通用匹配, 如果没有其它匹配,任何请求都会匹配到
+	!	~和!~*分别为区分大小写不匹配及不区分大小写不匹配
+	^ 	以什么开头的匹配
+	$	以什么结尾的匹配
+	^~	表示uri以某个常规字符串开头，不是正则匹配
+	* 代表任意字符
+
+>需要转义字符
+
+	. * ? / ( )
+
+>文件及目录匹配
+
+	-f和!-f用来判断是否存在文件
+	-d和!-d用来判断是否存在目录
+	-e和!-e用来判断是否存在文件或目录
+	-x和!-x用来判断文件是否可执行
+
+
+>rewrite指令的最后一项参数为flag标记，flag标记有：
+
+	1.last    	相当于apache里面的[L]标记，表示rewrite。
+	2.break		本条规则匹配完成后，终止匹配，不再匹配后面的规则。
+	3.redirect  返回302临时重定向，浏览器地址会显示跳转后的URL地址。
+	4.permanent	返回301永久重定向，浏览器地址会显示跳转后的URL地址。
+
+>常见内置变量
+
+	$args			请求中的参数值
+	$arg_name		请求中的的参数名，即“?”后面的arg_name=arg_value形式的arg_name
+	$host			请求中的主机头字段，如果请求中的主机头不可用，则为服务器处理请求的服务器名称
+	$remote_addr	客户端的IP地址
+	$remote_port	客户端的端口
+	$remote_user	已经经过Auth Basic Module验证的用户名
+	$request_uri	这个变量等于包含一些客户端请求参数的原始URI，它无法修改，请查看$uri更改或重写URI
+	$uri			请求中的当前URI(不带请求参数，参数位于$args)，可以不同于浏览器传递的$request_uri的值，
+					它可以通过内部重定向，或者使用index指令进行修改，$uri不包含主机名，如”/foo/bar.html”
+	
 	
 ***
 
@@ -217,4 +278,5 @@
 	#reload
 	/web/nginx/sbin/nginx -t
 	/web/nginx/sbin/nginx -s reload
+
 
