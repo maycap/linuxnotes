@@ -128,6 +128,10 @@ This is notes about RH7 uses
 
 This is notes about RH7 uses
 
+* [postfix](./worknotes/postfix.md)
+
+This is notes about postfix
+
 * [pptpd](./worknotes/pptpd.md)
 
 This is notes about pptpd to restrict user login repeatedly
