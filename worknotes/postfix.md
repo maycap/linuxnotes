@@ -49,10 +49,12 @@
 
 	#添加方式
 	smtpd_recipient_restrictions =
-       check_recipient_access hash:/etc/postfix/recipient_access,
-	   check_client_access hash:/etc/postfix/client_checks,
-	   check_sender_access hash:/etc/postfix/sender_checks,
-	   ....
+		check_recipient_access hash:/etc/postfix/recipient_access,
+		check_client_access hash:/etc/postfix/client_checks,
+		check_sender_access hash:/etc/postfix/sender_checks,
+		....
+		reject		#除此之外全部拒绝接收
+
 
 	#参考配置
 	# cat /etc/postfix/client_checks
@@ -72,5 +74,7 @@
 	#cat /etc/postfix/recipient_access
 	xxx@example.com   		REJECT  #具体地址
 	example.com             REJECT  #对整个域实现访问控制
+
+	修改规则需要 postmap client_checks，才开
 
 	
