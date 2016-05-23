@@ -75,6 +75,6 @@
 	xxx@example.com   		REJECT  #具体地址
 	example.com             REJECT  #对整个域实现访问控制
 
-	修改规则需要 postmap client_checks，才开
+	修改规则需要 postmap client_checks，才能生效
 
 	
