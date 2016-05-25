@@ -144,6 +144,25 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	[root@HSlave1 ~]# echo $a  | sed -r 's/ab(.*)ef/\1/g'
 	cd
 
+>文件编码
+
+	#vim 中查看文件编码：
+	set fileencoding
+	（备注：如果vim按照fileencodings提供的编码尝试不到文件编码，就用latin1编码打开）
+	（比如：中文编码gb2312 ，vim提示编码就为latin1)
+
+	#vim修改编码，前提识别对编码才可
+	set fileencoding=utf-8
+
+	#iconv转码编码
+	iconv -t utf-8 -f gb2312 -c my_database.sql > new.sql
+	iconv -t utf-8 -f gb2312 -c my_database.sql | tee my_database.sql
+	
+	#iconv参数解析：
+		-f  原编码
+		-t  目标编码
+		-c 忽略无法转换的字符
+	
 
 
 ####加密类
