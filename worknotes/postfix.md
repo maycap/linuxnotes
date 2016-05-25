@@ -3,6 +3,24 @@
 ###前言
 记录搭建本地邮件服务器遇到的一些问题
 
+
+###批量添加用户
+
+postfix用户管理主要集中在postfix.mailbox和postfix.alias这两张表，遍历生成对应sql插入，可以简单实现批量添加用户的需求，参考脚本：[PostfixUser](../giftscript/PostfixUser)
+
+>用法实例：
+
+	#下载脚本放到对应的邮件数据库服务器上，通过调用mysql客户端执行
+	#遍历用户列表
+	cat list
+		test,测试账户
+		kitty,小明
+		jony,大明
+
+	chmod +x PostfixUser
+	./PostfixUser list
+	
+
 ###问题记录
 
 >本地邮件发送失败

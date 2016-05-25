@@ -1,0 +1,87 @@
+#!/bin/sh
+#
+#description:
+#PostfixUser.sh		this is script that add mail users 
+#
+#### BEGIN INFO
+# Provides: maycap
+# Required-Start: postfix mysql server is running
+# Should-Start: null
+# version：1.0
+# date:2016-05-24
+### END INFO
+
+
+#this is CONSTANT
+DOMAIN='test.com'
+MAILPASSWORD='{CRAM-MD5}xxxx'
+QUOTA='0'
+USERNAME='postfixuser'
+PASSWORD='postfixpassword'
+DBNAME='postfixdb'
+MAILBOXSQLFILE='./mailbox.sql'
+ALIASSQLFILE='./alias.sql'
+#create add user sql
+
+namelist=$1
+#test,测试账户
+
+function TestFile(){
+	filename=$1
+	if [ -s $filename ];then
+		return 0
+	else
+		touch $filename
+	fi
+}
+
+TestFile $MAILBOXSQLFILE
+TestFile $ALIASSQLFILE
+
+echo 'INSERT INTO `postfix`.`mailbox`' > $MAILBOXSQLFILE
+echo '(username,password,name,maildir,quota,local_part,domain,created,modified,active)' >>$MAILBOXSQLFILE
+echo 'VALUES' >> $MAILBOXSQLFILE
+
+echo 'INSERT INTO `postfix`.`alias`' >$ALIASSQLFILE
+echo '(address, goto, domain, created, modified, active)' >>$ALIASSQLFILE
+echo 'VALUES' >>$ALIASSQLFILE
+
+for nameinfo in `cat $namelist`
+do
+	username=${nameinfo%%,*}
+	name=${nameinfo##*,}
+	echo "(" >> $MAILBOXSQLFILE
+	echo "'"${username}@qgutech.com"'," >> $MAILBOXSQLFILE
+	echo "'"${MAILPASSWORD}"'," >> $MAILBOXSQLFILE
+	echo "'"${name}"'," >> $MAILBOXSQLFILE
+	echo "'qgutech.com/"${username}"/',"  >> $MAILBOXSQLFILE
+	echo "'0'," >> $MAILBOXSQLFILE
+	echo "'"${username}"'," >> $MAILBOXSQLFILE
+	echo "'qgutech.com'," >> $MAILBOXSQLFILE
+	echo "'2016-05-24 10:09:55',"  >> $MAILBOXSQLFILE
+	echo "'2016-05-24 10:09:55',"  >> $MAILBOXSQLFILE
+	echo "'1'"  >> $MAILBOXSQLFILE
+	echo "),"  >> $MAILBOXSQLFILE
+
+	echo "(" >> $ALIASSQLFILE
+	echo "'"${username}@qgutech.com"'," >> $ALIASSQLFILE
+	echo "'"${username}@qgutech.com"'," >> $ALIASSQLFILE
+	echo "'qgutech.com'," >> $ALIASSQLFILE
+	echo "'2016-05-24 10:09:55',"  >> $ALIASSQLFILE
+	echo "'2016-05-24 10:09:55',"  >> $ALIASSQLFILE
+	echo "'1'"  >> $ALIASSQLFILE
+	echo "),"  >> $ALIASSQLFILE
+
+done
+	
+#替换最后一个,为;
+sed -i ':a;N;$!ba;s/\(.*\),/\1;/' $MAILBOXSQLFILE
+sed -i ':a;N;$!ba;s/\(.*\),/\1;/' $ALIASSQLFILE
+
+
+echo "Now excute sql..."
+mysql -u${USERNAME} -p${PASSWORD} <$MAILBOXSQLFILE
+mysql -u${USERNAME} -p${PASSWORD} <$ALIASSQLFILE
+
+rm -fr $MAILBOXSQLFILE
+rm -f $ALIASSQLFILE
