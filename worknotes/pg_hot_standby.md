@@ -1,7 +1,7 @@
 ##postgresql hot_standby
 
 ###前言
-PostgreSQL hot standby就是实现多个PostgreSQL节点实现数据同步(其实9.0x不只是异步)、这个同步是针对整数集群的(包含一切的数据、 DDL,DCL都会在salve上同步)。salve在利用日志恢复数据同时也能提供只读的操作，这样就可以利用这个技术实现多台主机数据同步和读取操作 的负载平衡。
+PostgreSQL hot standby就是实现多个PostgreSQL节点实现数据同步(其实9.x不只是异步)、这个同步是针对整数集群的(包含一切的数据、DDL、DCL都会在salve上同步)。salve在利用日志恢复数据同时也能提供只读的操作，这样就可以利用这个技术实现多台主机数据同步和读取操作的负载平衡。
 
 ###部署
 
