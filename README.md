@@ -22,6 +22,10 @@ This is notes about psql use
 
 This is notes about postgres manager
 
+* [pg_hot_standby](./worknotes/pg_hot_standby.md)
+
+This is notes about postgres hot_standby
+
 
 * [mysql](./worknotes/mysql.md)
 
