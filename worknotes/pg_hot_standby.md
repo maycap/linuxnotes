@@ -99,9 +99,27 @@ PostgreSQL hot standby就是实现多个PostgreSQL节点实现数据同步(其�
 	Database system identifier:           6286792961765534492
 	Database cluster state:               in archive recovery
 
+###监控
+
+>WAL记录监控
 
 
-	
+主库查看流复制最后一个WAL记录位置
+
+	select  pg_current_xlog_location();
+
+
+从库查看从库最后一个WAL记录位置
+
+	select  pg_last_xlog_receive_location();
+
+
+每WAL发送进程一行，显示关于复制到发送端的链接备用服务器的统计信息(比如sent\_location)，字段解析参考：[PG-STAT-REPLICATION-VIEW](http://www.postgres.cn/docs/9.4/monitoring-stats.html#PG-STAT-REPLICATION-VIEW)
+
+	select * from pg_stat_replication;
+
+
+在pg\_current\_xlog\_location和sent\_location字段之间的不同可能表明主服务器在大负载下，而备库上sent\_location和 pg\_last\_xlog\_receive\_location的不同可能表明网络延迟，或者备库也处于重大负载之下。
 
 	
 
