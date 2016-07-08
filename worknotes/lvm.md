@@ -77,12 +77,15 @@ LVM系统教程很多，只记下常使用的一些组合命令以及遇到的�
 	5.mkfs.ext4 /dev/vg_eln4/mfs_data
 	
 	6.mkdir /usr/local/mfs
+
+	7.blkid /dev/sdb1
+	#获取uuid，防止个别系统无法识别
 	
-	7.fstab
+	8.fstab
 		/dev/vg_eln4/mfs_data /usr/local/mfs    ext4  defaults   0 0
 		#开机lvm检测失败导致启动异常，使用 0 0，跳过检测
 	
-	8.mount -a
+	9.mount -a
 
 ####在线添加分区
 	e2fsck -f /dev/vg_eln4/web
