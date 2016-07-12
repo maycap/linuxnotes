@@ -52,6 +52,25 @@
 
 由于linux是文件系统，可以直接复制使用，另外一台服务器若要使用，直接scp过去即可。
 
+
+###jdk1.7+验证码问题
+
+>报错提示参考
+
+	Could not initialize class sun.awt.X11FontManager
+
+	/libfontmanager.so: libgcc_s.so.1: cannot open shared object file: No such file or directory
+
+>对应安装
+
+	#yum install dejavu*
+	yum groupinstall Fonts
+	yum install libgcc_s.so.1
+	ldconfig
+
+	restart tomcat	
+
+
 ***
 ###执行sh编码问题###
 
