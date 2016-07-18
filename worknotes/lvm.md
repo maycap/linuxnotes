@@ -113,6 +113,15 @@ LVM系统教程很多，只记下常使用的一些组合命令以及遇到的�
 	ctrl-D
 	reboot
 
+###磁盘丢失，vg修复
+
+	Cannot change VG VolGroup00 while PVs are missing.
+
+	解决方法
+	vgreduce --removemissing VolGroup
+
+	常规移除
+	vgreduce VolGroup   /dev/sdb1
 
 
 
