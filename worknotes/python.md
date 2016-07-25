@@ -55,6 +55,14 @@ python官网下载地址是：https://www.python.org/downloads，参考实例：
 ###安装pip
 
 	wget https://bootstrap.pypa.io/get-pip.py --no-check-certificate
+
+修改pip源
+
+	vim ~/.pip/pip.conf
+	[global]
+	index-url = http://mirrors.aliyun.com/pypi/simple/
+	[install]
+	trusted-host=mirrors.aliyun.com
 	 
 
 troubleshoot:
@@ -103,5 +111,7 @@ troubleshoot:
 	
 	source yourEnvName/bin/activate
 	
+	pip freeze  >  requirements.txt
+	pip install  -r  requirements.txt
 
 	

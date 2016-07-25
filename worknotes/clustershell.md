@@ -23,7 +23,8 @@ clustershell是python编写，不支持windows，可用python方式安装，源�
 
 nodeset可用于节点控制，简单点可以直接添加/etc/clustershell/groups
 
-	vim /etc/clustershell/groups
+	#old vim /etc/clustershell/groups
+	vim /etc/clustershell/groups.d/local.cfg
 	hadoop: HSlave[1-3,6-17,20],HClient[1-2]
 
 	需要添加ssh认证，hadoop集群默认已添加
