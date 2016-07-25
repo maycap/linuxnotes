@@ -16,13 +16,13 @@ python官网下载地址是：https://www.python.org/downloads，参考实例：
 	#安装ipython需要的插件
 	
 	
-	wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tar.xz
-	tar xvf Python-2.7.9.tar.xz
-	cd Python-2.7.9
-	make all
+	wget https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tgz
+	tar xvf Python-2.7.12.tar.xz
+	cd Python-2.7.12
+	./configure --prefix=/opt/python2.9.11
+	make 
 	make install
-	make clean
-	make distclean
+
 
 ###配置修改
 安装python2.7.9后，默认仍是指向python2.6，需要重新指向。由于yum依赖python2.6，需要保留原有的python2.6。
@@ -91,6 +91,17 @@ troubleshoot:
 
 	ImportError: No module named zmq
 	pip install pyzmq
+
+###使用virtualenv
+
+	yum -y install epel-release
+	yum -y python-pip
+
+	pip install virtualenv
+
+	virtualenv --python=/opt/python2.7/bin/python2.7 yourEnvName
+	
+	source yourEnvName/bin/activate
 	
 
 	
