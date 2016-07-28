@@ -62,6 +62,11 @@ This is notes about a few examples of lvm
 
 This is notes about use nginx 
 
+
+* [nginx](./worknotes/lua.md)
+
+This is notes about use lua 
+
 * [python](./worknotes/python.md)
 
 This is notes about python2.6 -> python2.7 
