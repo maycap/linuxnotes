@@ -258,6 +258,62 @@
 	
 ***
 
+###nginx php7
+
+>php7 编译
+
+	wget http://cn.php.net/distributions/php-7.0.9.tar.bz2
+	./configure --prefix=/opt/php7 --with-config-file-path=/usr/local/php7/etc --with-config-file-scan-dir=/usr/local/php7/etc/php.d --with-mcrypt=/usr/include --enable-mysqlnd --with-mysqli --with-pdo-mysql --enable-fpm --with-fpm-user=nginx --with-fpm-group=nginx --with-gd --with-iconv --with-zlib --enable-xml --enable-shmop --enable-sysvsem --enable-inline-optimization --enable-mbregex --enable-mbstring --enable-ftp --enable-gd-native-ttf --with-openssl --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --without-pear --with-gettext --enable-session --with-curl --with-jpeg-dir --with-freetype-dir --enable-opcache
+
+	make -j 3
+	make test
+	make install
+
+>php配置
+
+	cd  php-7.0,9
+	cp php.ini-production /usr/local/php7/etc/php.ini
+	
+	cd /usr/local/php7/etc
+	cp php-fpm.conf.default php-fpm.conf
+	cp php-fpm.d/www.conf.defualt php-fpm.d/www.conf
+
+>php-fpm自启动
+
+	cd /usr/src/php-7.0.0/sapi/fpm
+	cp init.d.php-fpm /etc/init.d/php-fpm
+	chmod +x /etc/init.d/php-fpm
+	chkconfig --add php-fpm
+	chkconfig php-fpm on
+
+>nginx默认编译也可，参考配置
+
+	#显示目录列表，默认不显示目录
+	autoindex on;
+    autoindex_exact_size off;
+    autoindex_localtime on;
+
+	location / {
+           root /web/php_sys_svn;
+           # index  test.php index.html index.htm;
+        }
+
+	location ~(.*\.json) {
+		root /web/php_sys_svn;
+		error_page 405 =200 $1;
+	}
+
+	location ~ \.php$ {
+            root           /web/php_sys_svn;
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include        fastcgi_params;
+        }
+
+
+***
+
 ###下载静态文件出现错误
 
 >ERR\_CONTENT\_LENGTH\_MISMATCH
