@@ -18,10 +18,13 @@
 	#严格安装 resolv-file 文件中的顺序从上到下进行 DNS 解析, 直到第一个成功解析成功为止
 	strict-order
 
-	#确保注释掉 no-hosts, 默认情况下这是注释掉的,dnsmasq 会首先寻找本地的 hosts 文件再去寻找缓存下来的域名, 最后去上游 dns 服务器寻找.
+	#确保注释掉 no-hosts, 默认情况下这是注释掉的,
+	#dnsmasq 会首先寻找本地的 hosts 文件再去寻找缓存下来的域名, 最后去上游 dns 服务器寻找.
 	#no-hosts
 		
-	#设置：listen-address=127.0.0.1，表示这个 dnsmasq 本机自己使用有效。注意：如果你想让本机所在的局域网的其它电脑也能够使用上Dnsmasq，应该把本机的局域网IP加上去：listen-address=192.168.1.11,127.0.0.1。注意：如果想允许所有的用户使用你的DNS解析服务器，把listen-address去掉即可。
+	#设置：listen-address=127.0.0.1，表示这个 dnsmasq 本机自己使用有效。
+	#注意：如果你想让本机所在的局域网的其它电脑也能够使用上Dnsmasq，应该把本机的局域网IP加上去：listen-address=192.168.1.11,127.0.0.1。
+	#注意：如果想允许所有的用户使用你的DNS解析服务器，把listen-address去掉即可。
 	#listen-address=
 
 	#默认先读取/etc/hosts，可以自定义hosts解析文件
