@@ -62,6 +62,10 @@ This is notes about a few examples of lvm
 
 This is notes about use nginx 
 
+* [dnsmasq](./worknotes/dnsmasq.md)
+
+This is notes about use dnsmasq 
+
 
 * [lua](./worknotes/lua.md)
 
