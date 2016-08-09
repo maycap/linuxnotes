@@ -287,6 +287,11 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	ssh user@host "source /etc/profile;/path/to/tomcat/bin/shutdown.sh"
 
+>ssh使用awk，$2打印失效，原因是变量被ssh执行过程中解析，需要逃逸
+
+	ssh 192.168.1.123 "source /etc/profile; if [ $( ps -ef | grep /web/service/tomcat9_xx_8003|grep -v grep | wc -l) -eq 1 ];then ps -ef | grep /web/service/tomcat9_xx_8003|grep -v grep | awk '{print \$2}'| xargs kill -9;fi"
+
+
 
 ###SOA
 
