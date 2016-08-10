@@ -291,6 +291,19 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	ssh 192.168.1.123 "source /etc/profile; if [ $( ps -ef | grep /web/service/tomcat9_xx_8003|grep -v grep | wc -l) -eq 1 ];then ps -ef | grep /web/service/tomcat9_xx_8003|grep -v grep | awk '{print \$2}'| xargs kill -9;fi"
 
+####进程类
+
+>获取命令当前进程号(pid)
+
+	tail -f access.log & echo $! 
+
+>获取脚本执行时当前进程号
+
+	#!/bin/sh	
+	echo $$
+	#echo $$ > /tmp/xxx.pid
+	sleep 100
+	echo 'over'
 
 
 ###SOA
