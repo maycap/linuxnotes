@@ -64,7 +64,11 @@
 	yum update python
 
 	然后在 yum  install salt-minion
-		
+
+>yum 使用
+
+	#反查相关内容由哪个安装包提供
+	yum whatprovides *xx*	
 
 
 ####网络类
