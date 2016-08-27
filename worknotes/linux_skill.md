@@ -93,6 +93,13 @@
 	iptables -t nat -A PREROUTING -d [跳转机外网IP] -p tcp --dport 3389 -j DNAT --to-destination [winIP]:3389
 	
 	iptables -t nat -A POSTROUTING -d [winIP] -p tcp --dport 3389 -j SNAT --to-source [跳转机内网IP]
+	
+>远程端口检测
+
+	1.nmap -p [port] ip
+	
+	#无须输入即可批量得到返回值
+	2.echo -e '\n' | telnet [port] ip
 
 
 ####编辑类
