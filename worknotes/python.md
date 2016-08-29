@@ -91,6 +91,16 @@ troubleshoot:
 	pip install ipython
 
 
+###SimpleHTTPServer
+
+>python -m Web服务器模块 [端口号，默认8000]
+
+	python -m SimpleHTTPServer 8080
+	
+	BaseHTTPServer: 提供基本的Web服务和处理器类，分别是HTTPServer和BaseHTTPRequestHandler。
+	SimpleHTTPServer: 包含执行GET和HEAD请求的SimpleHTTPRequestHandler类。
+	CGIHTTPServer: 包含处理POST请求和执行CGIHTTPRequestHandler类。
+	
 
 ###salt
 	#安装pyzmq报错，提示安装
