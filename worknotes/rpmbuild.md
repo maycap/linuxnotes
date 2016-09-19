@@ -94,4 +94,7 @@
 	
 	%post是rpm安装完毕后执行的操作，可用于修改属性，移动脚本之类的
 	
-	
+>编译
+
+	cd ~/rpmbuild/SPECS
+	rpmbuild -ba  squid.spec
