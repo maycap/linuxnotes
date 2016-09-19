@@ -70,6 +70,9 @@
 	#反查相关内容由哪个安装包提供
 	yum whatprovides *xx*	
 
+>rpm解压
+
+	rpm2cpio xxx.rpm | cpio -div
 
 ####网络类
 
