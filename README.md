@@ -75,6 +75,10 @@ This is notes about use lua
 
 This is notes about python2.6 -> python2.7 
 
+* [rpmbuild](./worknotes/rpmbuild.md)
+
+This is notes about use rpmbuild 
+
 * [clustershell](./worknotes/clustershell.md)
 
 This is notes about simple introduction of clustershell
