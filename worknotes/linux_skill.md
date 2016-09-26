@@ -73,6 +73,11 @@
 >rpm解压
 
 	rpm2cpio xxx.rpm | cpio -div
+	
+>yum 下载
+
+	yum install yum-utils
+	yumdownloader xxx-xx
 
 ####网络类
 
