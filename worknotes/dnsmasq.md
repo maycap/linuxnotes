@@ -1,10 +1,11 @@
-###dnsmasq
+### dnsmasq
 
-####前言
+#### 前言
+
 对比bind，dnsmasq的确上手N快，配置简单
 
 
-####实例
+#### 实例
 
 >install
 

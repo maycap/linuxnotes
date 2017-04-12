@@ -1,14 +1,14 @@
-#apache_httpd
+# apache_httpd
 
 ***
 记录关于apache--httpd的一些配置。
 
 
-####httpd转发监听
+#### httpd转发监听
 
 	ProxyPass /nexus http://127.0.0.1:8081/nexus
 
-#####虚拟域名配置
+##### 虚拟域名配置
 
 	vim httpd.conf
 	#去掉注释，启用虚拟域名服务

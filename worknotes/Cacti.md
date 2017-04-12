@@ -1,13 +1,13 @@
-##Cacti##
+## Cacti
 
 ***
-###前言###
+### 前言
 Cacti 在英文中的意思是仙人掌的意思，Cacti是一套基于PHP、MySQL、SNMP及RRDTool开发的网络流量监测图形分析工具。它通过snmpget来获取数据，使用 RRDtool绘画图形，它的界面非常漂亮，能让你根本无需明白rrdtool的参数能轻易的绘出漂亮的图形。
 
 
-###Cacti安装###
+### Cacti安装
 
-####安装LAMP环境####
+#### 安装LAMP环境
 
 	rpm -ivh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
 	ntpdate 202.120.2.101
@@ -15,7 +15,7 @@ Cacti 在英文中的意思是仙人掌的意思，Cacti是一套基于PHP、MyS
 
 	.....
 
-###httpd配置###
+### httpd配置
 
 	cat /etc/httpd/conf/httpd.conf
 	<VirtualHost *:80>
@@ -35,14 +35,16 @@ Cacti 在英文中的意思是仙人掌的意思，Cacti是一套基于PHP、MyS
 
 
 
-###模板资源###
+### 模板资源
+
 官方地址为 http://docs.cacti.net/templates，默认规则大致为：
 >体积大小4K的，属于模板。 console->Import Templates->import
 >
 >体积小小4k的，属于配置。 参考路径为：/web/vhosts/cacti/resource/snmp_queries/disk_io.xml
 
 
-###配置思路简单总结###
+### 配置思路简单总结 
+
 	1.下载模板，导入模板和配置文件
 
 	2.Host Templates->add->centos_1
@@ -100,7 +102,8 @@ Cacti 在英文中的意思是仙人掌的意思，Cacti是一套基于PHP、MyS
 
 
 	
-###TROUBLESHOOT###
+### TROUBLESHOOT
+
 初始登录失败
 
 	#查看mysql编码
@@ -169,7 +172,8 @@ spine替换cmd.php
 	说明：spine默认配置文件需要放在/etc才会生效，否则报如下错误：
 	SPINE: Poller[0] FATAL: Unable to read configuration file! (Spine init)
 		
-###客户端设置###
+### 客户端设置
+
 	yum install net-snmp
 
 	vim /etc/snmpd/snmpd.conf

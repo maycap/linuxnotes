@@ -1,6 +1,6 @@
-##cgroup
+## cgroup
 
-###简介
+### 简介
 
 Cgroups是control groups的缩写，是Linux内核提供的一种可以限制、记录、隔离进程组（process groups）所使用的物理资源（如：cpu,memory,IO等等）的机制。
 
@@ -179,7 +179,7 @@ control groups被称之为root cgroup，此时整个系统中的tasks(进程)都
 	cgsnapshot > /tmp/xxxxx.conf
 
 
-###写入配置
+### 写入配置
 
 手动调节很有成就感，不过一旦重启就要再来一遍，很容易忘记。因此写入配置文件，一目了然。
 

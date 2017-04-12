@@ -1,7 +1,7 @@
-###git notes###
+### git notes
 
 ***
-###前言###
+### 前言
 
 git使用备忘录
 ***
@@ -24,3 +24,7 @@ git使用备忘录
 	git rm -r --cached .
 	git add .
 	git commit -m 'update .gitignore'
+
+>忽略本地修改
+
+	git checkout -- worknotes/lvm.md

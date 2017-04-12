@@ -1,13 +1,14 @@
-###hadoop###
+### hadoop
 ***
 
-###前言###
+### 前言
 
 简单记录下hadoop搭建步骤，具体见官网
 
 ***
 
-####部署hadoop.tar.gz
+#### 部署hadoop.tar.gz
+
 	#查找列表 http://hadoop.apache.org/releases.html
 	wget http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.6.0/hadoop-2.6.0.tar.gz
 	
@@ -20,7 +21,7 @@
 	#H-Master可以多加一项，便于操作
 	export HADOOP_HOME_WARN_SUPPESS=1
 
-####添加jdk1.7
+#### 添加jdk1.7
 	
 	vim /etc/profile
 	export JAVA_HOME=/web/jdk1.7.0_67
@@ -28,7 +29,8 @@
 	export CLASSPATH=.:$CALSSPATH:$JAVA_HOME/lib:$JRE_HOME/lib
 	export PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 
-####添加hosts
+#### 添加hosts
+
 	vim /etc/hosts
 	192.168.100.100 HMaster
 	192.168.100.101 HSlave1
@@ -36,7 +38,8 @@
 	192.168.100.103 HSlave3
 	192.168.100.104 HClient
 
-####配置hadoop
+#### 配置hadoop
+
 hadoop默认配置文件在hadoop-2.6/etc/hadoop/下
 
 * 在*-env.sh中加入java的环境变量
@@ -152,13 +155,13 @@ hadoop默认配置文件在hadoop-2.6/etc/hadoop/下
 	    </property>
 	</configuration>
 
-####ssh通信####
+#### ssh通信
 	ssh-keygen -t rsa
     ssh-copy-id -i id_rsa.pub HMaster(HSlave1...）
 	使H-Master和H-Slaves可以通信	
 
 
-####分派masters,slaves
+#### 分派masters,slaves
 
 		cat masters   ---通用配置
 			H-Master
@@ -167,13 +170,13 @@ hadoop默认配置文件在hadoop-2.6/etc/hadoop/下
 			H-Slave2
 			....
 
-####初始化HDFS文件系统，仅需要一次
+#### 初始化HDFS文件系统，仅需要一次
 	 hadoop namenode -format
 
-####启动hadoop
+#### 启动hadoop
 	start-all.sh
 
-####检测手段jps
+#### 检测手段jps
 	H-Master：
 	4448 ResourceManager
 	8704 Jps
@@ -185,11 +188,11 @@ hadoop默认配置文件在hadoop-2.6/etc/hadoop/下
 	5340 NodeManager
 	1740 DataNode
 
-####HClient使用
+#### HClient使用
 	复制HMaster使用的hadoop到HClient所在的机器，配置同，不用启动
 
 ***
-####友情提示
+#### 友情提示
 默认编译时32位，64位系统使用，自主编译hadoop，替换lib/native即可
 	
 	

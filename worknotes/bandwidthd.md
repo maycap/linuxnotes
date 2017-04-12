@@ -1,10 +1,10 @@
-##bandwidthd
+## bandwidthd
 
-###简介
+### 简介
 简单的单机监控流量程序，安装配置都很方便
 
 
-###安装
+### 安装
 
 >基本编译组件安装
 
@@ -31,7 +31,7 @@
 	make
 	make install
 
-###配置
+### 配置
 
 >目录介绍
 
@@ -88,7 +88,7 @@
 
 	/usr/local/bandwidthd/bandwidthd
 
-###验收
+### 验收
 
 	http://ip/bandwidthd/
 

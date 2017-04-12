@@ -1,10 +1,11 @@
-##clustershell##
+## clustershell
 ***
-###前言###
+### 前言
+
 轻量级linux运维利器，并发执行，统一配置文件
 
 ***
-###安装clustershell
+### 安装clustershell
 
 
 采用常规方式，需要添加epel源，参考 http://fedoraproject.org/wiki/EPEL 选取对应版本的‘epel-release’，添加源后即可查询到，以EL6为例：
@@ -19,7 +20,7 @@ clustershell是python编写，不支持windows，可用python方式安装，源�
 	git clone https://github.com/cea-hpc/clustershell
 	python setup.py install
 
-###简单使用###
+### 简单使用
 
 nodeset可用于节点控制，简单点可以直接添加/etc/clustershell/groups
 
@@ -37,6 +38,7 @@ nodeset可用于节点控制，简单点可以直接添加/etc/clustershell/grou
 	统一配置文件，本地为HMaster
 	clush -b -w  @hadoop -c /web/hadoop-2.6.0/etc/hadoop/*-site.xml --dest=/web/hadoop-2.6.0/etc/hadoop
 
-###详细使用###
+### 详细使用
+
 参考wiki---https://github.com/cea-hpc/clustershell/wiki
 	
