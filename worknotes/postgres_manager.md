@@ -1,10 +1,10 @@
-##postgres管理##
+## postgres管理
 
-###前言##
+### 前言
 postgres数据库管理笔记
 
 ***
-####数据库安装
+#### 数据库安装
 
 >必须包
 
@@ -28,7 +28,7 @@ postgres数据库管理笔记
 	/web/pgsql/bin/initdb -D /web/data
 
 
-####授权管理
+#### 授权管理
 
 	#创建用户
 	CREATE USER postgresuser WITH PASSWORD 'xxxx'; 
@@ -39,7 +39,7 @@ postgres数据库管理笔记
 	#进入对应库授权
 	GRANT select ON ALL TABLES IN SCHEMA public TO postgresuser;
 
-####慢查询处理
+#### 慢查询处理
 
 数据库节点io,负载飙升都是常事，sql检测方法有：
 
@@ -63,7 +63,7 @@ sql回滚和强杀：
 	select pg_cancel_backend('pid'); 
 	select pg_terminate_backend('pid');
 
-####表磁盘使用量判断
+#### 表磁盘使用量判断
 
 每个表都有一个主堆(primary heap)磁盘文件，大多数数据都存储在这里。 如果一个表存在值可能会很长的字段，则另外还有一个用于存储因为数值 太长而不适合存储在主表中的数据的TOAST文件。如果存在这个扩展表，那么将会同时存在 一个TOAST索引。当然，同时还可能有索引和基表关联。每个表和索引都存放在单独的磁盘文件里(超过 1GB 可能会被分割成多个)。
 
@@ -143,7 +143,7 @@ sql回滚和强杀：
 	pg_dump uc -t uc_group_20150814 -a > psql uc -t uc_group	
 
 
-####模拟内存表
+#### 模拟内存表
 
 1.建立tmpfs（ramfs无法限制使用大小）
 	
@@ -160,7 +160,7 @@ sql回滚和强杀：
 	psql> create database tmpfsdb template template0 owner postgres tablespace tmpfs;
 
 
-####垃圾收集与分析
+#### 垃圾收集与分析
 
 >Name
 

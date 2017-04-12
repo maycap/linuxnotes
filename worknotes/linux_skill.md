@@ -1,10 +1,10 @@
-##linux_skill##
+## linux_skill
 
-###前言###
+### 前言
 记录平时见到的一些技巧，以备不时之需
 
 ***
-####yum源问题
+#### yum源问题
 
 >添加epel源，参考 http://fedoraproject.org/wiki/EPEL 选取对应版本的‘epel-release’，添加源后即可查询到，以EL6为例：
 
@@ -79,7 +79,7 @@
 	yum install yum-utils
 	yumdownloader xxx-xx
 
-####网络类
+#### 网络类
 
 >查看机器公网IP：
 
@@ -110,7 +110,7 @@
 	2.echo -e '\n' | telnet [port] ip
 
 
-####编辑类
+#### 编辑类
 >替换输出：
 
 	echo $a | tr . ' '
@@ -240,7 +240,7 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	echo U2FsdGVkX18Zgoc+dfAdpIK58JbcEYFdJBPMINU91DKPeVVrU2k9oXWsgpvpdO/Z | openssl enc -aes-256-cbc -a -d -salt -pass pass:tecmint
 
-####系统类
+#### 系统类
 
 >查看服务器型号
 
@@ -325,7 +325,7 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	ntpdate -u 210.72.145.44        --中国国家授时中心
 
 
-####ssh
+#### ssh
 
 >远程重启tomcat时，简单采用ssh，会报JAVA_HOME找不到，可采用
 
@@ -335,7 +335,7 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	ssh 192.168.1.123 "source /etc/profile; if [ $( ps -ef | grep /web/service/tomcat9_xx_8003|grep -v grep | wc -l) -eq 1 ];then ps -ef | grep /web/service/tomcat9_xx_8003|grep -v grep | awk '{print \$2}'| xargs kill -9;fi"
 
-####进程类
+#### 进程类
 
 >获取命令当前进程号(pid)
 
@@ -350,7 +350,7 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	echo 'over'
 
 
-###SOA
+### SOA
 
 >zookeeper客户端
 
@@ -358,7 +358,7 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	bin/zkCli.sh -server host port     
 
 
-###rsync
+### rsync
 
 >有没有/问题
 	
@@ -383,14 +383,14 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	 rsync -arv -e 'ssh -p 100' source-file remotehost:/target-path
 
-###git
+### git
 
 >放弃本地修改，强行更新
 
 	git fetch --all
 	git reset --hard origin/master
 
-###iptables
+### iptables
 
 >列出含有序号的INPUT规则，通过num删除
 
@@ -400,7 +400,7 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	iptables -D INPUT 4
 	
 	
-###权限类
+### 权限类
 
 >粘滞位
 

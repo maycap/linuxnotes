@@ -1,12 +1,12 @@
-###SVN Synchronous apache###
+### SVN Synchronous apache
 ***
 
-###前言###
+### 前言
 
 在未使用gitlab管理代码前，公司内部使用SVN，前端工程师为了代码及时展现效果，提出提交代码后，要在浏览器及时看到效果，如一些php文件等需要解析的前端文件。SVN异机钩子同步失败，决定本地更新，NFS挂载。
 
 
-* ####同步代码
+* #### 同步代码
 
 		mkdir webos
 		svn co http://192.168.1.200/svn/repos/program/eln4/app/webos --username=  --password
@@ -14,7 +14,7 @@
 
 	由于服务器使用Apache承载SVN，其属主为apache,便于操作
 
-* ####设置钩子
+* #### 设置钩子
 
 		vim /var/www/.subversion/servers
  		store-plaintext-passwords = no
@@ -37,20 +37,20 @@
 
 	鉴于字符集编码已经祸害了无数人，请在脚本中加入编码
 
-* ####NFS挂载
+* #### NFS挂载
 
 		cat /etc/exports
 		/web/php_sys_svn *(rw,async,no_root_squash)
 
 	首先要确信你已经安装nfs，并启动了。
 
-* ####Apache展示服务器
+* #### Apache展示服务器
 		mount -t nfs 192.168.1.200:/web/php_sys_svn /web/php_sys_svn
 		ln -s /web/php_sys_svn **(apache 家目录）
 	网页访问确认即可。
 
 
-###备份###
+### 备份
 
 >环境
 
@@ -146,7 +146,8 @@
 
 
 ***
-###源码安装最新版###
+### 源码安装最新版
+
 yum虽然方便，版本总是落后，而且莫名的bug也不好理解，先更新到最新版试试。官网下载地址 http://subversion.apache.org/download/ ，下载不了，请切换 Mirror。新版依赖serf,官网地址https://code.google.com/p/serf/
 
 	wget http://apache.dataguru.cn/subversion/subversion-1.8.13.tar.bz2
@@ -160,7 +161,8 @@ yum虽然方便，版本总是落后，而且莫名的bug也不好理解，先�
 	./configure --prefix=/usr/local/subversion --with-apr=/usr/local/apr --with-apr-util=/usr/local/apr --enable-mod-activation --with-apache-libexecdir=/usr/local/httpd/modules --with-apxs=/usr/sbin/apxs --with-serf=/usr/local/serf
 	./make && make install
 
-###单独编译mod\_dav\_svn###
+### 单独编译mod\_dav\_svn
+
 >需要安装httpd-devel
 
 	yum install httpd-devel

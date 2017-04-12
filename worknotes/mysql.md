@@ -1,6 +1,6 @@
-##mysql
+## mysql
 
-###安装
+### 安装
 
 >rpm方式
 
@@ -13,7 +13,7 @@
   	rpm -ivh MySQL-client-5.6.29-1.el6.x86_64.rpm 
 
 
-####初始化数据库
+#### 初始化数据库
 
 	#指定用户初始化
 
@@ -22,7 +22,7 @@
 	mysql_install_db --user=mysql --datadir=/web/data_3306/data/
 
 	
-####修改配置文件
+#### 修改配置文件
 
 	
 	cat /web/data_3306/my.cnf 
@@ -69,7 +69,7 @@
 	sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES 
 
 
-####修改初始密码
+#### 修改初始密码
 
 	#跳过授权，允许本地登录
 	mysqld_safe --defaults-file=/web/data_3306/my.cnf --skip-grant-tables --skip-networking
@@ -88,7 +88,7 @@
 ***
 
 
-###troubleshoot
+### troubleshoot
 
 >[ERROR] Can't find messagefile '/usr/share/mysql/errmsg.sys'
 

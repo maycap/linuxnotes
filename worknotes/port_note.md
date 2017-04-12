@@ -1,7 +1,7 @@
-##端口复用和转发
+## 端口复用和转发
 
 
-###端口复用笔记
+### 端口复用笔记
 
 >haproxy
 
@@ -35,7 +35,7 @@
 	https://github.com/yrutschle/sslh
 
 
-###端口转发
+### 端口转发
 
 >iptables(linux)
 

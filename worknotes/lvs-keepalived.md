@@ -1,6 +1,7 @@
-##lvs-keepalived##
+## lvs-keepalived
 
-###前言###
+### 前言
+
 LVS工作在网络层，通过控制IP来实现负载均衡。IPVS是其具体的实现模块。IPVS的主要作用：安装在Director Server上面，在Director Server虚拟一个对外访问的IP（VIP）。用户访问VIP，到达Director Server，Director Server根据一定的规则选择一个Real Server，处理完成后然后返回给客户端数据。
 
 IPVS有三种机制：NAT，TUN，DR
@@ -25,7 +26,7 @@ DR Direct server在VIP:80端口监听用户请求，改写请求报文的MAC地�
 
 考虑它们的容量向较少连接的服务器分配较多的工作。容量通过用户指定的砝码来说明，可以根据装载信息动态的向上或向下调整。(用于实际服务主机性能不一致时)
 
-###部署###
+### 部署
 >节点布局
 
 <table>
@@ -163,7 +164,7 @@ DR Direct server在VIP:80端口监听用户请求，改写请求报文的MAC地�
 	clush -b -w @lvs-rs  "hostname >> /var/www/html/index.html"
 	clusb -b -w @lvs-rs service httpd start
 
-###检测
+### 检测
 
 >负载分流检验
 

@@ -1,11 +1,11 @@
-##防止用户重复登录pptpd##
+## 防止用户重复登录pptpd
 
-* ####前言：
+* #### 前言：
 	
 	pptpd自身不含有限制账户登录功能，可用pppd功能实现。
 	pptpd服务器使用端口  tcp 1723
 
-* ####以centos6.5为例:
+* #### 以centos6.5为例:
 
 
 		yum install -y wget perl ppp
@@ -27,7 +27,7 @@
 		test		pptpd   test.test	 		* 
 
 
-* ####NAT转换
+* #### NAT转换
 		
 		1.设置Linux内核支持ip数据包的转发：
 			echo "1" > /proc/sys/net/ipv4/ip_forward
@@ -162,7 +162,7 @@
 	登录测试即可实现限制单独账户功能
 
 
-###vpn客户端
+### vpn客户端
 
 >安装
 

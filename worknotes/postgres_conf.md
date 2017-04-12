@@ -1,10 +1,10 @@
-##postgres配置##
+## postgres配置
 
-###前言##
+### 前言
 postgres数据库配置笔记
 
 ***
-####基础配置####
+#### 基础配置
 >监听
 	
 	listen_addresses '*'
@@ -34,7 +34,7 @@ postgres数据库配置笔记
 	参数first，默认null值为无限大
 	参数last，默认null值为无限小
 	
-###fsync (boolean)
+### fsync (boolean)
 	
 如果这个选项是打开，那么 PostgreSQL 服务器将在好几个地方使用 fsync() 系统调用来确保更新已经物理上写到磁盘中。 这样就保证了数据库集群将在操作系统或者硬件崩溃的情况下恢复到一个一致的状态。
 
@@ -44,7 +44,7 @@ postgres数据库配置笔记
 
 	
 
-#####内存使用率高#####
+##### 内存使用率高
 
 数据服务器卡，top检测发现，check_point和write占用内存很大，查看资料得知：
 checkpoint又名检查点，在oracle中checkpoint的发生意味着之前的脏数据全部写回磁盘，数据库实现了一致性与数据完整性。oracle在实现介质恢复时将以最近的checkpoint为参照点执行事务前滚。在postgresql中checkpoint起着相同的作用：写脏数据；完成数据库的完整性检查。
@@ -79,7 +79,8 @@ WAL log的最大数量，系统默认值是3。该值越大，在执行介质恢
 
 ***
 
-###TRUOBLE###
+### TRUOBLE
+
 >启动不了，去除限制
 
 	#config pgsql env

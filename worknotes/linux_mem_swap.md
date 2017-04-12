@@ -1,11 +1,11 @@
-##linux_mem_swap##
+## linux_mem_swap
 
-###前言###
+### 前言
 与linux_skill并不同，此笔记主要记录linux上关于内存和交换分区。
 
 ***
 
-###buffer和cache
+### buffer和cache
 
 cache可以说是个混合大名词了，旗下有三大分支：cpu\_cache、page\_cache、buffer\_cache
 
@@ -36,7 +36,7 @@ Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在C
 
  如果 cache 的值很大，说明cache住的文件数很多。如果频繁访问到的文件都能被cache住，那么磁盘的读IO 必会非常小。
 
-###free###
+### free
 如此常见的命令，直接上数据如下：
 
 	# free -m
@@ -86,7 +86,7 @@ Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在C
 
 
 ***
-###top
+### top
 直接上数据如下：
 	
 	  PID USER      PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  DATA COMMAND                                                                           
@@ -125,7 +125,7 @@ Cache又分为一级Cache(L1 Cache)和二级Cache(L2 Cache)，L1 Cache集成在C
 	RES = Mtotal * %MEM
 
 
-###swap
+### swap
 
 如果系统的物理内存用光了，则会用到swap。系统就会跑得很慢，但仍能运行;如果Swap空间用光了，那么系统就会发生错误。通常会出现“application is out of memory”的错误，严重时会造成服务进程的死锁。
 

@@ -1,10 +1,10 @@
-##postfix
+## postfix
 
-###前言
+### 前言
 记录搭建本地邮件服务器遇到的一些问题
 
 
-###批量添加用户
+### 批量添加用户
 
 postfix用户管理主要集中在postfix.mailbox和postfix.alias这两张表，遍历生成对应sql插入，可以简单实现批量添加用户的需求，参考脚本：[PostfixUser](../giftscript/PostfixUser)
 
@@ -21,7 +21,7 @@ postfix用户管理主要集中在postfix.mailbox和postfix.alias这两张表，
 	./PostfixUser list
 	
 
-###问题记录
+### 问题记录
 
 >本地邮件发送失败
 

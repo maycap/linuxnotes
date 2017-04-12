@@ -1,10 +1,11 @@
-##nagios##
+## nagios
 
-###前言###
+### 前言
 Nagios是一款用于系统和网络监控的应用程序。它可以在你设定的条件下对主机和服务进行监控，在状态变差和变好的时候给出告警信息。参考中文手册：http://nagios-cn.sourceforge.net/nagios-cn/bookfirst.html
 
 
-###安装###
+### 安装
+
 安装nagios-core，官网下载地址 http://pkgs.repoforge.org/rpmforge-release/ ，首先要更新下rpmforge，安装些基础编码依赖包
 
 	rpm -ivh http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el7.rf.x86_64.rpm
@@ -99,7 +100,7 @@ Nagios是一款用于系统和网络监控的应用程序。它可以在你设�
 	
 	
 
-###客户端安装###
+### 客户端安装
 被监控端安装nagios-plugins和nrpe
 
 	#添加使用账户
@@ -135,7 +136,7 @@ Nagios是一款用于系统和网络监控的应用程序。它可以在你设�
 	NRPE v2.15
 
 	
-###添加监控项###
+### 添加监控项
 
 监控项在客户端添加，常规检测报警参数，w--warning,c--critic,u--unkown,r--recovery。
 
@@ -158,7 +159,7 @@ Nagios是一款用于系统和网络监控的应用程序。它可以在你设�
 
 解释为：
 
-###服务端配置###
+### 服务端配置
 
 使用独立配置
 	
@@ -275,7 +276,7 @@ Nagios是一款用于系统和网络监控的应用程序。它可以在你设�
 	DISK OK - free space: / 27143 MB (93% inode=96%);| /=1782MB;24378;27425;0;30473
 		
 		
-###娱乐版###
+### 娱乐版
 基于clush的批量安装nagios客户端，由于爆了很多warning，就不介绍了。
 
 	# ls /root/nagios/
@@ -372,7 +373,7 @@ Nagios是一款用于系统和网络监控的应用程序。它可以在你设�
 	#./check_mem -w 80 -c 90 
 	
 
-###监控windows###
+### 监控windows
 
 nscp是windows下nagios监控client的一个合集。其包含check plugins 、check_nt、check_nrpe 、nsca client 、wmi checks 。一般需要的监测项基本都包含在内了。下载地址 http://sourceforge.net/projects/nscplus/files/nscplus/
 

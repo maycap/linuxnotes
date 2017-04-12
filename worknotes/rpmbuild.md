@@ -1,9 +1,9 @@
-##rpmbuild
+## rpmbuild
 
-###preface
+### preface
 使用rpmbuild打包一些软件，定制一些配置与脚本，便于线上安装。
 
-###使用步骤
+### 使用步骤
 >获取软件包
 
 	yum install rpmdevtools

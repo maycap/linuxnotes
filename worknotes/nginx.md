@@ -1,12 +1,12 @@
-###nginx###
+## nginx
 ***
 
-###前言
+### 前言
 公司使用nginx作为web服务器，一些功能需要加密，在内部开发时自定义证书。和nginx一些遇到问题及解决方法。
 
 ***
 
-###nginx升级
+### nginx升级
 
 >源码下载
 
@@ -33,7 +33,7 @@
 	#libGeoIP.so.1 error
 	ln -s /usr/local/lib/libGeoIP.so.1 /usr/lib64/
 
-###nginx主配置
+### nginx主配置
 	server {
 	        listen       443;
 	        server_name  www.jaylin.org;
@@ -49,7 +49,7 @@
 	由于功能相互依赖，被依赖的应用，location /myapp/ 也要加入ssl配置中。
 	具体可通过https访问应用，chrome查看报错提示，依次添加。
 
-###自定义证书
+### 自定义证书
 
 	# cd /etc/nginx
 	# openssl genrsa -des3 -out jaylin.key 1024
@@ -61,7 +61,7 @@
 	采用简单的方式可以生成密钥对，却避免不了重启nginx需要手动输入必须设置的密码，不利于自动化启动与管理。
 
 ***
-###代理websocket
+### 代理websocket
 
 在使用nginx代理websocket时，使用最简单配置如下：
 
@@ -91,7 +91,7 @@
 	proxy_set_header Connection "upgrade";
 
 
-###代理mail
+### 代理mail
 一般情况下，客户端发起的邮件请求在经过nginx这个邮件代理服务器后，从网络通信的角度来看，nginx实现邮件代理功能时会把一个请求分为以下4个阶段：
 
 	接收并解析客户端初始请求的阶段。
@@ -141,7 +141,7 @@
 	请检查nginx -V  是否含有  --with-mail
 	
 
-###密码访问控制
+### 密码访问控制
 
 有时候部署升级程序，需要外网访问入口，通过nginx设置密码，达到简单控制目的。
 
@@ -157,7 +157,7 @@
 
 	chmod 400 htpasswd.db   //相当更安全些  
 
-###静态文件缓存
+### 静态文件缓存
 
 	#缓存目录设置
 	proxy_temp_path   /web/nginx/proxy_temp_dir 1 2;
@@ -199,7 +199,7 @@
 	
 	这种才会先缓存到 proxy_temp,再写入proxy_path。因此在proxy_path中可以看到缓存文件
 
-###正则匹配
+### 正则匹配
 
 简而言之，举例如下：
 
@@ -263,7 +263,7 @@
 	
 ***
 
-###nginx php7
+### nginx php7
 
 >php7 编译
 
@@ -319,7 +319,7 @@
 
 ***
 
-###下载静态文件出现错误
+### 下载静态文件出现错误
 
 >ERR\_CONTENT\_LENGTH\_MISMATCH
 

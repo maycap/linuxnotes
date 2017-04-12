@@ -1,10 +1,10 @@
-##Tomcat
+## Tomcat
 
-###前言###
+### 前言
 
 Apache Tomcat是一款实现了 Java Servlet, JavaServer Pages, Java Expression Language and Java WebSocket technologies的开源软件，属于轻量级应用服务器。
 
-###Tomcat内容介绍
+### Tomcat内容介绍
 
 环境使用Centos6.5，参考官网文档: [http://tomcat.apache.org/](http://tomcat.apache.org/)
 
@@ -117,7 +117,7 @@ catalina.base
 
 仅运行一个Tomcat实例时，这两个属性指向的位置是相同的。
 
-###插一点自带功能介绍
+### 插一点自带功能介绍
 
 将tomcat单独作为web服务器，功能将复杂很多。常使用作为后端容器，再此少量介绍。直接运行，打开对应的 http://ip:8080 ,页面功能，使用较少，主要为单人测试使用。
 
@@ -147,7 +147,7 @@ catalina.base
 	<user username="tomcat" password="tomcat" roles="tomcat,manager-gui，admin-gui"/>
 
 
-###配置介绍
+### 配置介绍
 
 >丢war方式
 

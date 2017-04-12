@@ -1,11 +1,11 @@
-##slony##
+## slony
 
-###前言###
+### 前言
 基于表备份的数据库同步，slony很是优秀，整理笔记。
 
 ***
 
-###安装###
+### 安装
 	tar jxvf slony1-2.0.3.tar.bz2
 	cd slony1-2.0.3.tar.bz2
 	export PGMAIN=/usr/local/pgsql
@@ -14,7 +14,7 @@
 	gmake install
 
 
-###传统配置###
+### 传统配置
 
 slony有点类似postgresql库的概念，一个完整的slony复制称为一个集群，在schema下表现为_$CLUSTER。通过内部表信息，可以看到执行到哪一步，以及是否缺少信息，执行过程的日志自然更方便。集群下可以有无数个集合，slony复制以set作为一个集，集内部可以定义数个需要同步的表信息，前提需要ddl必须相同！同步开始前，从库会被清空，因此无须复制数据到从库！
 
@@ -196,7 +196,7 @@ slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to current
 
 都可合并处理
 
-###脚本配置###
+### 脚本配置
 
 在初始完集群的情况下，曾经写了一个，自动建库，自动建立slony基于全库表配置的脚本。可自定义setid,tableid，schemaname,以及指定配置文件，基于一主多从，从库已逗号分隔。
 
@@ -244,7 +244,7 @@ slony向原先的set添不进去，"ERROR:  Slony-I: cannot add table to current
 	gem_slavenode:2
 
 
-###问题###
+### 问题
 
 >slony正在运行时，删除修改表失败,这种情况就比较惨烈。需要停掉slony，删除触发器，再复制主库ddl，执行到从库
 

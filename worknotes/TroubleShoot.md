@@ -1,12 +1,12 @@
-##TroubleShoot##
+## TroubleShoot
 
 ***
 
-###前言###
+### 前言
 公司内部遇到的一些环境小点，零零散散，记录备用
 
 ***
-###javasqlite###
+### javasqlite
 常规流程：
 
 	步骤 1:yum install sqlite3*  sqlite-devel
@@ -36,7 +36,7 @@
 	vi /etc/profile 添加CLASSPATH
 
 ***
-###jdk字体###
+### jdk字体
 为了生成一些人性化的证书，需要引入windows的一些字体进入jdk，而不是linux的系统环境字体。
 
 	获取字体:
@@ -53,7 +53,7 @@
 由于linux是文件系统，可以直接复制使用，另外一台服务器若要使用，直接scp过去即可。
 
 
-###jdk1.7+验证码问题
+### jdk1.7+验证码问题
 
 >报错提示参考
 
@@ -72,7 +72,7 @@
 
 
 ***
-###执行sh编码问题###
+### 执行sh编码问题
 
 	: No such file or direct﻿orybin/sh
 	: command not founde 2: 
@@ -88,7 +88,8 @@
 
 ***
 
-###vsftp匿名上传下载###
+### vsftp匿名上传下载
+
 内部使用，最快的简洁交换文件，匿名方式
 
 1.0 修改主目录
@@ -138,13 +139,13 @@
 
 	chroot_local_user=YES  --限制为自身家目录，确保安全
 
-###编译###
+### 编译
 在使用基础内核时，一般没有gcc，g++，编译源码前需要
 	
 	yum -y install gcc gcc-c++
 
 
-###导出失败###
+### 导出失败
 
 导出列表，小文件可以，大文件有的浏览器导出丢失，有的直接报错。tomcat日志如下：
 
