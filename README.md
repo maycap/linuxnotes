@@ -10,6 +10,10 @@ This is notes for linux manage works
 
 This is notes about kills on linux 
 
+* [linux_ad](./worknotes/linux_ad.md)
+
+This is notes about linux join ad
+
 * [postgres_conf](./worknotes/postgres_conf.md)
 
 This is notes about postgres configure
