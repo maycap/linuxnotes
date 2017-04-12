@@ -2,7 +2,7 @@
 Some notes about Linux
 
 ***
-###On [worknotes](./worknotes)
+### On [worknotes](./worknotes)
 
 This is notes for linux manage works
 
@@ -174,7 +174,7 @@ This is notes about KickStart to install centos
 This is notes about some troubleshoot of work
 
 ***
-###On [netnotes](./netnotes)
+### On [netnotes](./netnotes)
 
 This is notes for network
 
@@ -185,7 +185,7 @@ This is notes about net speed
 
 
 ***
-###On [managescript catalog](./managescript)
+### On [managescript catalog](./managescript)
 
 This is the scripts to manage some Middleware
 
@@ -233,7 +233,8 @@ This is the script to restart tomcat in rotation
 This is the script to exec sql
 
 ***
-###Some words###
+### Some words
+
 Linux note by [maycap](https://github.com/maycap),Welcome advice
 
 This guy's contact: [gencat@163.com](gencat@163.com)

@@ -84,7 +84,7 @@
 
 >pam验证控制类型
 
-<table border="1">
+<table>
 	<tr>
 		<th>Control Flags</th>
 		<td>返回值</td>
