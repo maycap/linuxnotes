@@ -324,6 +324,32 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	#NTP服务器(上海) ：ntp.api.bz
 	ntpdate -u 210.72.145.44        --中国国家授时中心
 
+#### 获取时间
+	
+	＃查看明天日期
+	date -d next-day +%Y%m%d
+	date -d tomorrow +%Y%m%d
+
+	＃查看昨天日期
+	date -d last-day +%Y%m%d
+	date -d yesterday +%Y%m%d
+	
+	＃查看上个月日期
+	date -d next-month +%Y%m
+	
+	＃查看明年日期
+	date -d next-year +%Y
+	
+	＃获取昨天或多天前的日期
+	date +%Y%m%d -d '2 days ago'
+	
+	#获取2周后日期
+	date -d '2 weeks'
+	
+	＃高级功能展示
+	date -d '50 days'   	(50天后的日期）
+	date -d '-100 days' 	(100天以前的日期）
+	date -d 'dec 14 -2 weeks' （相对：dec 14这个日期的两周前的日期）
 
 #### ssh
 
