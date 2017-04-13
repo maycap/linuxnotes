@@ -263,6 +263,31 @@
 	
 ***
 
+### nginx proxy php
+
+
+LNAMP相当于nginx作为web入口，apache作为php的真是处理。当用户发出php脚本执行请求，nginx不会执行php，会把这个问题留给后台的apache，nginx会等待一段时间，apache可以在等待时间内处理php脚本请求，若未处理完，nginx便已未收到数据请求而返回504 Gateway time-out错误，实际情况是apache依然会在后台处理完php脚本，只是前台返回错误。
+
+>优化nginx与apche通信时间
+
+	proxy_connect_timeout 60s;
+	proxy_send_timeout   90;
+	proxy_read_timeout   600;
+	proxy_buffer_size    128k;
+	proxy_buffers     8 128k;
+	proxy_busy_buffers_size 256k;
+	
+	proxy_temp_file_write_size 0;
+	
+
+>参数参考
+
+1. proxy\_connect\_timeout 连接时间，前端连接后端时间，60s以内即可
+2. proxy\_send\_timeout 发送时间，允许后端返回数据的时间，90s以内即可
+3. proxy\_read\_timeout 读写时间，这是前端等待后端处理时间，这是导致504 Gateway time-out的根本原因，出现这个错误，说明这个值太小，推荐不小于600s，服务器越差，那么设置得更长，保证处理完毕
+4. buffers 数值设置，proxy\_buffers>=sum(proxy\_busy\_buffers\_size>=proxy\_buffer\_size)
+
+
 ### nginx php7
 
 >php7 编译
