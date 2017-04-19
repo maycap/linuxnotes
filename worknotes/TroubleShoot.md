@@ -138,6 +138,32 @@
 	注释匿名anon_*开头的即可
 
 	chroot_local_user=YES  --限制为自身家目录，确保安全
+	
+### vsftp限速
+
+
+>编辑/etc/vsftpd/vsftpd.conf
+
+	 tcp_wrapper=YES
+	 
+>编辑/etc/hosts.allow
+
+	vsftpd:192.168.*.*:setenv VSFTPD_LOAD_CONF /etc/vsftpd/local.class
+	vsftpd:ALL:setenv VSFTPD_LOAD_CONF /etc/vsftpd/internet.class
+	
+>创建并编辑/etc/vsftpd/local.class
+
+	#设置为0代表不限速
+	anon_max_rate=0  #匿名登录用户
+	local_max_rate=0    #授权登录用户
+    
+>创建并编辑/etc/vsftpd/internet.class
+	
+	anon_max_rate=300000  #匿名用户的速度约300KB/s
+	local_max_rate=500000   #授权用户的速度约500KB/s
+	
+重启vsftpd服务，这样就实现对192.168.0.0这个网段不限速，其余网段限速的效果。
+
 
 ### 编译
 在使用基础内核时，一般没有gcc，g++，编译源码前需要
