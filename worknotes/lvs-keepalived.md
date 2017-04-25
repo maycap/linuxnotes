@@ -266,3 +266,76 @@ DR Direct server在VIP:80端口监听用户请求，改写请求报文的MAC地�
 	IP Virtual Server version 1.2.1 (size=4096)
 	Prot LocalAddress:Port Scheduler Flags
 	  -> RemoteAddress:Port           Forward Weight ActiveConn InActConn
+	  
+	
+### keepalived 多VIP切换
+
+>配置参考
+
+	vrrp_script web1_check
+	{
+	    script "/etc/keepalived/web1_check.sh"
+	    interval 1
+	    weigh -2
+	}
+	
+	vrrp_script web2_check
+	{
+	    script "/etc/keepalived/web2_check.sh"
+	    interval 1
+	    weigh -2
+	}
+	
+	vrrp_instance webone {
+	    state MASTER
+	    interface eth0
+	    virtual_router_id 38
+	    priority 100
+	    advert_int 1
+	    authentication {
+	        auth_type PASS
+	        auth_pass 017181
+	    }
+	    track_script
+	    {
+	        web1_check
+	    }
+	
+	    virtual_ipaddress {
+	      10.57.17.181
+	    }
+	}
+	
+	
+	vrrp_instance webtwo {
+	    state MASTER
+	    interface eth0
+	    virtual_router_id 39
+	    priority 100
+	    advert_int 1
+	    authentication {
+	        auth_type PASS
+	        auth_pass 017182
+	    }
+	    track_script
+	    {
+	        web2_check
+	    }
+	    virtual_ipaddress {
+	      10.57.17.182
+	    }
+	}
+
+>检测脚本
+
+	＃exit 0 则不触发脚本
+	＃exit 1 则触发下一步，如 权重 －2
+	
+	cat web1_check.sh
+	
+	#!/bin/sh
+	exit `cat /tmp/web1`
+	
+>效果
+
+	每个vrrp_instance 实例单独根据检测脚本切换权重，适合单机启动多个实例需要自动切换的情况。
