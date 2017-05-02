@@ -23,6 +23,27 @@ python官网下载地址是：https://www.python.org/downloads，参考实例：
 	make 
 	make install
 
+>查看默认编码
+
+	
+	When built with --enable-unicode=ucs4:
+	
+	>>> import sys
+	>>> print sys.maxunicode
+	1114111
+	
+	
+	When built with --enable-unicode=ucs2:
+	
+	>>> import sys
+	>>> print sys.maxunicode
+	65535
+
+>选择python默认编码
+	
+	#两个编码并不兼容，因此site-packages无法直接复制使用
+	--enable-unicode[=ucs[24]]
+
 
 ### 配置修改
 安装python2.7.9后，默认仍是指向python2.6，需要重新指向。由于yum依赖python2.6，需要保留原有的python2.6。
