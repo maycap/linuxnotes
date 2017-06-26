@@ -132,7 +132,7 @@ This is notes about kvm
 
 This is notes about zstack offline setting
 
-* [Zstack_change_ip](./worknotes/Zstack_change_ip)
+* [Zstack_change_ip](./worknotes/Zstack_change_ip.md)
 
 This is notes about Zstack vm change ip
 
