@@ -128,6 +128,15 @@ This is notes about install http php mysql example
 
 This is notes about kvm
 
+* [zstack](./worknotes/zstack.md)
+
+This is notes about zstack offline setting
+
+* [Zstack_change_ip](./worknotes/Zstack_change_ip)
+
+This is notes about Zstack vm change ip
+
+
 * [jetty](./worknotes/jetty.md)
 
 This is notes about jetty
