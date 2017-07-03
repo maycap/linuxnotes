@@ -150,6 +150,10 @@ This is notes about tomcat
 This is notes about suse11 uses
 
 
+* [Centos6—>Centos7](./worknotes/os6update7.md)
+
+This is notes about Centos6 update Centos7
+
 * [RH7](./worknotes/RH7.md)
 
 This is notes about RH7 uses
