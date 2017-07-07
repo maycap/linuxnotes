@@ -158,6 +158,10 @@ This is notes about Centos6 update Centos7
 
 This is notes about RH7 uses
 
+* [vsftp](./worknotes/vsftp.md)
+
+This is notes about vsftpd uses
+
 * [apache_httpd](./worknotes/apache_httpd.md)
 
 This is notes about RH7 uses
