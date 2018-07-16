@@ -54,6 +54,15 @@
 
 		/usr/lib/vmware/auth/bin/adduser -h / -s /bin/sh -G root youruser
 
+* #### 获取系统参数
+
+> SN
+
+	esxcfg-info | grep 'Serial Number'
+
+> 更改主机名
+
+	esxcfg-advcfg -s hostname /Misc/hostname
 
 ***
 >VMware vSphere Client使用端口

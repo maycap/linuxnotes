@@ -226,6 +226,7 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 
 	pwgen 10 1  （10位长度，一个）
 	makepasswd --char 50 --count 7
+	openssl rand -base64 10
 
 >加密
 	
