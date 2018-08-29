@@ -325,6 +325,14 @@ grep的语法支持正则表达式,下面是一些有用的参数：
 	#NTP服务器(上海) ：ntp.api.bz
 	ntpdate -u 210.72.145.44        --中国国家授时中心
 
+>自动化定时任务
+	
+	＃继承以前的，追加一个新的
+	(crontab -l 2>/dev/null ;echo "* * * 2 * hostname")  | crontab -
+	or
+	/var/spool/cron/admin   (只适合root操作) 
+	
+
 #### 获取时间
 	
 	＃查看明天日期
